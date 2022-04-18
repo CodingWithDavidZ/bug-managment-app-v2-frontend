@@ -1,14 +1,10 @@
 import React, { useContext, useState } from 'react';
 import Login from './Login';
 import Register from './Register';
-import { UserContext } from '../Context/UserContext';
+import AppContext from '../Context/AppContext';
 
 function AuthContainer() {
-	const [user, setUser] = useContext(UserContext);
-	const [registerEmail, setRegisterEmail] = useState('');
-	const [registerPassword, setRegisterPassword] = useState('');
-	const [loginEmail, setLoginEmail] = useState('');
-	const [loginPassword, setLoginPassword] = useState('');
+	const { user, setUser } = useContext(AppContext);
 	const [userInfo, setUserInfo] = useState({
 		username: '',
 		first_name: '',
@@ -33,37 +29,11 @@ function AuthContainer() {
 	function renderAuthMethod(authMethod) {
 		switch (authMethod) {
 			case 'login':
-				return (
-					<Login
-						setUser={setUser}
-						loginEmail={loginEmail}
-						loginPassword={loginPassword}
-						setLoginEmail={setLoginEmail}
-						setLoginPassword={setLoginPassword}
-					/>
-				);
+				return <Login />;
 			case 'register':
-				return (
-					<Register
-						setUser={setUser}
-						registerEmail={registerEmail}
-						registerPassword={registerPassword}
-						setRegisterEmail={setRegisterEmail}
-						setRegisterPassword={setRegisterPassword}
-						userInfo={userInfo}
-						setUserInfo={setUserInfo}
-					/>
-				);
+				return <Register userInfo={userInfo} setUserInfo={setUserInfo} />;
 			default:
-				return (
-					<Login
-						setUser={setUser}
-						loginEmail={loginEmail}
-						loginPassword={loginPassword}
-						setLoginEmail={setLoginEmail}
-						setLoginPassword={setLoginPassword}
-					/>
-				);
+				return <Login />;
 		}
 	}
 

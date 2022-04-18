@@ -1,14 +1,15 @@
 import React, { useContext } from 'react';
-import { UserContext } from '../Context/UserContext';
+import AppContext from '../Context/AppContext';
 
 function Register({ userInfo, setUserInfo }) {
-	const [user, setUser] = useContext(UserContext);
+	const {setUser} = useContext(AppContext);
 
 	function register(e) {
 		e.preventDefault();
 		console.log('Register > userInfo', userInfo);
 		fetch(`http://localhost:3000/register`, {
 			method: 'POST',
+			credentials: 'include',
 			headers: {
 				'Content-Type': 'application/json',
 			},
@@ -26,7 +27,6 @@ function Register({ userInfo, setUserInfo }) {
 		})
 			.then((response) => response.json())
 			.then((data) => {
-				console.log('AuthContainer > register > data', data);
 				setUser(data);
 			})
 			.catch((error) => {

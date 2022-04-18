@@ -1,8 +1,8 @@
 import React, { useContext, useState } from 'react';
-import { UserContext } from '../Context/UserContext';
+import AppContext from '../Context/AppContext';
 
-function Login({ sendUserToBackend }) {
-	const [user, setUser] = useContext(UserContext);
+function Login() {
+	const { setUser } = useContext(AppContext);
 	const [userLogin, setUserLogin] = useState({
 		username: '',
 		password: '',
@@ -10,20 +10,24 @@ function Login({ sendUserToBackend }) {
 
 	async function login(e) {
 		e.preventDefault();
-		const res = await fetch('http://localhost:3000/login', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify({
-				username: userLogin.username,
-				password: userLogin.password,
-			}),
-		});
-		if (res.status === 200) {
-			const user = await res.json();
-			setUser(user);
-			console.log('Login > user', user);
+		const res = await fetch(
+			'http://localhost:3000/login',
+
+			{
+				method: 'POST',
+				credentials: 'include',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({
+					username: userLogin.username,
+					password: userLogin.password,
+				}),
+			}
+		);
+		if (res.ok) {
+			const data = await res.json();
+			setUser(data);
 		} else {
 			setUserLogin({
 				username: '',
@@ -33,7 +37,7 @@ function Login({ sendUserToBackend }) {
 	}
 
 	return (
-		<div className='w-full max-w-xs' onSubmit={login}>
+		<div className='w-full max-w-xs'>
 			<h3>Login User:</h3>
 			<form
 				className='bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4'
