@@ -8,7 +8,8 @@ import Home from './Pages/Home/Home';
 import AppContext from './Context/AppContext';
 
 function App() {
-	const { user, setUser, setBugs} = useContext(AppContext);
+	const { user, setUser, setBugs, setBugsReversed, bugs } =
+		useContext(AppContext);
 
 	useEffect(() => {
 		// auto-login
@@ -25,18 +26,22 @@ function App() {
 		});
 	}, []);
 
-	useEffect(() => {
-		fetch(`http://localhost:3000/bugs`, {
-			method: 'GET',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-		}).then((r) => {
-			if (r.ok) {
-				r.json().then((bugs) => setBugs(bugs));
-			}
-		});
-	}, []);
+	// useEffect(() => {
+	// 	fetch(`http://localhost:3000/bugs`, {
+	// 		method: 'GET',
+	// 		headers: {
+	// 			'Content-Type': 'application/json',
+	// 		},
+	// 	}).then((r) => {
+	// 		if (r.ok) {
+	// 			// setBugs and setBugsReversed
+	// 			r.json().then((bugs) => {
+	// 				setBugs(bugs);
+	// 			});
+	// 		}
+	// 	});
+	// }, []);
+
 
 	return (
 		<div>

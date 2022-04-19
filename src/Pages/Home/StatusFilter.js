@@ -7,7 +7,7 @@ function StatusFilter() {
 	const notHighlighted =
 		'py-2 px-8 text-gray-600 hover:text-indigo-700 hover:bg-indigo-100 rounded-full';
 
-	const { setBugStatusSort, bugs } = useContext(AppContext);
+	const { setBugStatusSort, bugs, setSortBy, sortBy } = useContext(AppContext);
 	const [allStyle, setAllStyle] = useState(isHighlighted);
 	const [completedStyle, setCompletedStyle] = useState(notHighlighted);
 	const [inProgressStyle, setInProgressStyle] = useState(notHighlighted);
@@ -23,6 +23,7 @@ function StatusFilter() {
 				setOnHoldStyle(notHighlighted);
 				setNeedsApprovalStyle(notHighlighted);
 				setBugStatusSort('all');
+				setSortBy({...sortBy, sortFilter: 'all'});
 				break;
 			case 'completed':
 				setAllStyle(notHighlighted);
@@ -31,6 +32,7 @@ function StatusFilter() {
 				setOnHoldStyle(notHighlighted);
 				setNeedsApprovalStyle(notHighlighted);
 				setBugStatusSort('completed');
+				setSortBy({...sortBy, sortFilter: 'completed'});
 				break;
 			case 'inProgress':
 				setAllStyle(notHighlighted);
@@ -39,6 +41,7 @@ function StatusFilter() {
 				setOnHoldStyle(notHighlighted);
 				setNeedsApprovalStyle(notHighlighted);
 				setBugStatusSort('inProgress');
+				setSortBy({...sortBy, sortFilter: 'inProgress'});
 				break;
 			case 'onHold':
 				setAllStyle(notHighlighted);
@@ -47,6 +50,7 @@ function StatusFilter() {
 				setOnHoldStyle(isHighlighted);
 				setNeedsApprovalStyle(notHighlighted);
 				setBugStatusSort('onHold');
+				setSortBy({...sortBy, sortFilter: 'waiting'});
 				break;
 			case 'needsApproval':
 				setAllStyle(notHighlighted);
@@ -55,6 +59,7 @@ function StatusFilter() {
 				setOnHoldStyle(notHighlighted);
 				setNeedsApprovalStyle(isHighlighted);
 				setBugStatusSort('needsApproval');
+				setSortBy({...sortBy, sortFilter: 'needsApproval'});
 				break;
 			default:
 				setAllStyle(isHighlighted);
@@ -63,35 +68,10 @@ function StatusFilter() {
 				setOnHoldStyle(notHighlighted);
 				setNeedsApprovalStyle(notHighlighted);
 				setBugStatusSort('all');
+				setSortBy({...sortBy, sortFilter: 'all'});
 		}
 	}
 
-	const bugsClosed = bugs.filter(
-		(bug) =>
-			bug.status === 'Closed' ||
-			bug.status === 'Fixed' ||
-			bug.status === 'Duplicate Bug' ||
-			bug.status === 'Not Reproducible' ||
-			bug.status === 'Not a Bug' ||
-			bug.status === 'Ready For Next Release'
-	);
-
-	const bugsOpen = bugs.filter(
-		(bug) => bug.status === 'Open' || bug.status === 'In Progress'
-	);
-
-	const bugsNeedingApproval = bugs.filter(
-		(bug) =>
-			bug.status === 'Fix Not Confirmed' || bug.status === 'Ready For Retest'
-	);
-
-	const bugsWaiting = bugs.filter(
-		(bug) =>
-			bug.status === 'On Hold' ||
-			bug.status === 'Ready For Retest' ||
-			bug.status === 'Pushed Back' ||
-			bug.status === 'Missing Information'
-	);
 
 	return (
 		<div className='flex items-center'>

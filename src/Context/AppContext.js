@@ -3,11 +3,15 @@ import { createContext, useState, useEffect } from 'react';
 const AppContext = createContext();
 export function AppProvider({ children }) {
 	const [user, setUser] = useState({});
-	const [sortBy, setSortBy] = useState('newest');
+	const [sortBy, setSortBy] = useState({
+		sortDirection: 'Descending',
+		sortFilter: 'all',
+	});
+
 	const [bugs, setBugs] = useState([]);
 	const [bugStatusSort, setBugStatusSort] = useState('');
 	const [bugSortOrder, setBugSortOrder] = useState([]);
-
+	const [bugsReversed, setBugsReversed] = useState([]);
 	
 
 
@@ -17,6 +21,7 @@ export function AppProvider({ children }) {
 		setUser,
 		bugs,
 		setBugs,
+		bugsReversed,
 		sortBy,
 		setSortBy,
 		bugStatusSort,
