@@ -1,5 +1,7 @@
-import React, { useContext } from 'react';
+import React, { useContext, } from 'react';
 import AppContext from '../Context/AppContext';
+import { Link, BrowserRouter as Router, Route, Routes, useNavigate } from 'react-router-dom';
+
 
 function Header() {
 	const { user, setUser } = useContext(AppContext);
@@ -25,7 +27,7 @@ function Header() {
 		}
 	}
 
-	
+
 
 	return (
 		<header className='text-gray-600 body-font'>
@@ -33,24 +35,29 @@ function Header() {
 				<div className='flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0'>
 					<h1>Welcome:</h1>
 					<span className='text-base '>
-						{user.username ? ` \u00A0${user.username}` : 'Please Login or Register'}
+						{user.username
+							? ` \u00A0${user.username}`
+							: '\u00A0 Please Login or Register'}
 					</span>
 				</div>
 				{user.id ? (
-					<nav className='md:mr-auto md:ml-4 md:py-1 md:pl-4 md:border-l md:border-gray-400	flex flex-wrap items-center text-base justify-center'>
-						<p className='mr-5 hover:text-gray-900 hover:border-gray-600 hover:border-2 hover:rounded-md cursor-pointer'>
-							Home
-						</p>
-						<p className='mr-5 hover:text-gray-900 hover:border-gray-600 hover:border-2 hover:rounded-md cursor-pointer'>
-							Second Link
-						</p>
-						<p className='mr-5 hover:text-gray-900 hover:border-gray-600 hover:border-2 hover:rounded-md cursor-pointer'>
-							Third Link
-						</p>
-						<p className='mr-5 hover:text-gray-900 hover:border-gray-600 hover:border-2 hover:rounded-md cursor-pointer'>
-							Fourth Link
-						</p>
-					</nav>
+						<nav className='md:mr-auto md:ml-4 md:py-1 md:pl-4 md:border-l md:border-gray-400	flex flex-wrap items-center text-base justify-center'>
+							<Link
+								className='mr-5 hover:text-gray-900 hover:border-gray-600 hover:border-2 hover:rounded-md cursor-pointer'
+								to='/'
+							>
+								Home
+							</Link>
+							<p className='mr-5 hover:text-gray-900 hover:border-gray-600 hover:border-2 hover:rounded-md cursor-pointer'>
+								Second Link
+							</p>
+							<p className='mr-5 hover:text-gray-900 hover:border-gray-600 hover:border-2 hover:rounded-md cursor-pointer'>
+								Third Link
+							</p>
+							<p className='mr-5 hover:text-gray-900 hover:border-gray-600 hover:border-2 hover:rounded-md cursor-pointer'>
+								Fourth Link
+							</p>
+						</nav>
 				) : (
 					<nav className='md:mr-auto md:ml-4 md:py-1 md:pl-4 	flex flex-wrap items-center text-base justify-center'>
 						<p className='mr-5 hover:text-gray-900 hover:border-gray-600 hover:border-2 hover:rounded-md cursor-pointer'></p>

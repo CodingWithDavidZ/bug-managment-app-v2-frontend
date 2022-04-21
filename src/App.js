@@ -1,15 +1,15 @@
 import './App.css';
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import AuthContainer from './Auth/AuthContainer';
 import Header from './Pages/Header';
-
+import ViewBugContainer from './Pages/ViewBug/ViewBugContainer';
 import Home from './Pages/Home/Home';
 import AppContext from './Context/AppContext';
+import Loading from './Components/Loading';
 
 function App() {
-	const { user, setUser, setBugs, setBugsReversed, bugs } =
-		useContext(AppContext);
+	const { user, setUser, isLoading } = useContext(AppContext);
 
 	useEffect(() => {
 		// auto-login
@@ -26,33 +26,16 @@ function App() {
 		});
 	}, []);
 
-	// useEffect(() => {
-	// 	fetch(`http://localhost:3000/bugs`, {
-	// 		method: 'GET',
-	// 		headers: {
-	// 			'Content-Type': 'application/json',
-	// 		},
-	// 	}).then((r) => {
-	// 		if (r.ok) {
-	// 			// setBugs and setBugsReversed
-	// 			r.json().then((bugs) => {
-	// 				setBugs(bugs);
-	// 			});
-	// 		}
-	// 	});
-	// }, []);
-
-
 	return (
 		<div>
-			<Header />
 			<Router>
+			<Header />
 				<Routes>
-					<Route
-						exact
-						path='/'
-						element={user.id ? <Home /> : <AuthContainer />}
-					/>
+					<Route>
+						<Route exact path='/' element={<Home />} />
+
+						<Route exact path='viewBug' element={<ViewBugContainer />} />
+					</Route>
 				</Routes>
 			</Router>
 		</div>

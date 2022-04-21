@@ -29,11 +29,11 @@ function AuthContainer() {
 	function renderAuthMethod(authMethod) {
 		switch (authMethod) {
 			case 'login':
-				return <Login />;
+				return <Login className='content-center' />;
 			case 'register':
 				return <Register userInfo={userInfo} setUserInfo={setUserInfo} />;
 			default:
-				return <Login />;
+				return <Login className='content-center' />;
 		}
 	}
 

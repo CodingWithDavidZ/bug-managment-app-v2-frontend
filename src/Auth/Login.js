@@ -29,6 +29,7 @@ function Login() {
 			const data = await res.json();
 			setUser(data);
 		} else {
+			alert('Invalid username or password');
 			setUserLogin({
 				username: '',
 				password: '',
@@ -37,7 +38,7 @@ function Login() {
 	}
 
 	return (
-		<div className='w-full max-w-xs'>
+		<div className='w-full max-w-xs grid '>
 			<h3>Login User:</h3>
 			<form
 				className='bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4'

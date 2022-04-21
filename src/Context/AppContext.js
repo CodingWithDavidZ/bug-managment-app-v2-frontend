@@ -7,27 +7,39 @@ export function AppProvider({ children }) {
 		sortDirection: 'Descending',
 		sortFilter: 'all',
 	});
-
+	const [bug, setBug] = useState([]);
+	const [isLoading, setIsLoading] = useState(true);
+	const [selectedBug, setSelectedBug] = useState();
 	const [bugs, setBugs] = useState([]);
 	const [bugStatusSort, setBugStatusSort] = useState('');
 	const [bugSortOrder, setBugSortOrder] = useState([]);
-	const [bugsReversed, setBugsReversed] = useState([]);
-	
+	const [allUsers, setAllUsers] = useState([]);
 
+	let localBugId = localStorage.getItem('bugId');
 
+	useEffect(() => {
+		setSelectedBug(localStorage.getItem('bugId'));
+	}, [localBugId]);
 
 	const value = {
 		user,
 		setUser,
 		bugs,
 		setBugs,
-		bugsReversed,
 		sortBy,
 		setSortBy,
 		bugStatusSort,
 		setBugStatusSort,
 		bugSortOrder,
 		setBugSortOrder,
+		selectedBug,
+		setSelectedBug,
+		isLoading,
+		setIsLoading,
+		bug,
+		setBug,
+		allUsers,
+		setAllUsers,
 	};
 
 	return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

@@ -5,7 +5,7 @@ import SortBy from '../SortBy';
 
 function TableFramework() {
 	//responsible for holding state and rendering table
-	const { bugs, setBugs, sortBy } = useContext(AppContext);
+	const { bugs, setBugs, sortBy, setAllUsers } = useContext(AppContext);
 
 	
 	useEffect(() => {
@@ -26,12 +26,27 @@ function TableFramework() {
 		});
 	}, [sortBy]);
 
+	useEffect(() => {
+		fetch(`http://localhost:3000/users`, {
+			method: 'GET',
+			credentials: 'include',
+			headers: {
+				'Content-Type': 'application/json'},
+				}).then((r) => {
+					if (r.ok) {
+						r.json().then((users) => {
+					setAllUsers(users);
+				});
+			}
+		});
+	}, []);
+
 			
 
 
 	const renderBugs = () => {
 		return bugs.map((bug) => {
-			return <TableElement key={bug.id} bug={bug} />;
+			return <TableElement key={bug.id} bug={bug}/>;
 		});
 	};
 
