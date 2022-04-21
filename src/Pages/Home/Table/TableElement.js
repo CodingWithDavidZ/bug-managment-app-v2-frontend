@@ -8,8 +8,8 @@ import { AiOutlineComment } from 'react-icons/ai';
 import DateFormat from '../../../Components/DateFormat';
 
 
-function TableElement() {
-	const { setIsLoading, setSelectedBug, setBug, bug } = useContext(AppContext);
+function TableElement({bug}) {
+	const { setIsLoading, setSelectedBug, setBug } = useContext(AppContext);
 	const navigate = useNavigate();
 	
 
