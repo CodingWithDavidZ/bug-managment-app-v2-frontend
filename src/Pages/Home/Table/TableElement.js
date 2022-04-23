@@ -37,7 +37,6 @@ function TableElement({bug}) {
 		navigate(`viewBug`);
 		}, 250);
 	}
-	
 
 	return (
 		<>
@@ -47,7 +46,8 @@ function TableElement({bug}) {
 				id={bug.id}
 				key={key + bug.id + 'tr'}
 			>
-				<td id={bug.id} key={key + bug.id + 'td 1'}>
+				{/* //idea: to add a select check box */}
+				{/* <td id={bug.id} key={key + bug.id + 'td 1'}>
 					<div className='ml-5' key={key + bug.id + 'div 1'} id={bug.id}>
 						<div
 							className='bg-gray-200 rounded-sm w-5 h-5 flex flex-shrink-0 justify-center items-center relative'
@@ -68,7 +68,7 @@ function TableElement({bug}) {
 							></div>
 						</div>
 					</div>
-				</td>
+				</td> */}
 				<td className='' id={bug.id} key={key + bug.id + 'td 2'}>
 					<div
 						className='flex items-center pl-5'

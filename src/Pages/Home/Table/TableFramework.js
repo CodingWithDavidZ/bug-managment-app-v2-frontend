@@ -55,6 +55,21 @@ function TableFramework() {
 	return (
 		<div className='mt-7 overflow-x-auto' key={useId()}>
 			<table className='w-full whitespace-nowrap' key={useId()}>
+				<thead>
+					<tr className='h-14 bg-indigo-100 text-indigo-500 border-gray-800 rounded'>
+						{/* //idea: add a check box */}
+						{/* <th>Select</th> */}
+						<th>Bug Title</th>
+						<th>Priority</th>
+						<th>Created</th>
+						<th>Messages</th>
+						<th>Updated</th>
+						<th>Due</th>
+						<th>View</th>
+						<th>Status</th>
+					</tr>
+				</thead>
+
 				<tbody key={useId()}>
 					{renderBugs()}
 					<tr className='h-3' key={useId()}></tr>

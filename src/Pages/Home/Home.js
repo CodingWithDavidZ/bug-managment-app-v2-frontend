@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import AppContext from '../../Context/AppContext';
 
 import SortBy from './SortBy';
-import AddBugButton from './AddBugButton';
+import AddBugPopModal from './AddBugPopModal';
 import StatusFilter from './StatusFilter';
 
 import TableFramework from './Table/TableFramework';
@@ -29,7 +29,7 @@ function Home() {
 			<div className='bg-white py-4 md:py-7 px-4 md:px-8 xl:px-10'>
 				<div className='sm:flex items-center justify-between'>
 					<StatusFilter />
-					<AddBugButton />
+					<AddBugPopModal />
 				</div>
 			</div>
 			<TableFramework />
