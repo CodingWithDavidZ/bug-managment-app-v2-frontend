@@ -1,18 +1,19 @@
 // import './App.css';
-import React, { useEffect, useContext, useState } from 'react';
+import React, { useEffect, useContext, useState, useMemo } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Header from './Pages/Header';
-import ViewBugContainer from './Pages/ViewBug/ViewBugContainer';
+import ViewBug from './Pages/ViewBug/ViewBug';
 import Home from './Pages/Home/Home';
 import AppContext from './Context/AppContext';
-import Breadcrumbs from "./Components/Breadcrumbs";
+import AuthContainer from './Auth/AuthContainer';
+import Breadcrumbs from './Components/Breadcrumbs';
 import routes from './Utilities/routes';
-
 
 function App() {
 	const { user, setUser, isLoading } = useContext(AppContext);
+	const [allUsers, setAllUsers] = useState([]);
 
-	useEffect(() => {
+	useMemo(() => {
 		// auto-login
 		fetch(`http://localhost:3000/me`, {
 			method: 'GET',
@@ -25,16 +26,41 @@ function App() {
 				r.json().then((user) => setUser(user));
 			}
 		});
-	}, [setUser]);
+	}, []);
+
+	useMemo(() => {
+		const helper = allUsers
+		fetch(`http://localhost:3000/users`, {
+			method: 'GET',
+			credentials: 'include',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		}).then((r) => {
+			if (r.ok) {
+				r.json().then((users) => {
+					setAllUsers(users);
+				});
+			}
+		});
+	}, []);
 
 	return (
 		<div>
 			<Router>
 				<Header />
 				<Routes>
-					<Route exact path='/' element={<Home />} />
+					<Route
+						exact
+						path='/'
+						element={user.id ? <Home /> : <AuthContainer />}
+					/>
 
-					<Route exact path='viewBug' element={<ViewBugContainer />} />
+					<Route
+						exact
+						path='viewBug'
+						element={<ViewBug allUsers={allUsers} setAllUsers={setAllUsers} />}
+					/>
 				</Routes>
 			</Router>
 		</div>

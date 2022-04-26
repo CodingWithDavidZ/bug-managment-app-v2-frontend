@@ -1,46 +1,87 @@
 import React from 'react';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState, useCallback } from 'react';
 import AppContext from '../../Context/AppContext';
 import DateFormat from '../../Components/DateFormat';
 import Comments from './Comments';
 
-function ViewBug() {
-	const { bug, allUsers, setBug } = useContext(AppContext);
-	const[value, setValue] = useState('');
+function ViewBug({ allUsers, setAllUsers }) {
+	const { bug, setBug } = useContext(AppContext);
+	const [value, setValue] = useState('');
 
+	console.log('bug', bug);
+	// useEffect(() => {
+	// 	console.log('ViewBug.js: useEffect: allUsers ', allUsers);
+	// 	if (allUsers.length <= 0 || allUsers.length === undefined) {
+	// 		fetch(`http://localhost:3000/users`, {
+	// 			method: 'GET',
+	// 			credentials: 'include',
+	// 			headers: {
+	// 				'Content-Type': 'application/json',
+	// 			},
+	// 		}).then((r) => {
+	// 			if (r.ok) {
+	// 				r.json().then((users) => {
+	// 					setAllUsers(users);
+	// 				});
+	// 				console.log('ViewBug.js: useEffect: allUsers 2', allUsers.length);
+	// 			}
+	// 		});
+	// 	}
+	// }, []);
 
-    console.log('allUsers', allUsers);
-
-    function findUser(id) {
-        const user = allUsers.find((user) => user.id === id);
-        return user.username;
-    }
+	const findUser = useCallback(
+		(id) => {
+			console.log('ViewBug.js: findUser: allUsers ', allUsers, 'id ', id);
+			// allUsers.find((user) =>  user.id === id  )
+			return allUsers.find((user) => user.id === id).username;
+		},
+		[allUsers]
+	);
 
 	const bugId = bug.id;
 	const issueTitle = bug.issue_title;
 	const issueDescription = bug.issue_description;
-	const identifiedBy = findUser(bug.identified_by);
-	const identifiedDate = (bug.identified_date !== null) ? <DateFormat time={bug.identified_date} /> : null;
+	const identifiedBy =
+		bug.identified_by !== null
+			? findUser(bug.identified_by)
+			: findUser(bug.created_by);
+	const identifiedDate =
+		bug.identified_date !== null ? (
+			<DateFormat time={bug.identified_date} />
+		) : null;
 	const projectId = bug.project_id;
-	const assignedTo = (bug.assigned_to !== null) ? findUser(bug.assigned_to) : 'Unassigned';
+	const assignedTo =
+		bug.assigned_to !== null ? findUser(bug.assigned_to) : 'Unassigned';
 	const status = bug.status;
-	const statusModifiedDate = (bug.status_modified_date !== null) ? <DateFormat time={bug.status_modified_date} />: null;
+	const statusModifiedDate =
+		bug.status_modified_date !== null ? (
+			<DateFormat time={bug.status_modified_date} />
+		) : null;
 	const priority = bug.priority;
-	const targetResolutionDate = (bug.target_resolution_date !== null) ? <DateFormat time={bug.target_resolution_date} /> : 'No Target Resolution Date';
+	const targetResolutionDate =
+		bug.target_resolution_date !== null ? (
+			<DateFormat time={bug.target_resolution_date} />
+		) : (
+			'No Target Resolution Date'
+		);
 	const progress = `${bug.progress}0%`;
-	const actualResolutionDate = (bug.actual_resolution_date !== null) ? <DateFormat time={bug.actual_resolution_date} /> : null;
+	const actualResolutionDate =
+		bug.actual_resolution_date !== null ? (
+			<DateFormat time={bug.actual_resolution_date} />
+		) : null;
 	const resolutionSummary = bug.resolution_summary;
-	const modifiedBy = (bug.modified_by !== null) ? findUser(bug.modified_by) : null;
-	const approvedBy = bug.approved_by
+	const modifiedBy =
+		bug.modified_by !== null ? findUser(bug.modified_by) : null;
+	const approvedBy = bug.approved_by;
 	const imageUrl = bug.image_url;
 	const approved = bug.approved;
-	const createdBy = (bug.created_by) ? findUser(bug.created_by) : 'Not Created';
+	const createdBy = bug.created_by ? findUser(bug.created_by) : 'Not Created';
 	const createdAt = <DateFormat time={bug.created_at} />;
 	const updatedAt = <DateFormat time={bug.updated_at} />;
 
 	const handleChange = (e) => {
 		setValue(e.target.value);
-	}
+	};
 
 	async function addComment(e) {
 		e.preventDefault();
@@ -62,70 +103,138 @@ function ViewBug() {
 			.catch((err) => console.log(err));
 	}
 
-
-
-
-
 	return (
-		<div>
+		<div className='px-3'>
 			<div>
-				<div>Bug Id: {bugId}</div>
-				<div>Issue Title: {issueTitle}</div>
-				<div>Issue Description: {issueDescription}</div>
-				<div>
-					{identifiedBy !== createdBy ? `Identified By: ${identifiedBy}` : null}
+				<div className=''>
+					<span className=''>
+						<strong>Bug Id:</strong> {bugId},
+					</span>
+					<span className='px-1'>
+						{identifiedBy !== createdBy ? (
+							<span>
+								<span className='font-bold'> Identified By:</span>
+								<span className='px-1'> {identifiedBy},</span>
+							</span>
+						) : null}
+					</span>
+					<span className='px-1'>
+						<strong>Issue Title: </strong> {issueTitle},
+					</span>
 				</div>
 				<div>
-					{identifiedDate !== null
-						? `Identified Date: ${identifiedDate}`
-						: null}
-				</div>
-				<div>{projectId !== null ? `Project Id: ${projectId}` : null}</div>
-				<div>Assigned To: {assignedTo}</div>
-				<div>Status: {status}</div>
-				<div>
-					{statusModifiedDate !== null
-						? `Status Modified Date: ${statusModifiedDate}`
-						: null}
-				</div>
-				<div>Priority: {priority}</div>
-				<div>Target Resolution Date: {targetResolutionDate}</div>
-				<div>Progress: {progress}</div>
-				<div>
-					{actualResolutionDate !== null
-						? `Actual Resolution Date: {actualResolutionDate}`
-						: null}
+					<strong>Issue Description:</strong> {issueDescription}
 				</div>
 				<div>
-					{actualResolutionDate !== null
-						? `Resolution summary: ${resolutionSummary}`
-						: null}
+					{identifiedDate !== null ? (
+						<div>
+							<span className='font-bold'>Identified Date: </span>
+							<span>{identifiedDate}</span>
+						</div>
+					) : null}
 				</div>
 				<div>
-					{modifiedBy !== null ? `Last Modified by: ${modifiedBy}` : null}
+					{projectId !== null ? (
+						<div>
+							<span className='font-bold'>Project Id: </span>
+							<span>{projectId}</span>
+						</div>
+					) : null}
 				</div>
-				<div>{approvedBy !== null ? `Approved By: ${approvedBy}` : null}</div>
-				<div>{imageUrl !== null ? `Image url:${imageUrl}` : null}</div>
-				<div>{approved !== null ? `Approved: ${approved}` : null}</div>
-				<div>Created by: {createdBy}</div>
-				<div>Created at: {createdAt}</div>
-				<div>Updated at: {updatedAt}</div>
+				<div>
+					<strong>Assigned To:</strong> {assignedTo}
+				</div>
+				<div>
+					<span>
+						<strong>Status:</strong> {status},
+					</span>
+					<span className='px-1'>
+						<strong>Priority:</strong> {priority}
+					</span>
+					<div className='font-bold'>Progress:</div>
+					<div className='bg-gray-300 w-1/3  h-3'>
+						<div className='bg-blue-500 w-11/12 h-full'></div>
+					</div>
+				</div>
+				<div className=''>
+					{statusModifiedDate !== null ? (
+						<div>
+							<span className='font-bold'> Status Modified Date: </span>
+							<span>{statusModifiedDate}</span>
+						</div>
+					) : null}
+				</div>
+				<div>
+					<strong>Target Resolution Date:</strong> {targetResolutionDate}
+				</div>
+				<div>
+					{actualResolutionDate !== null ? (
+						<div>
+							<span className='font-bold'> Actual Resolution Date: </span>
+							<span>{actualResolutionDate}</span>
+						</div>
+					) : null}
+				</div>
+				<div>
+					{actualResolutionDate !== null ? (
+						<div>
+							<span className='font-bold'> Resolution Summary: </span>
+							<span>{resolutionSummary}</span>
+						</div>
+					) : null}
+				</div>
+				<div>
+					{modifiedBy !== null ? (
+						<div>
+							<span className='font-bold'> Modified By: </span>
+							<span>{modifiedBy}</span>
+						</div>
+					) : null}
+				</div>
+				<div>
+					{approvedBy !== null ? (
+						<div>
+							<span className='font-bold'> Approved By: </span>
+							<span>{approvedBy}</span>
+						</div>
+					) : null}
+				</div>
+				<div>
+					{imageUrl !== null ? (
+						<div>
+							<span className='font-bold'> Image Url: </span>
+							<span>{imageUrl}</span>
+						</div>
+					) : null}
+				</div>
+				<div>
+					{approved === (true || false) ? (
+						<div>
+							<span className='font-bold'> Approved: </span>
+							<span>{approved}</span>
+						</div>
+					) : null}
+				</div>
+				<div>
+					<span className=''>
+						<strong>Created by:</strong> {createdBy}
+					</span>
+					<span className='px-1'>
+						<strong>Created at:</strong> {createdAt}
+					</span>
+					<span className='px-1'>
+						<strong>Updated at:</strong> {updatedAt}
+					</span>
+				</div>
 				<div>_________________________________________</div>
 
-				<Comments />
-				<form onSubmit={addComment} id={bug.id} value={value}>
-					<input
-						type='text'
-						name='comment'
-						placeholder='Add Comment'
-						id={bug.id}
-						value={value}
-						onChange={handleChange}
-					/>
-					<button type='submit' id={bug.id}>
-						Submit
-					</button>
-				</form>
+				<Comments
+					className=''
+					findUser={findUser}
+					addComment={addComment}
+					value={value}
+					handleChange={handleChange}
+				/>
 				<br />
 			</div>
 		</div>

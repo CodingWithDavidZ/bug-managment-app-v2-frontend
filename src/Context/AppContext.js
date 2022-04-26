@@ -13,7 +13,7 @@ export function AppProvider({ children }) {
 	const [bugs, setBugs] = useState([]);
 	const [bugStatusSort, setBugStatusSort] = useState('');
 	const [bugSortOrder, setBugSortOrder] = useState([]);
-	const [allUsers, setAllUsers] = useState([]);
+	
 
 	let localBugId = localStorage.getItem('bugId');
 
@@ -38,8 +38,6 @@ export function AppProvider({ children }) {
 		setIsLoading,
 		bug,
 		setBug,
-		allUsers,
-		setAllUsers,
 	};
 
 	return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

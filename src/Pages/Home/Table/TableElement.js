@@ -1,4 +1,4 @@
-import React, { useId, useContext, useEffect} from 'react';
+import React, { useId, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AppContext from '../../../Context/AppContext';
 import { BiLink } from 'react-icons/bi';
@@ -7,36 +7,29 @@ import { MdOutlineUpdate } from 'react-icons/md';
 import { AiOutlineComment } from 'react-icons/ai';
 import DateFormat from '../../../Components/DateFormat';
 
-
-function TableElement({bug}) {
+function TableElement({ bug }) {
 	const { setIsLoading, setSelectedBug, setBug } = useContext(AppContext);
 	const navigate = useNavigate();
-	
 
 	let key = useId();
 
-	
-	function handleViewClick(e) {
+	const handleViewClick = async (e) => {
 		e.preventDefault();
-		async function fetchSelectedBug() {
-			const response = await fetch(
-				`http://localhost:3000/bugs/${e.target.id}`,
-				{
-					method: 'GET',
-					credentials: 'include',
-					headers: {
-						'Content-Type': 'application/json',
-					},
-				}
-			);
-			const data = await response.json();
-			setBug(data);
-		}
-		fetchSelectedBug();
+		const response = await fetch(`http://localhost:3000/bugs/${e.target.id}`, {
+			method: 'GET',
+			credentials: 'include',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		});
+		const data = await response.json();
+		setBug(data);
 		setTimeout(() => {
-		navigate(`viewBug`);
-		}, 250);
-	}
+			navigate(`viewBug`);
+		}, 500);
+	};
+
+	
 
 	return (
 		<>
@@ -82,8 +75,10 @@ function TableElement({bug}) {
 						>
 							{bug.issue_title}
 						</p>
-						{/* TODO: add a turnary to show the link icon if an image url exists */}
-						<BiLink key={key + bug.id + 'emoji'} />
+
+						{bug.image_url !== ('' || null) ? (
+							<BiLink key={key + bug.id + 'emoji'} />
+						) : null}
 					</div>
 				</td>
 				<td className='pl-10' id={bug.id} key={key + bug.id + 'td 3'}>
@@ -164,11 +159,14 @@ function TableElement({bug}) {
 				</td>
 				<td className='pl-5 ' key={key + bug.id + 'td-7'} id={bug.id}>
 					<div
-						className='py-3 px-3 text-sm focus:outline-none leading-none text-red-700 bg-red-100 rounded'
+						className='py-3 px-3 text-sm focus:outline-none leading-none rounded flex justify-center'
+						// className='py-3 px-3 text-sm focus:outline-none leading-none text-red-700 bg-red-100 rounded flex justify-center'
 						key={key + bug.id + 'target resolution date'}
 						id={bug.id}
 					>
-						{bug.target_resolution_date}
+						{bug.target_resolution_date !== null
+							? bug.target_resolution_date
+							: 'N/A'}
 					</div>
 				</td>
 				<td className='pl-4' key={key + bug.id + 'td-8'} id={bug.id}>
@@ -183,7 +181,7 @@ function TableElement({bug}) {
 				</td>
 				<td id={bug.id}>
 					<div
-						className='relative px-5 pt-2'
+						className='relative px-5 pt-2 flex items-center justify-center w-full'
 						key={key + bug.id + 'td-9'}
 						id={bug.id}
 					>

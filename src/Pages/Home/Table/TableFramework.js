@@ -5,7 +5,7 @@ import SortBy from '../SortBy';
 
 function TableFramework() {
 	//responsible for holding state and rendering table
-	const { bugs, setBugs, sortBy, setAllUsers } = useContext(AppContext);
+	const { bugs, setBugs, sortBy, setAllUsers , allUsers } = useContext(AppContext);
 
 	
 	useEffect(() => {
@@ -26,20 +26,27 @@ function TableFramework() {
 		});
 	}, [sortBy]);
 
-	useEffect(() => {
-		fetch(`http://localhost:3000/users`, {
-			method: 'GET',
-			credentials: 'include',
-			headers: {
-				'Content-Type': 'application/json'},
-				}).then((r) => {
-					if (r.ok) {
-						r.json().then((users) => {
-					setAllUsers(users);
-				});
-			}
-		});
-	}, []);
+	
+	// function getAllUsers() {
+	// 	if (allUsers === [] || allUsers === undefined) {
+	// 	fetch(`http://localhost:3000/users`, {
+	// 		method: 'GET',
+	// 		credentials: 'include',
+	// 		headers: {
+	// 			'Content-Type': 'application/json'},
+	// 			}).then((r) => {
+	// 				if (r.ok) {
+	// 					r.json().then((users) => {
+	// 				setAllUsers(users);
+	// 			});
+	// 		}
+	// 	});
+	// }
+	// }
+
+	// getAllUsers();
+
+
 
 			
 

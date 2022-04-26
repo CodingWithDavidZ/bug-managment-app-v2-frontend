@@ -1,9 +1,21 @@
-import React, {useRef, useState, useEffect} from 'react'
+import React, {useRef, useState, useContext} from 'react'
 import Dropdown from '../../Components/Dropdown';
+import AppContext from '../../Context/AppContext';
 
 
 function AddBugPopModal() {
 	const [isVisible, setIsVisible] = useState(false)
+	const [bugPriority, setBugPriority] = useState(3)
+	const {user, setBugs, bugs} = useContext(AppContext)
+
+
+
+	const [submitInfo, setSubmitInfo] = useState({
+		issue_title: '',
+		issue_description: '',
+		priority: '',
+		image_url: '',
+	})
 
     const modalRef = useRef(null);
 
@@ -21,23 +33,66 @@ function AddBugPopModal() {
 
     let passedArray = [
 			// { option: 'noSelection', value: null, display: defaultLabel },
-			{ option: 'option1', value: 'value1', display: 'Turtle 1' },
-			{ option: 'option2', value: 'value2', display: 'Turtle 2' },
-			{ option: 'option3', value: 'value3', display: 'Turtle 3' },
-			{ option: 'option4', value: 'value4', display: 'Turtle 4' },
-			{ option: 'noSelection', value: 'value5', display: '' },
+			{ option: 'option1', value: 0, display: 'Critical', tooltip: 'Security Risk or Breaks Functionality' },
+			{ option: 'option2', value: 1, display: 'Urgent', tooltip: 'Obstructs Operations in a Serious Manner' },
+			{ option: 'option3', value: 2, display: 'Medium', tooltip: 'Issue Hinders Normal Usage but Applications Still Works' },
+			{ option: 'option4', value: 3, display: 'Low (Default)', tooltip: 'Minor loss of function or an annoying behavior.' },
+			{ option: 'option4', value: 4, display: 'Very Low', tooltip: 'Cosmetic Issues, Spelling Errors, Minor Graphical Issues' },
 		];
+
+		function submitNewBug(e) {
+			e.preventDefault();
+			console.log();
+			fetch(`http://localhost:3000/bugs/create`, {
+				method: 'POST',
+				credentials: 'include',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({
+					bug: {
+						issue_title: submitInfo.issue_title,
+						issue_description: submitInfo.issue_description,
+						priority: bugPriority,
+						image_url: submitInfo.image_url,
+						status: 'Open',
+					}
+				}),
+			})
+				.then((response) => response.json())
+				.then((data) => {
+					console.log('Submit New Bug > data', data);
+					setBugs(bugs => [...bugs, data]);
+					changeVisible();
+					setSubmitInfo({
+						issue_title: '',
+						issue_description: '',
+						priority: '',
+						image_url: '',
+					})
+				}
+			).catch((error) => {
+				alert(error);
+				changeVisible();
+			});
+			
+		}
 
   return (
 		<div>
-			<button
+			<div
 				className='focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600 mt-4 sm:mt-0 inline-flex items-start justify-start px-6 py-3 bg-indigo-700 hover:bg-indigo-600 focus:outline-none rounded'
 				onClick={changeVisible}
 			>
 				<p className='text-sm font-medium leading-none text-white'>Add Bug</p>
-			</button>
+			</div>
 			<dh-component>
-				<div className={visible()} id='modal' ref={modalRef}>
+				<form
+					className={visible()}
+					id='form'
+					ref={modalRef}
+					onSubmit={submitNewBug}
+				>
 					<div
 						role='alert'
 						className='container mx-auto w-11/12 md:w-2/3 max-w-lg'
@@ -45,20 +100,25 @@ function AddBugPopModal() {
 						<div className='relative py-8 px-5 md:px-10 bg-white shadow-md rounded border border-gray-400'>
 							<div className='w-full flex justify-start text-gray-600 mb-3'>
 								<svg
+									version='1.0'
 									xmlns='http://www.w3.org/2000/svg'
-									className='icon icon-tabler icon-tabler-wallet'
-									width='52'
-									height='52'
-									viewBox='0 0 24 24'
-									strokeWidth='1'
-									stroke='currentColor'
-									fill='none'
-									strokeLinecap='round'
-									strokeLinejoin='round'
+									width='52.000000pt'
+									height='52.000000pt'
+									viewBox='0 0 52.000000 52.000000'
+									preserveAspectRatio='xMidYMid meet'
 								>
-									<path stroke='none' d='M0 0h24v24H0z' />
-									<path d='M17 8v-3a1 1 0 0 0 -1 -1h-10a2 2 0 0 0 0 4h12a1 1 0 0 1 1 1v3m0 4v3a1 1 0 0 1 -1 1h-12a2 2 0 0 1 -2 -2v-12' />
-									<path d='M20 12v4h-4a2 2 0 0 1 0 -4h4' />
+									{' '}
+									<g
+										transform='translate(0.000000,52.000000) scale(0.050000,-0.050000)'
+										fill='#000000'
+										stroke='none'
+									>
+										{' '}
+										<path d='M394 947 c-7 -6 1 -38 17 -69 24 -47 25 -65 5 -98 -37 -57 -65 -39 -72 48 -7 78 -49 92 -60 19 -18 -124 19 -147 236 -147 217 0 254 23 236 147 -11 73 -53 59 -60 -19 -7 -87 -35 -105 -72 -48 -20 33 -19 51 5 98 28 55 24 82 -13 82 -10 0 -27 -27 -39 -60 -13 -37 -35 -60 -57 -60 -22 0 -44 23 -57 60 -20 58 -43 74 -69 47z' />{' '}
+										<path d='M189 839 c-42 -68 61 -239 144 -239 50 0 27 -39 -40 -67 -95 -40 -153 -122 -153 -217 0 -102 47 -93 56 10 5 52 24 87 69 125 78 66 102 29 27 -41 -62 -58 -79 -270 -22 -270 23 0 30 25 30 109 0 110 27 163 46 91 34 -130 139 -16 149 161 l8 139 -82 0 c-103 0 -181 68 -181 159 0 61 -26 81 -51 40z' />{' '}
+										<path d='M800 801 c0 -92 -77 -161 -179 -161 l-81 0 0 -115 c1 -176 119 -320 154 -187 19 74 46 22 46 -89 0 -84 7 -109 30 -109 57 0 40 212 -22 270 -75 70 -51 107 27 41 45 -38 64 -73 69 -125 9 -103 56 -112 56 -10 0 95 -58 177 -153 217 -68 28 -90 67 -38 67 94 0 197 226 116 255 -17 5 -25 -13 -25 -54z' />{' '}
+										<path d='M500 303 c0 -9 -25 -28 -55 -42 l-55 -24 50 -27 c31 -17 50 -44 50 -73 0 -28 12 -47 30 -47 18 0 30 19 30 47 0 29 19 56 50 73 l50 27 -55 24 c-30 14 -55 33 -55 42 0 9 -9 17 -20 17 -11 0 -20 -8 -20 -17z' />{' '}
+									</g>{' '}
 								</svg>
 							</div>
 							<h1 className='text-gray-800 font-lg font-bold tracking-normal leading-tight mb-4'>
@@ -73,8 +133,15 @@ function AddBugPopModal() {
 							<input
 								id='name'
 								type='text'
+								value={submitInfo.issue_title}
 								className='mb-5 mt-2 text-gray-600 focus:outline-none focus:border focus:border-indigo-700 font-normal w-full h-10 flex items-center pl-3 text-sm border-gray-300 rounded border'
 								placeholder='Enter Title That Summarizes Bug'
+								onChange={(e) => {
+									setSubmitInfo({
+										...submitInfo,
+										issue_title: e.target.value,
+									});
+								}}
 							/>
 							<label
 								htmlFor='name'
@@ -85,84 +152,49 @@ function AddBugPopModal() {
 							<textarea
 								className='form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none'
 								id='exampleFormControlTextarea1'
+								value={submitInfo.issue_description}
 								rows='3'
 								placeholder='Detailed Explanation of Bug'
+								onChange={(e) => {
+									setSubmitInfo({
+										...submitInfo,
+										issue_description: e.target.value,
+									});
+								}}
 							/>
-							<label
-								htmlFor='email2'
-								className='text-gray-800 text-sm font-bold leading-tight tracking-normal'
-							>
-								Priority
-							</label>
-							<Dropdown />
+							<div className='flex items-center justify-start w-full py-1.5'>
+								<Dropdown
+									array={passedArray}
+									label={'Priority'}
+									setBugPriority={setBugPriority}
+									value={bugPriority}
+								/>
+							</div>
 							<label
 								htmlFor='expiry'
 								className='text-gray-800 text-sm font-bold leading-tight tracking-normal'
 							>
-								Expiry Date
+								Screen Capture of Bug if Applicable
 							</label>
-							<div className='relative mb-5 mt-2'>
-								<div className='absolute right-0 text-gray-600 flex items-center pr-3 h-full cursor-pointer'>
-									<svg
-										xmlns='http://www.w3.org/2000/svg'
-										className='icon icon-tabler icon-tabler-calendar-event'
-										width='20'
-										height='20'
-										viewBox='0 0 24 24'
-										strokeWidth='1.5'
-										stroke='currentColor'
-										fill='none'
-										strokeLinecap='round'
-										strokeLinejoin='round'
-									>
-										<path stroke='none' d='M0 0h24v24H0z' />
-										<rect x='4' y='5' width='16' height='16' rx='2' />
-										<line x1='16' y1='3' x2='16' y2='7' />
-										<line x1='8' y1='3' x2='8' y2='7' />
-										<line x1='4' y1='11' x2='20' y2='11' />
-										<rect x='8' y='15' width='2' height='2' />
-									</svg>
-								</div>
-								<input
-									id='expiry'
-									className='text-gray-600 focus:outline-none focus:border focus:border-indigo-700 font-normal w-full h-10 flex items-center pl-3 text-sm border-gray-300 rounded border'
-									placeholder='MM/YY'
-								/>
-							</div>
-							<label
-								htmlFor='cvc'
-								className='text-gray-800 text-sm font-bold leading-tight tracking-normal'
-							>
-								CVC
-							</label>
-							<div className='relative mb-5 mt-2'>
-								<div className='absolute right-0 text-gray-600 flex items-center pr-3 h-full cursor-pointer'>
-									<svg
-										xmlns='http://www.w3.org/2000/svg'
-										className='icon icon-tabler icon-tabler-info-circle'
-										width='20'
-										height='20'
-										viewBox='0 0 24 24'
-										strokeWidth='1.5'
-										stroke='currentColor'
-										fill='none'
-										strokeLinecap='round'
-										strokeLinejoin='round'
-									>
-										<path stroke='none' d='M0 0h24v24H0z'></path>
-										<circle cx='12' cy='12' r='9'></circle>
-										<line x1='12' y1='8' x2='12.01' y2='8'></line>
-										<polyline points='11 12 12 12 12 16 13 16'></polyline>
-									</svg>
-								</div>
-								<input
-									id='cvc'
-									className='mb-8 text-gray-600 focus:outline-none focus:border focus:border-indigo-700 font-normal w-full h-10 flex items-center pl-3 text-sm border-gray-300 rounded border'
-									placeholder='MM/YY'
-								/>
-							</div>
+							<input
+								id='name'
+								type='text'
+								className='mb-5 mt-2 text-gray-600 focus:outline-none focus:border focus:border-indigo-700 font-normal w-full h-10 flex items-center pl-3 text-sm border-gray-300 rounded border'
+								placeholder='URL of Screen Capture'
+								value={submitInfo.image_url}
+								onChange={(e) => {
+									setSubmitInfo({
+										...submitInfo,
+										image_url: e.target.value,
+									});
+								}}
+							/>
+
 							<div className='flex items-center justify-start w-full'>
-								<button className='focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 transition duration-150 ease-in-out hover:bg-indigo-600 bg-indigo-700 rounded text-white px-8 py-2 text-sm'>
+								<button
+									className='focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 transition duration-150 ease-in-out hover:bg-indigo-600 bg-indigo-700 rounded text-white px-8 py-2 text-sm'
+									type='submit'
+								>
 									Submit
 								</button>
 								<button
@@ -196,7 +228,7 @@ function AddBugPopModal() {
 							</button>
 						</div>
 					</div>
-				</div>
+				</form>
 				<div className='w-full flex justify-center py-12' id='button'>
 					{/* <button
 						className='focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 mx-auto transition duration-150 ease-in-out hover:bg-indigo-600 bg-indigo-700 rounded text-white px-4 sm:px-8 py-2 text-xs sm:text-sm'
