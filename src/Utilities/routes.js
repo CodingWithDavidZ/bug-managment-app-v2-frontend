@@ -1,8 +1,8 @@
 import Home from '../Pages/Home/Home';
-import ViewBugContainer from '../Pages/ViewBug/ViewBugContainer';
+import ViewBug from '../Pages/ViewBug/ViewBug';
 
 export default [
 	{ path: '/', name: 'Home', Component: Home },
-	{ path: '/viewBug', name: 'ViewBug', Component: ViewBugContainer },
+	{ path: '/viewBug', name: 'ViewBug', Component: ViewBug },
 ];
 

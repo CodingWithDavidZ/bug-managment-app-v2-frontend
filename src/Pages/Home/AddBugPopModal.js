@@ -62,7 +62,7 @@ function AddBugPopModal() {
 				.then((response) => response.json())
 				.then((data) => {
 					console.log('Submit New Bug > data', data);
-					setBugs(bugs => [...bugs, data]);
+					setBugs((prev) => [...prev, data]);
 					changeVisible();
 					setSubmitInfo({
 						issue_title: '',

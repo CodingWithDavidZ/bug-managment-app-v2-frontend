@@ -7,19 +7,56 @@ export function AppProvider({ children }) {
 		sortDirection: 'Descending',
 		sortFilter: 'all',
 	});
-	const [bug, setBug] = useState([]);
+	const [bug, setBug] = useState(
+		JSON.parse(window.localStorage.getItem('bug'))
+	);
 	const [isLoading, setIsLoading] = useState(true);
 	const [selectedBug, setSelectedBug] = useState();
 	const [bugs, setBugs] = useState([]);
 	const [bugStatusSort, setBugStatusSort] = useState('');
 	const [bugSortOrder, setBugSortOrder] = useState([]);
-	
-
-	let localBugId = localStorage.getItem('bugId');
+	const [allUsers, setAllUsers] = useState(
+		JSON.parse(window.localStorage.getItem('allUsers'))
+	);
 
 	useEffect(() => {
-		setSelectedBug(localStorage.getItem('bugId'));
-	}, [localBugId]);
+		console.log('fetched allUsers');
+		fetch(`http://localhost:3000/users`, {
+			method: 'GET',
+			credentials: 'include',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		}).then((r) => {
+			if (r.ok) {
+				r.json().then((users) => {
+					setAllUsers(users);
+				});
+			}
+		});
+	}, [setAllUsers]);
+	
+	useEffect(() => {
+		console.log('Saved allUsers to localStorage');
+		localStorage.setItem('allUsers', JSON.stringify(allUsers));
+	}, [allUsers]);	
+
+	useEffect(() => {
+		console.log('Pulled allUsers from localStorage');
+		setAllUsers(JSON.parse(window.localStorage.getItem('allUsers')));
+	}, []);
+
+	useEffect(() => {
+		localStorage.setItem("bug", JSON.stringify(bug));
+		console.log('Saved bug to localStorage');
+	}, [bug]);
+
+	useEffect(() => {
+		setBug(JSON.parse(window.localStorage.getItem('bug')));
+		console.log('Pulled bug from localStorage');
+	}, []);
+
+	
 
 	const value = {
 		user,
@@ -38,6 +75,8 @@ export function AppProvider({ children }) {
 		setIsLoading,
 		bug,
 		setBug,
+		allUsers,
+		setAllUsers,
 	};
 
 	return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

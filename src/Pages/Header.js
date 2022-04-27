@@ -5,6 +5,7 @@ import { Link, BrowserRouter as Router, Route, Routes, useNavigate } from 'react
 
 function Header() {
 	const { user, setUser } = useContext(AppContext);
+	const navigate = useNavigate();
 
 	// const logout = async () => {
 	// 	logoutOfServer();
@@ -22,6 +23,7 @@ function Header() {
 		if (res.ok) {
 			alert('Logged out');
 			setUser({});
+			navigate('/');
 		} else {
 			alert('logout failed');
 		}

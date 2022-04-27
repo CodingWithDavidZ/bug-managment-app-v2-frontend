@@ -8,7 +8,7 @@ import { AiOutlineComment } from 'react-icons/ai';
 import DateFormat from '../../../Components/DateFormat';
 
 function TableElement({ bug }) {
-	const { setIsLoading, setSelectedBug, setBug } = useContext(AppContext);
+	const { setBug } = useContext(AppContext);
 	const navigate = useNavigate();
 
 	let key = useId();

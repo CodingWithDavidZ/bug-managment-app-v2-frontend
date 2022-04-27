@@ -5,7 +5,7 @@ import SortBy from '../SortBy';
 
 function TableFramework() {
 	//responsible for holding state and rendering table
-	const { bugs, setBugs, sortBy, setAllUsers , allUsers } = useContext(AppContext);
+	const { bugs, setBugs, sortBy } = useContext(AppContext);
 
 	
 	useEffect(() => {

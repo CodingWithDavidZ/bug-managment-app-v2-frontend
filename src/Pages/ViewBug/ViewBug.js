@@ -4,36 +4,20 @@ import AppContext from '../../Context/AppContext';
 import DateFormat from '../../Components/DateFormat';
 import Comments from './Comments';
 
-function ViewBug({ allUsers, setAllUsers }) {
-	const { bug, setBug } = useContext(AppContext);
-	const [value, setValue] = useState('');
+function ViewBug() {
+	const { bug, allUsers } = useContext(AppContext);
 
 	console.log('bug', bug);
-	// useEffect(() => {
-	// 	console.log('ViewBug.js: useEffect: allUsers ', allUsers);
-	// 	if (allUsers.length <= 0 || allUsers.length === undefined) {
-	// 		fetch(`http://localhost:3000/users`, {
-	// 			method: 'GET',
-	// 			credentials: 'include',
-	// 			headers: {
-	// 				'Content-Type': 'application/json',
-	// 			},
-	// 		}).then((r) => {
-	// 			if (r.ok) {
-	// 				r.json().then((users) => {
-	// 					setAllUsers(users);
-	// 				});
-	// 				console.log('ViewBug.js: useEffect: allUsers 2', allUsers.length);
-	// 			}
-	// 		});
-	// 	}
-	// }, []);
 
 	const findUser = useCallback(
 		(id) => {
 			console.log('ViewBug.js: findUser: allUsers ', allUsers, 'id ', id);
 			// allUsers.find((user) =>  user.id === id  )
-			return allUsers.find((user) => user.id === id).username;
+			
+				const allUsersUsernames = allUsers.filter((user) => user.id === id)[0]
+					.username;
+				return allUsersUsernames;
+			
 		},
 		[allUsers]
 	);
@@ -45,10 +29,9 @@ function ViewBug({ allUsers, setAllUsers }) {
 		bug.identified_by !== null
 			? findUser(bug.identified_by)
 			: findUser(bug.created_by);
-	const identifiedDate =
-		bug.identified_date !== null ? (
-			<DateFormat time={bug.identified_date} />
-		) : null;
+	const identifiedDate = bug.identified_date !== null && (
+		<DateFormat time={bug.identified_date} />
+	);
 	const projectId = bug.project_id;
 	const assignedTo =
 		bug.assigned_to !== null ? findUser(bug.assigned_to) : 'Unassigned';
@@ -64,14 +47,13 @@ function ViewBug({ allUsers, setAllUsers }) {
 		) : (
 			'No Target Resolution Date'
 		);
-	const progress = `${bug.progress}0%`;
+	const progress = `${bug.progress}0`;
 	const actualResolutionDate =
 		bug.actual_resolution_date !== null ? (
 			<DateFormat time={bug.actual_resolution_date} />
 		) : null;
 	const resolutionSummary = bug.resolution_summary;
-	const modifiedBy =
-		bug.modified_by !== null ? findUser(bug.modified_by) : null;
+	const modifiedBy = bug.modified_by !== null && findUser(bug.modified_by);
 	const approvedBy = bug.approved_by;
 	const imageUrl = bug.image_url;
 	const approved = bug.approved;
@@ -79,29 +61,87 @@ function ViewBug({ allUsers, setAllUsers }) {
 	const createdAt = <DateFormat time={bug.created_at} />;
 	const updatedAt = <DateFormat time={bug.updated_at} />;
 
-	const handleChange = (e) => {
-		setValue(e.target.value);
-	};
-
-	async function addComment(e) {
-		e.preventDefault();
-		fetch(`http://localhost:3000/bugs/${e.target.id}/comments`, {
-			method: 'PUT',
-			credentials: 'include',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify({
-				bug_id: e.target.id,
-				comment_text: e.target.attributes.value.value,
-			}),
-		})
-			.then((res) => res.json())
-			.then((data) => {
-				setBug(...bug.comments, data);
-			})
-			.catch((err) => console.log(err));
+	function renderProgressBar(progressBar) {
+		switch (progressBar) {
+			case '0':
+				return <div></div>;
+			case '10':
+				return (
+					<div className='bg-red-700 w-8 h-full' value={progressBar}></div>
+				);
+			case '20':
+				return (
+					<div className='bg-red-500 w-1/5 h-full' value={progressBar}></div>
+				);
+			case '30':
+				return (
+					<div className='bg-orange-700 w-1/3 h-full' value={progressBar}></div>
+				);
+			case '40':
+				return (
+					<div className='bg-orange-500 w-2/5 h-full' value={progressBar}></div>
+				);
+			case '50':
+				return (
+					<div className='bg-cyan-700 w-6/12 h-full' value={progressBar}></div>
+				);
+			case '60':
+				return (
+					<div className='bg-sky-700 w-3/5 h-full' value={progressBar}></div>
+				);
+			case '70':
+				return (
+					<div className='bg-blue-500 w-80 h-full' value={progressBar}></div>
+				);
+			case '80':
+				return (
+					<div className='bg-teal-500 w-4/5 h-full' value={progressBar}></div>
+				);
+			case '90':
+				return (
+					<div
+						className='bg-green-500 w-11/12 h-full'
+						value={progressBar}
+					></div>
+				);
+			case '100':
+				return (
+					<div
+						className='bg-green-700 h-full text-center text-white'
+						value={progressBar}
+					>
+						Closed
+					</div>
+				);
+			default:
+				return <div></div>;
+		}
 	}
+
+	// const handleChange = (e) => {
+	// 	e.preventDefault();
+	// 	setValue(e.target.value);
+	// };
+
+	// async function addComment(e) {
+	// 	e.preventDefault();
+	// 	fetch(`http://localhost:3000/bugs/${e.target.id}/comments`, {
+	// 		method: 'PUT',
+	// 		credentials: 'include',
+	// 		headers: {
+	// 			'Content-Type': 'application/json',
+	// 		},
+	// 		body: JSON.stringify({
+	// 			bug_id: e.target.id,
+	// 			comment_text: e.target.attributes.value.value,
+	// 		}),
+	// 	})
+	// 		.then((res) => res.json())
+	// 		.then((data) => {
+	// 			setBug((prev) => [...prev.comments, data]);
+	// 		})
+	// 		.catch((err) => console.log(err));
+	// }
 
 	return (
 		<div className='px-3'>
@@ -123,7 +163,7 @@ function ViewBug({ allUsers, setAllUsers }) {
 					</span>
 				</div>
 				<div>
-					<strong>Issue Description:</strong> {issueDescription}
+					<strong>Issue Description:</strong> <div>{issueDescription}</div>
 				</div>
 				<div>
 					{identifiedDate !== null ? (
@@ -152,8 +192,8 @@ function ViewBug({ allUsers, setAllUsers }) {
 						<strong>Priority:</strong> {priority}
 					</span>
 					<div className='font-bold'>Progress:</div>
-					<div className='bg-gray-300 w-1/3  h-3'>
-						<div className='bg-blue-500 w-11/12 h-full'></div>
+					<div className='bg-gray-300 w-1/3  h-5' value={progress}>
+						{renderProgressBar('100')}
 					</div>
 				</div>
 				<div className=''>
@@ -230,10 +270,10 @@ function ViewBug({ allUsers, setAllUsers }) {
 
 				<Comments
 					className=''
-					findUser={findUser}
-					addComment={addComment}
-					value={value}
-					handleChange={handleChange}
+					// findUser={findUser}
+					// addComment={addComment}
+					// value={value}
+					// handleChange={handleChange}
 				/>
 				<br />
 			</div>
