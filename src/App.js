@@ -66,8 +66,8 @@ function App() {
 
 	return (
 		<div>
-			<ErrorBoundary FallbackComponent={ErrorFallback} onError={errorHandler} onReset={resetState} >
 				<Router>
+			<ErrorBoundary FallbackComponent={ErrorFallback} onError={errorHandler} onReset={resetState} >
 					<Header />
 					<Routes>
 						<Route path='/'>
@@ -76,8 +76,8 @@ function App() {
 							<Route exact path='viewBug' element={<ViewBug />} />
 						</Route>
 					</Routes>
-				</Router>
 			</ErrorBoundary>
+				</Router>
 		</div>
 	);
 }

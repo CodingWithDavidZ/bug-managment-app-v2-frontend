@@ -14,8 +14,8 @@ function Comments() {
 	};
 
 	async function addComment(e) {
-		e.preventDefault();
-		fetch(`http://localhost:3000/bugs/${e.target.id}/comments`, {
+		e.preventDefault(); //! If I remove this, the page will refresh but I will not lose state but the fetch won't fire
+		await fetch(`http://localhost:3000/bugs/${e.target.id}/comments`, {
 			method: 'PUT',
 			credentials: 'include',
 			headers: {
