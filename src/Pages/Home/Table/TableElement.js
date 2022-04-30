@@ -6,28 +6,23 @@ import { BsTagsFill, BsCalendarDate } from 'react-icons/bs';
 import { MdOutlineUpdate } from 'react-icons/md';
 import { AiOutlineComment } from 'react-icons/ai';
 import DateFormat from '../../../Components/DateFormat';
+import * as api from '../../../Api/ApiCalls';
+import { useQuery } from 'react-query';
+import {getBug} from '../../../Api/ApiCalls';
 
 function TableElement({ bug }) {
-	const { setBug } = useContext(AppContext);
+	const { setBug, setTest, test } = useContext(AppContext);
 	const navigate = useNavigate();
 
 	let key = useId();
 
-	const handleViewClick = async (e) => {
+	function handleClick(e) {
 		e.preventDefault();
-		const response = await fetch(`http://localhost:3000/bugs/${e.target.id}`, {
-			method: 'GET',
-			credentials: 'include',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-		});
-		const data = await response.json();
-		setBug(data);
-		setTimeout(() => {
-			navigate(`viewBug`);
-		}, 500);
-	};
+		console.log('handleClick e: ', e);
+		setTest(e.target.id);
+		// getBug(e.target.id);
+		navigate('/viewBug');
+	}
 
 	
 
@@ -174,7 +169,7 @@ function TableElement({ bug }) {
 						className='focus:ring-2 focus:ring-offset-2 focus:ring-red-300 text-sm leading-none text-gray-600 py-3 px-5 bg-gray-100 rounded hover:bg-gray-200 focus:outline-none'
 						key={key + bug.id + 'view'}
 						id={bug.id}
-						onClick={handleViewClick}
+						onClick={handleClick}
 					>
 						View
 					</button>
