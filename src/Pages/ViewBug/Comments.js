@@ -16,7 +16,7 @@ function Comments() {
 	async function addComment(e) {
 		e.preventDefault(); //! If I remove this, the page will refresh but I will not lose state but the fetch won't fire
 		await fetch(`http://localhost:3000/bugs/${e.target.id}/comments`, {
-			method: 'PUT',
+			method: 'POST',
 			credentials: 'include',
 			headers: {
 				'Content-Type': 'application/json',
@@ -28,7 +28,8 @@ function Comments() {
 		})
 			.then((res) => res.json())
 			.then((data) => {
-				setBug((prev) => [...prev.comments, data]);
+				// setBug((prev) => [...prev.comments, data]);
+				setBug(data);
 				navigate(`/viewBug`);
 			})
 			.catch((err) => console.log(err));
@@ -36,13 +37,9 @@ function Comments() {
 
 	const findUser = useCallback(
 		(id) => {
-			console.log('Comments.js: findUser: allUsers ', allUsers, 'id ', id);
-			// allUsers.find((user) =>  user.id === id  )
-			
-				const allUsersUsernames = allUsers.filter((user) => user.id === id)[0]
-					.username;
-				return allUsersUsernames;
-			
+			const allUsersUsernames = allUsers.filter((user) => user.id === id)[0]
+				.username;
+			return allUsersUsernames;
 		},
 		[allUsers]
 	);
