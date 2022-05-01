@@ -4,7 +4,7 @@ import Register from './Register';
 import AppContext from '../Context/AppContext';
 
 function AuthContainer() {
-	const { user, setUser } = useContext(AppContext);
+	
 	const [userInfo, setUserInfo] = useState({
 		username: '',
 		first_name: '',

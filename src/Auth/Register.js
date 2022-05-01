@@ -6,7 +6,6 @@ function Register({ userInfo, setUserInfo }) {
 
 	function register(e) {
 		e.preventDefault();
-		console.log('Register > userInfo', userInfo);
 		fetch(`http://localhost:3000/register`, {
 			method: 'POST',
 			credentials: 'include',

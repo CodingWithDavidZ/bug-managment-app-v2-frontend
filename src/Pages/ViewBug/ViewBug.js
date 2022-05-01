@@ -7,29 +7,13 @@ import Comments from './Comments';
 function ViewBug() {
 	const { bug, allUsers } = useContext(AppContext);
 
-	console.log('bug', bug);
-
 	function findUser(id) {
-		console.log('ViewBug.js: findUser: allUsers ', allUsers, 'id ', id);
-		// allUsers.find((user) =>  user.id === id  )
-		console.log(allUsers);
-		console.log(id)
-
-		if (id !== undefined && id !== null) {
-			console.log(
-				allUsers.filter((user) => {
-					console.log(user.id, id);
-					return user.id === id;
-				})
-			);
 			const allUsersUsernames = allUsers.filter((user) => user.id === id)[0]
 				.username;
-
 			return allUsersUsernames;
-		}
 	}
 
-	console.log(bug, bug.identified_by, bug.created_by);
+
 
 	const bugId = bug.id;
 	const issueTitle = bug.issue_title;

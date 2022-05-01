@@ -1,5 +1,8 @@
 import React, { useContext, useState } from 'react';
 import AppContext from '../Context/AppContext';
+import * as api from '../Api/ApiCalls';
+import { useQuery } from 'react-query';
+
 
 function Login() {
 	const { setUser } = useContext(AppContext);
@@ -7,6 +10,7 @@ function Login() {
 		username: '',
 		password: '',
 	});
+	
 
 	async function login(e) {
 		e.preventDefault();

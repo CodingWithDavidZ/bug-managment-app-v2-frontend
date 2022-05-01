@@ -6,7 +6,6 @@ import { useNavigate } from 'react-router-dom';
 function Comments() {
 	const { bug, allUsers, setBug } = useContext(AppContext);
 	const [valueHere, setValueHere] = useState('');
-	const navigate = useNavigate();
 
 	const handleChange = (e) => {
 		e.preventDefault();
@@ -14,7 +13,7 @@ function Comments() {
 	};
 
 	async function addComment(e) {
-		e.preventDefault(); //! If I remove this, the page will refresh but I will not lose state but the fetch won't fire
+		e.preventDefault(); 
 		await fetch(`http://localhost:3000/bugs/${e.target.id}/comments`, {
 			method: 'POST',
 			credentials: 'include',
@@ -30,7 +29,7 @@ function Comments() {
 			.then((data) => {
 				// setBug((prev) => [...prev.comments, data]);
 				setBug(data);
-				navigate(`/viewBug`);
+				setValueHere('')
 			})
 			.catch((err) => console.log(err));
 	}

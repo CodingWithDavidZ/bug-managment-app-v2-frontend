@@ -8,7 +8,7 @@ function TableFramework() {
 	const { bugs, setBugs, sortBy } = useContext(AppContext);
 
 	
-	useEffect(() => {
+	const bugsFetch = useEffect(() => {
 		fetch(`http://localhost:3000/bugs/sortOrder`, {
 			method: 'POST',
 			headers: {
@@ -53,7 +53,7 @@ function TableFramework() {
 
 	const renderBugs = () => {
 		return bugs.map((bug) => {
-			return <TableElement key={bug.id} bug={bug}/>;
+			return <TableElement key={bug.id} bug={bug} bugsFetch={bugsFetch}/>;
 		});
 	};
 

@@ -10,12 +10,21 @@ import Breadcrumbs from './Components/Breadcrumbs';
 import routes from './Utilities/routes';
 import {ErrorBoundary, useErrorHandler} from 'react-error-boundary';
 import ErrorFallback from './Components/ErrorFallback';
+import {useQuery} from 'react-query';
+import * as api from '././Api/ApiCalls';
+import useGetMe from '././Api/ApiCalls';
 
 function App() {
 	const { user, setUser, setBug, setAllUsers, bug, allUsers } = useContext(AppContext);
 	// const [allUsers, setAllUsers] = useState([]);
 
 	const handleError = useErrorHandler();
+
+	
+	
+	const queryMe = useGetMe();
+	const getMe = queryMe.data
+
 
 	useEffect(() => {
 		// auto-login
@@ -31,30 +40,8 @@ function App() {
 			}
 		});
 	}, [setUser]);
+	
 
-	// useEffect(() => {
-	// 	fetch(`http://localhost:3000/users`, {
-	// 		method: 'GET',
-	// 		credentials: 'include',
-	// 		headers: {
-	// 			'Content-Type': 'application/json',
-	// 		},
-	// 	}).then((r) => {
-	// 		if (r.ok) {
-	// 			r.json().then((users) => {
-	// 				setAllUsers(users);
-	// 			});
-	// 		}
-	// 	});
-	// }, [setAllUsers]);
-
-	// useEffect(() => {
-	// 	setAllUsers(JSON.parse(window.localStorage.getItem('count')));
-	// }, []);
-
-	// useEffect(() => {
-	// 	localStorage.setItem('allUsers', JSON.stringify(allUsers));
-	// }, [allUsers]);
 	const errorHandler = (error, info) => {
 		console.log('ERROR: ',error,'INFO: ', info);
 	};
@@ -64,6 +51,10 @@ function App() {
 		setAllUsers(JSON.parse(window.localStorage.getItem('allUsers')))
 	}
 
+	if (queryMe.status === 'loading') {
+		return <div>Loading...</div>
+	}
+
 	return (
 		<div>
 				<Router>
@@ -71,7 +62,7 @@ function App() {
 					<Header />
 					<Routes>
 						<Route path='/'>
-							<Route index element={user.id ? <Home /> : <AuthContainer />} />
+							<Route index element={( user.id) ? <Home /> : <AuthContainer />} />
 
 							<Route exact path='viewBug' element={<ViewBug />} />
 						</Route>

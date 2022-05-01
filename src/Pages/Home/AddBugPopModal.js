@@ -1,14 +1,21 @@
 import React, {useRef, useState, useContext} from 'react'
 import Dropdown from '../../Components/Dropdown';
 import AppContext from '../../Context/AppContext';
+import {useQuery, useQueryClient} from 'react-query'
+import * as api from '../../Api/ApiCalls';
+import { useNavigate } from 'react-router-dom';
 
 
 function AddBugPopModal() {
 	const [isVisible, setIsVisible] = useState(false)
 	const [bugPriority, setBugPriority] = useState(3)
-	const {user, setBugs, bugs} = useContext(AppContext)
+	const {bugsFetch} = useContext(AppContext)
+	const navigate = useNavigate()
 
+	const queryClient=useQueryClient()
 
+	const addBug = useQuery('addBug', () => api.submitNewBug(submitInfo.issue_title, submitInfo.issue_description, bugPriority, submitInfo.image_url))
+	
 
 	const [submitInfo, setSubmitInfo] = useState({
 		issue_title: '',
@@ -27,8 +34,10 @@ function AddBugPopModal() {
 		}
 	}
 
-	function changeVisible() {
+	function changeVisible(e) {
+		e.preventDefault();
 		setIsVisible(!isVisible);
+		
 	}
 
     let passedArray = [
@@ -40,30 +49,16 @@ function AddBugPopModal() {
 			{ option: 'option4', value: 4, display: 'Very Low', tooltip: 'Cosmetic Issues, Spelling Errors, Minor Graphical Issues' },
 		];
 
-		function submitNewBug(e) {
+		function handleSubmit(e) {
 			e.preventDefault();
-			console.log();
-			fetch(`http://localhost:3000/bugs/create`, {
-				method: 'POST',
-				credentials: 'include',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify({
-					bug: {
-						issue_title: submitInfo.issue_title,
-						issue_description: submitInfo.issue_description,
-						priority: bugPriority,
-						image_url: submitInfo.image_url,
-						status: 'Open',
-					}
-				}),
-			})
-				.then((response) => response.json())
-				.then((data) => {
-					console.log('Submit New Bug > data', data);
-					setBugs((prev) => [...prev, data]);
-					changeVisible();
+			api.submitNewBug(
+				submitInfo.issue_title,
+				submitInfo.issue_description,
+				bugPriority,
+				submitInfo.image_url
+			);
+			console.log('addBug', addBug);
+					changeVisible(e);
 					setSubmitInfo({
 						issue_title: '',
 						issue_description: '',
@@ -71,12 +66,6 @@ function AddBugPopModal() {
 						image_url: '',
 					})
 				}
-			).catch((error) => {
-				alert(error);
-				changeVisible();
-			});
-			
-		}
 
   return (
 		<div>
@@ -91,7 +80,7 @@ function AddBugPopModal() {
 					className={visible()}
 					id='form'
 					ref={modalRef}
-					onSubmit={submitNewBug}
+					onSubmit={handleSubmit}
 				>
 					<div
 						role='alert'

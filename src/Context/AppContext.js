@@ -1,7 +1,11 @@
-import { createContext, useState, useEffect } from 'react';
+import { createContext, useState, useEffect, useMemo } from 'react';
+import { useQuery, useMutation, useQueryClient } from 'react-query';
+import { useNavigate } from 'react-router-dom';
+
 
 const AppContext = createContext();
 export function AppProvider({ children }) {
+	const queryClient = useQueryClient();
 	const [user, setUser] = useState({});
 	const [sortBy, setSortBy] = useState({
 		sortDirection: 'Descending',
@@ -35,30 +39,49 @@ export function AppProvider({ children }) {
 			}
 		});
 	}, [setAllUsers]);
+
+	function  bugsFetch() {
+		fetch(`http://localhost:3000/bugs/sortOrder`, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+				sortDirection: sortBy.sortDirection,
+				sortFilter: sortBy.sortFilter,
+			}),
+		}).then((r) => {
+			if (r.ok) {
+				r.json().then((bugs) => {
+					setBugs(bugs);
+				});
+			}
+		});
+	}
 	
-	useEffect(() => {
-		console.log('Saved allUsers to localStorage');
-		localStorage.setItem('allUsers', JSON.stringify(allUsers));
-	}, [allUsers]);	
+	// useEffect(() => {
+	// 	console.log('Saved allUsers to localStorage');
+	// 	localStorage.setItem('allUsers', JSON.stringify(allUsers));
+	// }, [allUsers]);	
 
-	useEffect(() => {
-		console.log('Pulled allUsers from localStorage');
-		setAllUsers(JSON.parse(window.localStorage.getItem('allUsers')));
-	}, []);
+	// useEffect(() => {
+	// 	console.log('Pulled allUsers from localStorage');
+	// 	setAllUsers(JSON.parse(window.localStorage.getItem('allUsers')));
+	// }, []);
 
-	useEffect(() => {
-		localStorage.setItem("bug", JSON.stringify(bug));
-		console.log('Saved bug to localStorage');
-	}, [bug]);
+	// useEffect(() => {
+	// 	localStorage.setItem("bug", JSON.stringify(bug));
+	// 	console.log('Saved bug to localStorage');
+	// }, [bug]);
 
-	useEffect(() => {
-		setBug(JSON.parse(window.localStorage.getItem('bug')));
-		console.log('Pulled bug from localStorage');
-	}, []);
+	// useEffect(() => {
+	// 	setBug(JSON.parse(window.localStorage.getItem('bug')));
+	// 	console.log('Pulled bug from localStorage');
+	// }, []);
 
 	
 
-	const value = {
+	const value = useMemo(() => ({
 		user,
 		setUser,
 		bugs,
@@ -77,7 +100,9 @@ export function AppProvider({ children }) {
 		setBug,
 		allUsers,
 		setAllUsers,
-	};
+		queryClient,
+		bugsFetch
+	}));
 
 	return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 }
