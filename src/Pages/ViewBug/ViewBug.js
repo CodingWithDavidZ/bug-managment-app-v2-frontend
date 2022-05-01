@@ -3,6 +3,7 @@ import { useContext, useEffect, useState, useCallback } from 'react';
 import AppContext from '../../Context/AppContext';
 import DateFormat from '../../Components/DateFormat';
 import Comments from './Comments';
+import ModifyBug from './ModifyBug';
 
 function ViewBug() {
 	const { bug, allUsers } = useContext(AppContext);
@@ -41,6 +42,7 @@ function ViewBug() {
 			'No Target Resolution Date'
 		);
 	const progress = `${bug.progress}0`;
+	const rawProgress = bug.progress;
 	const actualResolutionDate =
 		bug.actual_resolution_date !== null ? (
 			<DateFormat time={bug.actual_resolution_date} />
@@ -56,7 +58,7 @@ function ViewBug() {
 
 	function renderProgressBar(progressBar) {
 		switch (progressBar) {
-			case '0':
+			case 'null0':
 				return <div></div>;
 			case '10':
 				return (
@@ -139,126 +141,131 @@ function ViewBug() {
 	return (
 		<div className='px-3'>
 			<div>
-				<div className=''>
-					<span className=''>
-						<strong>Bug Id:</strong> {bugId},
-					</span>
-					<span className='px-1'>
-						{identifiedBy !== createdBy ? (
-							<span>
-								<span className='font-bold'> Identified By:</span>
-								<span className='px-1'> {identifiedBy},</span>
-							</span>
+				<div>
+					<div className=''>
+						<span className=''>
+							<strong>Bug Id:</strong> {bugId},
+						</span>
+						<span className='px-1'>
+							{identifiedBy !== createdBy ? (
+								<span>
+									<span className='font-bold'> Identified By:</span>
+									<span className='px-1'> {identifiedBy},</span>
+								</span>
+							) : null}
+						</span>
+						<span className='px-1'>
+							<strong>Issue Title: </strong> {issueTitle},
+						</span>
+					</div>
+					<div>
+						<strong>Issue Description:</strong> <div>{issueDescription}</div>
+					</div>
+					<div>
+						{identifiedDate !== null ? (
+							<div>
+								<span className='font-bold'>Identified Date: </span>
+								<span>{identifiedDate}</span>
+							</div>
 						) : null}
-					</span>
-					<span className='px-1'>
-						<strong>Issue Title: </strong> {issueTitle},
-					</span>
-				</div>
-				<div>
-					<strong>Issue Description:</strong> <div>{issueDescription}</div>
-				</div>
-				<div>
-					{identifiedDate !== null ? (
-						<div>
-							<span className='font-bold'>Identified Date: </span>
-							<span>{identifiedDate}</span>
+					</div>
+					<div>
+						{projectId !== null ? (
+							<div>
+								<span className='font-bold'>Project Id: </span>
+								<span>{projectId}</span>
+							</div>
+						) : null}
+					</div>
+					<div>
+						<strong>Assigned To:</strong> {assignedTo}
+					</div>
+					<div>
+						<span>
+							<strong>Status:</strong> {status},
+						</span>
+						<span className='px-1'>
+							<strong>Priority:</strong> {priority}
+						</span>
+						<div className='font-bold'>Progress:</div>
+						<div className='bg-gray-300 w-1/3  h-5' value={progress}>
+							{renderProgressBar(progress)}
 						</div>
-					) : null}
-				</div>
-				<div>
-					{projectId !== null ? (
-						<div>
-							<span className='font-bold'>Project Id: </span>
-							<span>{projectId}</span>
-						</div>
-					) : null}
-				</div>
-				<div>
-					<strong>Assigned To:</strong> {assignedTo}
-				</div>
-				<div>
-					<span>
-						<strong>Status:</strong> {status},
-					</span>
-					<span className='px-1'>
-						<strong>Priority:</strong> {priority}
-					</span>
-					<div className='font-bold'>Progress:</div>
-					<div className='bg-gray-300 w-1/3  h-5' value={progress}>
-						{renderProgressBar('100')}
+					</div>
+					<div className=''>
+						{statusModifiedDate !== null ? (
+							<div>
+								<span className='font-bold'> Status Modified Date: </span>
+								<span>{statusModifiedDate}</span>
+							</div>
+						) : null}
+					</div>
+					<div>
+						<strong>Target Resolution Date:</strong> {targetResolutionDate}
+					</div>
+					<div>
+						{actualResolutionDate !== null ? (
+							<div>
+								<span className='font-bold'> Actual Resolution Date: </span>
+								<span>{actualResolutionDate}</span>
+							</div>
+						) : null}
+					</div>
+					<div>
+						{actualResolutionDate !== null ? (
+							<div>
+								<span className='font-bold'> Resolution Summary: </span>
+								<span>{resolutionSummary}</span>
+							</div>
+						) : null}
+					</div>
+					<div>
+						{modifiedBy !== null ? (
+							<div>
+								<span className='font-bold'> Modified By: </span>
+								<span>{modifiedBy}</span>
+							</div>
+						) : null}
+					</div>
+					<div>
+						{approvedBy !== null ? (
+							<div>
+								<span className='font-bold'> Approved By: </span>
+								<span>{approvedBy}</span>
+							</div>
+						) : null}
+					</div>
+					<div>
+						{imageUrl !== null ? (
+							<div>
+								<span className='font-bold'> Image Url: </span>
+								<span>{imageUrl}</span>
+							</div>
+						) : null}
+					</div>
+					<div>
+						{approved === (true || false) ? (
+							<div>
+								<span className='font-bold'> Approved: </span>
+								<span>{approved}</span>
+							</div>
+						) : null}
+					</div>
+					<div>
+						<span className=''>
+							<strong>Created by:</strong> {createdBy}
+						</span>
+						<span className='px-1'>
+							<strong>Created at:</strong> {createdAt}
+						</span>
+						<span className='px-1'>
+							<strong>Updated at:</strong> {updatedAt}
+						</span>
 					</div>
 				</div>
-				<div className=''>
-					{statusModifiedDate !== null ? (
-						<div>
-							<span className='font-bold'> Status Modified Date: </span>
-							<span>{statusModifiedDate}</span>
-						</div>
-					) : null}
-				</div>
-				<div>
-					<strong>Target Resolution Date:</strong> {targetResolutionDate}
-				</div>
-				<div>
-					{actualResolutionDate !== null ? (
-						<div>
-							<span className='font-bold'> Actual Resolution Date: </span>
-							<span>{actualResolutionDate}</span>
-						</div>
-					) : null}
-				</div>
-				<div>
-					{actualResolutionDate !== null ? (
-						<div>
-							<span className='font-bold'> Resolution Summary: </span>
-							<span>{resolutionSummary}</span>
-						</div>
-					) : null}
-				</div>
-				<div>
-					{modifiedBy !== null ? (
-						<div>
-							<span className='font-bold'> Modified By: </span>
-							<span>{modifiedBy}</span>
-						</div>
-					) : null}
-				</div>
-				<div>
-					{approvedBy !== null ? (
-						<div>
-							<span className='font-bold'> Approved By: </span>
-							<span>{approvedBy}</span>
-						</div>
-					) : null}
-				</div>
-				<div>
-					{imageUrl !== null ? (
-						<div>
-							<span className='font-bold'> Image Url: </span>
-							<span>{imageUrl}</span>
-						</div>
-					) : null}
-				</div>
-				<div>
-					{approved === (true || false) ? (
-						<div>
-							<span className='font-bold'> Approved: </span>
-							<span>{approved}</span>
-						</div>
-					) : null}
-				</div>
-				<div>
-					<span className=''>
-						<strong>Created by:</strong> {createdBy}
-					</span>
-					<span className='px-1'>
-						<strong>Created at:</strong> {createdAt}
-					</span>
-					<span className='px-1'>
-						<strong>Updated at:</strong> {updatedAt}
-					</span>
-				</div>
+				<span >
+					<ModifyBug rawProgress={rawProgress} />
+				</span>
 				<div>_________________________________________</div>
 
 				<Comments

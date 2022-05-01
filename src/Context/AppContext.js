@@ -59,25 +59,6 @@ export function AppProvider({ children }) {
 		});
 	}
 	
-	// useEffect(() => {
-	// 	console.log('Saved allUsers to localStorage');
-	// 	localStorage.setItem('allUsers', JSON.stringify(allUsers));
-	// }, [allUsers]);	
-
-	// useEffect(() => {
-	// 	console.log('Pulled allUsers from localStorage');
-	// 	setAllUsers(JSON.parse(window.localStorage.getItem('allUsers')));
-	// }, []);
-
-	// useEffect(() => {
-	// 	localStorage.setItem("bug", JSON.stringify(bug));
-	// 	console.log('Saved bug to localStorage');
-	// }, [bug]);
-
-	// useEffect(() => {
-	// 	setBug(JSON.parse(window.localStorage.getItem('bug')));
-	// 	console.log('Pulled bug from localStorage');
-	// }, []);
 
 	
 

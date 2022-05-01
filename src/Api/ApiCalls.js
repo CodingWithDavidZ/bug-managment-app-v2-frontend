@@ -1,9 +1,4 @@
 import { useQuery, useMutation, useQueryClient } from 'react-query';
-import {queryClient} from '../Context/AppContext';
-// Set config defaults when creating the instance
-
-// Alter defaults after instance has been created
-
 
 
 export const useGetAllUsers = async () => {

@@ -7,7 +7,7 @@ import { MdOutlineUpdate } from 'react-icons/md';
 import { AiOutlineComment } from 'react-icons/ai';
 import DateFormat from '../../../Components/DateFormat';
 
-function TableElement({ bug, }) {
+function TableElement({ bug }) {
 	const { setBug } = useContext(AppContext);
 	const navigate = useNavigate();
 

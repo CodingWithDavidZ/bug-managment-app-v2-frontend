@@ -19,8 +19,8 @@ function TableFramework() {
 			})
 		}).then((r) => {
 			if (r.ok) {
-				r.json().then((bugs) => {
-					setBugs(bugs);
+				r.json().then((res) => {
+					setBugs(res);
 				});
 			}
 		});
@@ -52,7 +52,9 @@ function TableFramework() {
 
 
 	const renderBugs = () => {
+		
 		return bugs.map((bug) => {
+			
 			return <TableElement key={bug.id} bug={bug} bugsFetch={bugsFetch}/>;
 		});
 	};
