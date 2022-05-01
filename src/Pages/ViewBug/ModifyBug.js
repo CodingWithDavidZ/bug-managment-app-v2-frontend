@@ -31,7 +31,7 @@ function ModifyBug({ rawProgress }) {
 	};
 
 	return (
-		<div>
+		<div className=''>
 			<form className=''>
 				<div className='container mx-auto w-11/12 md:w-2/3 max-w-lg '>
 					<label className='py-1'>Title: </label>
@@ -74,10 +74,21 @@ function ModifyBug({ rawProgress }) {
 							placeholder='Detailed Explanation of Bug'
 						/>
 					</div>
-					<div className='focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600 mt-4 sm:mt-0 inline-flex items-start justify-start px-6 py-3 bg-indigo-700 hover:bg-red-600 focus:outline-none rounded'>
-						<button className='text-sm font-medium leading-none text-white' type='button' oncClick={handleDelete}>
-							Delete Bug
-						</button>
+					<div className='grid grid-cols-3'>
+						<div className='focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600 mt-4 sm:mt-0 inline-flex items-start justify-center px-6 py-3 bg-indigo-700 hover:bg-green-600 focus:outline-none rounded'>
+							<button className='text-sm font-medium leading-none text-white'>
+								Submit
+							</button>
+						</div>
+						<div className='col-start-3 focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600 mt-4 sm:mt-0 inline-flex items-start justify-center px-6 py-3 bg-indigo-700 hover:bg-red-600 focus:outline-none rounded'>
+							<button
+								className='text-sm font-medium leading-none text-white'
+								type='button'
+								oncClick={handleDelete}
+							>
+								Delete Bug
+							</button>
+						</div>
 					</div>
 				</div>
 			</form>
