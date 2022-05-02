@@ -1,24 +1,21 @@
-import React, {useRef, useState, useContext} from 'react'
+import React, { useRef, useState, useContext } from 'react';
 import Dropdown from '../../Components/Dropdown';
 import AppContext from '../../Context/AppContext';
-import {useQueryClient} from 'react-query';
-
+import { useQueryClient } from 'react-query';
 
 function AddBugPopModal() {
-	const [isVisible, setIsVisible] = useState(false)
-	const [bugPriority, setBugPriority] = useState(3)
-	const {setBugs, setSortBy, sortBy} = useContext(AppContext)
-	const queryClient= useQueryClient()
-
+	const [isVisible, setIsVisible] = useState(false);
+	const [bugPriority, setBugPriority] = useState(3);
+	const queryClient = useQueryClient();
 
 	const [submitInfo, setSubmitInfo] = useState({
 		issue_title: '',
 		issue_description: '',
 		priority: '',
 		image_url: '',
-	})
+	});
 
-    const modalRef = useRef(null);
+	const modalRef = useRef(null);
 
 	function visible() {
 		if (isVisible) {
@@ -32,20 +29,45 @@ function AddBugPopModal() {
 		setIsVisible(!isVisible);
 	}
 
-    let passedArray = [
-			// { option: 'noSelection', value: null, display: defaultLabel },
-			{ option: 'option1', value: 0, display: 'Critical', tooltip: 'Security Risk or Breaks Functionality' },
-			{ option: 'option2', value: 1, display: 'Urgent', tooltip: 'Obstructs Operations in a Serious Manner' },
-			{ option: 'option3', value: 2, display: 'Medium', tooltip: 'Issue Hinders Normal Usage but Applications Still Works' },
-			{ option: 'option4', value: 3, display: 'Low (Default)', tooltip: 'Minor loss of function or an annoying behavior.' },
-			{ option: 'option4', value: 4, display: 'Very Low', tooltip: 'Cosmetic Issues, Spelling Errors, Minor Graphical Issues' },
-		];
+	let passedArray = [
+		// { option: 'noSelection', value: null, display: defaultLabel },
+		{
+			option: 'option1',
+			value: 0,
+			display: 'Critical',
+			tooltip: 'Security Risk or Breaks Functionality',
+		},
+		{
+			option: 'option2',
+			value: 1,
+			display: 'Urgent',
+			tooltip: 'Obstructs Operations in a Serious Manner',
+		},
+		{
+			option: 'option3',
+			value: 2,
+			display: 'Medium',
+			tooltip: 'Issue Hinders Normal Usage but Applications Still Works',
+		},
+		{
+			option: 'option4',
+			value: 3,
+			display: 'Low (Default)',
+			tooltip: 'Minor loss of function or an annoying behavior.',
+		},
+		{
+			option: 'option4',
+			value: 4,
+			display: 'Very Low',
+			tooltip: 'Cosmetic Issues, Spelling Errors, Minor Graphical Issues',
+		},
+	];
 
-		function submitNewBug(e) {
-			e.preventDefault();
-			if(submitInfo.issue_title === '' || submitInfo.issue_description === '') {
-				alert('Please fill out title and description fields.')
-			} else {
+	function submitNewBug(e) {
+		e.preventDefault();
+		if (submitInfo.issue_title === '' || submitInfo.issue_description === '') {
+			alert('Please fill out title and description fields.');
+		} else {
 			fetch(`http://localhost:3000/bugs/create`, {
 				method: 'POST',
 				credentials: 'include',
@@ -59,12 +81,11 @@ function AddBugPopModal() {
 						priority: bugPriority,
 						image_url: submitInfo.image_url,
 						status: 'Open',
-					}
+					},
 				}),
 			})
 				.then((response) => response.json())
 				.then((data) => {
-					setBugs((prev) => [...prev, data]);
 					queryClient.invalidateQueries('allBugs');
 					changeVisible();
 					setSubmitInfo({
@@ -72,17 +93,16 @@ function AddBugPopModal() {
 						issue_description: '',
 						priority: '',
 						image_url: '',
-					})
-				}
-			).catch((error) => {
-				alert(error);
-				changeVisible();
-			});
+					});
+				})
+				.catch((error) => {
+					alert(error);
+					changeVisible();
+				});
 		}
-			
-		}
+	}
 
-  return (
+	return (
 		<div>
 			<div
 				className='focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600 mt-4 sm:mt-0 inline-flex items-start justify-start px-6 py-3 bg-indigo-700 hover:bg-indigo-600 focus:outline-none rounded'
@@ -170,7 +190,7 @@ function AddBugPopModal() {
 								<Dropdown
 									array={passedArray}
 									label={'Priority'}
-									setBugPriority={setBugPriority}
+									setValue={setBugPriority}
 									value={bugPriority}
 								/>
 							</div>
@@ -248,4 +268,4 @@ function AddBugPopModal() {
 	);
 }
 
-export default AddBugPopModal
+export default AddBugPopModal;

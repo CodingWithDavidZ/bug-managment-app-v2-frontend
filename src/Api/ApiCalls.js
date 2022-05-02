@@ -26,7 +26,7 @@ export const useGetAllUsers = async () => {
 
 
 export async function getBug(e) {
-	console.log('getBug ApiCall: ', e);
+	
 	const response = await fetch(`http://localhost:3000/bugs/${e}`, {
 		method: 'GET',
 		credentials: 'include',

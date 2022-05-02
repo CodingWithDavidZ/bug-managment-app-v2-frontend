@@ -26,22 +26,22 @@ export function AppProvider({ children }) {
 	// const bugInStorage = JSON.parse(window.localStorage.getItem('bug'));
 
 
-	useEffect(() => {
-		console.log('fetched allUsers');
-		fetch(`http://localhost:3000/users`, {
-			method: 'GET',
-			credentials: 'include',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-		}).then((r) => {
-			if (r.ok) {
-				r.json().then((users) => {
-					setAllUsers(users);
-				});
-			}
-		});
-	}, [setAllUsers]);
+	// useEffect(() => {
+	// 	console.log('fetched allUsers');
+	// 	fetch(`http://localhost:3000/users`, {
+	// 		method: 'GET',
+	// 		credentials: 'include',
+	// 		headers: {
+	// 			'Content-Type': 'application/json',
+	// 		},
+	// 	}).then((r) => {
+	// 		if (r.ok) {
+	// 			r.json().then((users) => {
+	// 				setAllUsers(users);
+	// 			});
+	// 		}
+	// 	});
+	// }, [setAllUsers]);
 
 	function bugsFetch() {
 		fetch(`http://localhost:3000/bugs/sortOrder`, {

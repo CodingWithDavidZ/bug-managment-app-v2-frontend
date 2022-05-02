@@ -6,7 +6,7 @@ import React, { useState, useEffect, useRef } from 'react';
 //!      where "array" is the array of options to be displayed in the dropdown
 //!		 and "label" is the label of the dropdown button.
 //TODO: Bug: when hovering to get tool tip then selecting, changes dropdown button to tooltip.
-function Dropdown({ array, label, setBugPriority }) {
+function Dropdown({ array, label, setValue }) {
 	const [isVisible, setIsVisible] = useState(false);
 	const [noSelection, setNoSelection] = useState('Dropdown');
 	const [dropdownLabel, setDropdownLabel] = useState('Dropdown');
@@ -93,8 +93,9 @@ function Dropdown({ array, label, setBugPriority }) {
 			changeVisible();
 		} else {
 			setDropdownLabel(selectedOptionFromArray.display);
+			console.log("selectedOptionFromArray.display: ", selectedOptionFromArray.display, 'dropdownLabel: ', dropdownLabel);
 			changeVisible();
-			setBugPriority(parseInt(e.target.attributes.value.value));
+			setValue(parseInt(e.target.attributes.value.value));
 		}
 	}
 

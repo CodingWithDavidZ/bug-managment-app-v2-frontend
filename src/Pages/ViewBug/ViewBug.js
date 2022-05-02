@@ -10,8 +10,6 @@ function ViewBug() {
 	const { setBugInStorage, bugInStorage } = useContext(AppContext);
 	// const [bugInStorage, setBugInStorage] = useState('');
 
-	console.log('bugInStorage', bugInStorage);
-
 	useEffect(() => {
 		setBugInStorage(window.localStorage.getItem('bug'));
 	}, []);
@@ -51,10 +49,9 @@ function ViewBug() {
 
 	function findUser(id) {
 		if (allUsers.data) {
-			console.log(allUsers.data);
 			setTimeout(() => {
 			return allUsers.data.find((user) => user.id === id).username;
-			}, 1000);
+			}, 500);
 		}
 	}
 
