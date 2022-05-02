@@ -40,7 +40,7 @@ function ViewBug() {
 			'No Target Resolution Date'
 		);
 	const progress = `${bug.progress}0`;
-	const rawProgress = bug.progress;
+	const rawProgress = bug.progress !== null ? bug.progress : 0;
 	const actualResolutionDate =
 		bug.actual_resolution_date !== null ? (
 			<DateFormat time={bug.actual_resolution_date} />
@@ -56,7 +56,7 @@ function ViewBug() {
 
 	function renderProgressBar(progressBar) {
 		switch (progressBar) {
-			case 'null0':
+			case ('null0' || '0'):
 				return <div></div>;
 			case '10':
 				return (
@@ -268,7 +268,7 @@ function ViewBug() {
 				</div>
 				<div className='h-1 bg-gray-800'></div>
 				<div className='py-3'>
-					<Comments className='' />
+					<Comments className='' bugId={bugId}/>
 					<br />
 				</div>
 			</div>

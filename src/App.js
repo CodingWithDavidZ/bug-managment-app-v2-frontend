@@ -46,10 +46,6 @@ function App() {
 		console.log('ERROR: ',error,'INFO: ', info);
 	};
 
-	const resetState = ()=>{
-		setBug(JSON.parse(window.localStorage.getItem('bug')));
-		setAllUsers(JSON.parse(window.localStorage.getItem('allUsers')))
-	}
 
 	if (queryMe.status === 'loading') {
 		return <div>Loading...</div>
@@ -58,7 +54,7 @@ function App() {
 	return (
 		<div>
 				<Router>
-			<ErrorBoundary FallbackComponent={ErrorFallback} onError={errorHandler} onReset={resetState} >
+			<ErrorBoundary FallbackComponent={ErrorFallback} onError={errorHandler}>
 					<Header />
 					<Routes>
 						<Route path='/'>
