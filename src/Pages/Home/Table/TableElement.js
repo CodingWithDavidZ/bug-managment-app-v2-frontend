@@ -12,6 +12,7 @@ function TableElement({ bug }) {
 	const navigate = useNavigate();
 
 	let key = useId();
+	
 
 	const handleViewClick = async (e) => {
 		e.preventDefault();
