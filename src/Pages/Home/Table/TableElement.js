@@ -10,24 +10,9 @@ import {useQuery} from 'react-query';
 import { getCredentials } from '../../../Api/ApiCalls';
 
 function TableElement({ bug }) {
-	const { setBug, setSelectedBugId, selectedBugId } = useContext(AppContext);
 	const navigate = useNavigate();
 
 	let key = useId();
-
-	const { data, isLoading, isError } = useQuery(['getBug', selectedBugId], () =>
-		fetch(`http://localhost:3000/bugs/${selectedBugId}`, {
-			method: 'GET',
-			credentials: 'include',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-		}).then((res) => {
-			const result = res.json();
-			console.log({ result });
-			return result;
-		})
-	);
 
 	const handleViewClick =(e) => {
 		e.preventDefault();

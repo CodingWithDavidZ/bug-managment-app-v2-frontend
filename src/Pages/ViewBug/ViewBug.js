@@ -7,7 +7,14 @@ import ModifyBug from './ModifyBug';
 import { useQuery } from 'react-query';
 
 function ViewBug() {
-	const { selectedBugId, bugInStorage } = useContext(AppContext);
+	const { setBugInStorage, bugInStorage } = useContext(AppContext);
+	// const [bugInStorage, setBugInStorage] = useState('');
+
+	console.log('bugInStorage', bugInStorage);
+
+	useEffect(() => {
+		setBugInStorage(window.localStorage.getItem('bug'));
+	}, []);
 
 	const bug = useQuery(['getBug', bugInStorage], () =>
 		fetch(`http://localhost:3000/bugs/${bugInStorage}`, {

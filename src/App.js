@@ -1,22 +1,20 @@
 // import './App.css';
-import React, { useEffect, useContext, useState, useCallback } from 'react';
+import React, { useEffect, useContext} from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Header from './Pages/Header';
 import ViewBug from './Pages/ViewBug/ViewBug';
 import Home from './Pages/Home/Home';
 import AppContext from './Context/AppContext';
 import AuthContainer from './Auth/AuthContainer';
-import Breadcrumbs from './Components/Breadcrumbs';
-import routes from './Utilities/routes';
+
 import {ErrorBoundary, useErrorHandler} from 'react-error-boundary';
 import ErrorFallback from './Components/ErrorFallback';
-import {useQuery} from 'react-query';
-import * as api from '././Api/ApiCalls';
-import useGetMe from '././Api/ApiCalls';
+import {useQuery } from 'react-query';
 
 function App() {
 	const { user, setUser, sortBy } = useContext(AppContext);
 	const handleError = useErrorHandler();
+
 	
 	const allBugs = useQuery(['allBugs', sortBy], () =>
 		fetch(`http://localhost:3000/bugs/sortOrder`, {
@@ -34,12 +32,6 @@ function App() {
 			return result;
 		})
 	);
-
-	
-	
-	const queryMe = useGetMe();
-	const getMe = queryMe.data
-
 
 	useEffect(() => {
 		// auto-login
@@ -62,9 +54,7 @@ function App() {
 	};
 
 
-	if (queryMe.status === 'loading') {
-		return <div>Loading...</div>
-	}
+	
 
 	return (
 		<div>
@@ -73,7 +63,7 @@ function App() {
 					<Header />
 					<Routes>
 						<Route path='/'>
-							<Route index element={( user.id) ? <Home /> : <AuthContainer />} />
+							<Route index element={(user.id) ? <Home /> : <AuthContainer />} />
 
 							<Route exact path='viewBug' element={<ViewBug />} />
 						</Route>

@@ -22,21 +22,8 @@ export const useGetAllUsers = async () => {
 	});
 };
 
-const meFetch = () => {
-	return fetch(`http://localhost:3000/me`, {
-		method: 'GET',
-		credentials: 'include',
-		headers: {
-			'Content-Type': 'application/json',
-		},
-	}).then((r) => {
-		return r.json();
-	});
-};
 
-export default function useGetMe() {
-	return useQuery('getMe', meFetch);
-}
+
 
 export async function getBug(e) {
 	console.log('getBug ApiCall: ', e);

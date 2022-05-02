@@ -2,11 +2,12 @@ import React, { useContext, useEffect, useCallback, useState } from 'react';
 import AppContext from '../../Context/AppContext';
 import DateFormat from '../../Components/DateFormat';
 import { useNavigate } from 'react-router-dom';
-import { useQuery } from 'react-query';
+import { useQuery, useQueryClient } from 'react-query';
 
 function Comments() {
 	const { bugInStorage, allUsers, setBug, selectedBugId } = useContext(AppContext);
 	const [valueHere, setValueHere] = useState('');
+	const queryClient = useQueryClient();
 
 	const { data, isLoading, isError } = useQuery(['getBug', bugInStorage], () =>
 		fetch(`http://localhost:3000/bugs/${bugInStorage}`, {
@@ -47,7 +48,7 @@ function Comments() {
 			.then((res) => res.json())
 			.then((data) => {
 				// setBug((prev) => [...prev.comments, data]);
-				setBug(data);
+				queryClient.invalidateQueries('getBug');
 				setValueHere('')
 			})
 			.catch((err) => console.log(err));

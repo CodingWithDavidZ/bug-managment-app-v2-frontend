@@ -12,7 +12,7 @@ export function AppProvider({ children }) {
 		sortFilter: 'all',
 	});
 	const [selectedBugId, setSelectedBugId] = useState();
-	const [bug, setBug] = useState(
+	const [bugInStorage, setBugInStorage] = useState(
 		JSON.parse(window.localStorage.getItem('bug'))
 	);
 	const [isLoading, setIsLoading] = useState(true);
@@ -23,7 +23,8 @@ export function AppProvider({ children }) {
 	const [allUsers, setAllUsers] = useState(
 		JSON.parse(window.localStorage.getItem('allUsers'))
 	);
-	const bugInStorage = JSON.parse(window.localStorage.getItem('bug'));
+	// const bugInStorage = JSON.parse(window.localStorage.getItem('bug'));
+
 
 	useEffect(() => {
 		console.log('fetched allUsers');
@@ -42,7 +43,7 @@ export function AppProvider({ children }) {
 		});
 	}, [setAllUsers]);
 
-	function  bugsFetch() {
+	function bugsFetch() {
 		fetch(`http://localhost:3000/bugs/sortOrder`, {
 			method: 'POST',
 			headers: {
@@ -60,9 +61,6 @@ export function AppProvider({ children }) {
 			}
 		});
 	}
-	
-
-	
 
 	const value = useMemo(() => ({
 		user,
@@ -79,8 +77,6 @@ export function AppProvider({ children }) {
 		setSelectedBug,
 		isLoading,
 		setIsLoading,
-		bug,
-		setBug,
 		allUsers,
 		setAllUsers,
 		queryClient,
@@ -88,6 +84,7 @@ export function AppProvider({ children }) {
 		setSelectedBugId,
 		selectedBugId,
 		bugInStorage,
+		setBugInStorage,
 	}));
 
 	return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
