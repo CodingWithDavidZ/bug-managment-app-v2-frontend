@@ -4,55 +4,92 @@ import AppContext from '../../Context/AppContext';
 import DateFormat from '../../Components/DateFormat';
 import Comments from './Comments';
 import ModifyBug from './ModifyBug';
+import { useQuery } from 'react-query';
 
 function ViewBug() {
-	const { bug, allUsers } = useContext(AppContext);
+	const { selectedBugId, bugInStorage } = useContext(AppContext);
 
-	function findUser(id) {
-		const allUsersUsernames = allUsers.filter((user) => user.id === id)[0]
-			.username;
-		return allUsersUsernames;
+	const bug = useQuery(['getBug', bugInStorage], () =>
+		fetch(`http://localhost:3000/bugs/${bugInStorage}`, {
+			method: 'GET',
+			credentials: 'include',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		}).then((res) => {
+			const result = res.json();
+			console.log({ result });
+			return result;
+		})
+	);
+
+	const allUsers = useQuery('allUser', () =>
+		fetch(`http://localhost:3000/users`, {
+			method: 'GET',
+			credentials: 'include',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		}).then((res) => {
+			const result = res.json();
+			console.log({ result });
+			return result;
+		})
+	);
+	
+
+	if (bug.isLoading || allUsers.isLoading) {
+		return <div>Loading...</div>;
 	}
 
-	const bugId = bug.id;
-	const issueTitle = bug.issue_title;
-	const issueDescription = bug.issue_description;
+	function findUser(id) {
+		if (allUsers.data) {
+			console.log(allUsers.data);
+			setTimeout(() => {
+			return allUsers.data.find((user) => user.id === id).username;
+			}, 1000);
+		}
+	}
+
+	const bugId = bug.data.id;
+	const issueTitle = bug.data.issue_title;
+	const issueDescription = bug.data.issue_description;
 	const identifiedBy =
-		bug.identified_by !== null
-			? findUser(bug.identified_by)
-			: findUser(bug.created_by);
-	const identifiedDate = bug.identified_date !== null && (
-		<DateFormat time={bug.identified_date} />
+		bug.data.identified_by !== null
+			? findUser(bug.data.identified_by)
+			: findUser(bug.data.created_by);
+	const identifiedDate = bug.data.identified_date !== null && (
+		<DateFormat time={bug.data.identified_date} />
 	);
-	const projectId = bug.project_id;
+	const projectId = bug.data.project_id;
 	const assignedTo =
-		bug.assigned_to !== null ? findUser(bug.assigned_to) : 'Unassigned';
-	const status = bug.status;
+		bug.data.assigned_to !== null ? findUser(bug.data.assigned_to) : 'Unassigned';
+	const status = bug.data.status;
 	const statusModifiedDate =
-		bug.status_modified_date !== null ? (
-			<DateFormat time={bug.status_modified_date} />
+		bug.data.status_modified_date !== null ? (
+			<DateFormat time={bug.data.status_modified_date} />
 		) : null;
-	const priority = bug.priority;
+	const priority = bug.data.priority;
 	const targetResolutionDate =
-		bug.target_resolution_date !== null ? (
-			<DateFormat time={bug.target_resolution_date} />
+		bug.data.target_resolution_date !== null ? (
+			<DateFormat time={bug.data.target_resolution_date} />
 		) : (
 			'No Target Resolution Date'
 		);
-	const progress = `${bug.progress}0`;
-	const rawProgress = bug.progress !== null ? bug.progress : 0;
+	const progress = `${bug.data.progress}0`;
+	const rawProgress = bug.data.progress !== null ? bug.data.progress : 0;
 	const actualResolutionDate =
-		bug.actual_resolution_date !== null ? (
-			<DateFormat time={bug.actual_resolution_date} />
+		bug.data.actual_resolution_date !== null ? (
+			<DateFormat time={bug.data.actual_resolution_date} />
 		) : null;
-	const resolutionSummary = bug.resolution_summary;
-	const modifiedBy = bug.modified_by !== null && findUser(bug.modified_by);
-	const approvedBy = bug.approved_by;
-	const imageUrl = bug.image_url;
-	const approved = bug.approved;
-	const createdBy = bug.created_by ? findUser(bug.created_by) : 'Not Created';
-	const createdAt = <DateFormat time={bug.created_at} />;
-	const updatedAt = <DateFormat time={bug.updated_at} />;
+	const resolutionSummary = bug.data.resolution_summary;
+	const modifiedBy = bug.data.modified_by !== null && findUser(bug.data.modified_by);
+	const approvedBy = bug.data.approved_by;
+	const imageUrl = bug.data.image_url;
+	const approved = bug.data.approved;
+	const createdBy = bug.data.created_by ? findUser(bug.data.created_by) : 'Not Created';
+	const createdAt = <DateFormat time={bug.data.created_at} />;
+	const updatedAt = <DateFormat time={bug.data.updated_at} />;
 
 	function renderProgressBar(progressBar) {
 		switch (progressBar) {
@@ -135,6 +172,8 @@ function ViewBug() {
 	// 		})
 	// 		.catch((err) => console.log(err));
 	// }
+	
+
 
 	return (
 		<div className='px-3'>

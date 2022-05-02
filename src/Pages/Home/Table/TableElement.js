@@ -6,28 +6,35 @@ import { BsTagsFill, BsCalendarDate } from 'react-icons/bs';
 import { MdOutlineUpdate } from 'react-icons/md';
 import { AiOutlineComment } from 'react-icons/ai';
 import DateFormat from '../../../Components/DateFormat';
+import {useQuery} from 'react-query';
+import { getCredentials } from '../../../Api/ApiCalls';
 
 function TableElement({ bug }) {
-	const { setBug } = useContext(AppContext);
+	const { setBug, setSelectedBugId, selectedBugId } = useContext(AppContext);
 	const navigate = useNavigate();
 
 	let key = useId();
-	
 
-	const handleViewClick = async (e) => {
-		e.preventDefault();
-		const response = await fetch(`http://localhost:3000/bugs/${e.target.id}`, {
+	const { data, isLoading, isError } = useQuery(['getBug', selectedBugId], () =>
+		fetch(`http://localhost:3000/bugs/${selectedBugId}`, {
 			method: 'GET',
 			credentials: 'include',
 			headers: {
 				'Content-Type': 'application/json',
 			},
-		});
-		const data = await response.json();
-		setBug(data);
-		setTimeout(() => {
+		}).then((res) => {
+			const result = res.json();
+			console.log({ result });
+			return result;
+		})
+	);
+
+	const handleViewClick =(e) => {
+		e.preventDefault();
+		console.log('e.target.id', e.target.id);
+		// setSelectedBugId(e.target.id)
+		window.localStorage.setItem('bug', e.target.id);
 			navigate(`viewBug`);
-		}, 500);
 	};
 
 	

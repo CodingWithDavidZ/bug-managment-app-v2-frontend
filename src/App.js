@@ -15,10 +15,25 @@ import * as api from '././Api/ApiCalls';
 import useGetMe from '././Api/ApiCalls';
 
 function App() {
-	const { user, setUser, setBug, setAllUsers, bug, allUsers } = useContext(AppContext);
-	// const [allUsers, setAllUsers] = useState([]);
-
+	const { user, setUser, sortBy } = useContext(AppContext);
 	const handleError = useErrorHandler();
+	
+	const allBugs = useQuery(['allBugs', sortBy], () =>
+		fetch(`http://localhost:3000/bugs/sortOrder`, {
+			method: 'POST',
+			credentials: 'include',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+				sortDirection: sortBy.sortDirection,
+				sortFilter: sortBy.sortFilter,
+			}),
+		}).then((res) => {
+			const result = res.json();
+			return result;
+		})
+	);
 
 	
 	

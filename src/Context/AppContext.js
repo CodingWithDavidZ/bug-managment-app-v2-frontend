@@ -11,6 +11,7 @@ export function AppProvider({ children }) {
 		sortDirection: 'Descending',
 		sortFilter: 'all',
 	});
+	const [selectedBugId, setSelectedBugId] = useState();
 	const [bug, setBug] = useState(
 		JSON.parse(window.localStorage.getItem('bug'))
 	);
@@ -22,6 +23,7 @@ export function AppProvider({ children }) {
 	const [allUsers, setAllUsers] = useState(
 		JSON.parse(window.localStorage.getItem('allUsers'))
 	);
+	const bugInStorage = JSON.parse(window.localStorage.getItem('bug'));
 
 	useEffect(() => {
 		console.log('fetched allUsers');
@@ -82,7 +84,10 @@ export function AppProvider({ children }) {
 		allUsers,
 		setAllUsers,
 		queryClient,
-		bugsFetch
+		bugsFetch,
+		setSelectedBugId,
+		selectedBugId,
+		bugInStorage,
 	}));
 
 	return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

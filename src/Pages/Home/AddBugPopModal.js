@@ -1,13 +1,14 @@
 import React, {useRef, useState, useContext} from 'react'
 import Dropdown from '../../Components/Dropdown';
 import AppContext from '../../Context/AppContext';
+import {useQueryClient} from 'react-query';
 
 
 function AddBugPopModal() {
 	const [isVisible, setIsVisible] = useState(false)
 	const [bugPriority, setBugPriority] = useState(3)
 	const {setBugs, setSortBy, sortBy} = useContext(AppContext)
-
+	const queryClient= useQueryClient()
 
 
 	const [submitInfo, setSubmitInfo] = useState({
@@ -64,7 +65,7 @@ function AddBugPopModal() {
 				.then((response) => response.json())
 				.then((data) => {
 					setBugs((prev) => [...prev, data]);
-					setSortBy(sortBy);
+					queryClient.invalidateQueries('allBugs');
 					changeVisible();
 					setSubmitInfo({
 						issue_title: '',

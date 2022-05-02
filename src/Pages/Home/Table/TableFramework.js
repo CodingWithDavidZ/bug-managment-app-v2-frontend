@@ -2,29 +2,29 @@ import React, { useId, useContext, useEffect } from 'react';
 import TableElement from './TableElement';
 import AppContext from '../../../Context/AppContext';
 import SortBy from '../SortBy';
+import { useQuery } from 'react-query';
 
 function TableFramework() {
 	//responsible for holding state and rendering table
-	const { bugs, setBugs, sortBy } = useContext(AppContext);
+	const { setBugs, sortBy } = useContext(AppContext);
 
 	
-	const bugsFetch = useEffect(() => {
+	const bugs = useQuery(['allBugs', sortBy], () =>
 		fetch(`http://localhost:3000/bugs/sortOrder`, {
 			method: 'POST',
+			credentials: 'include',
 			headers: {
-				'Content-Type': 'application/json'},
+				'Content-Type': 'application/json',
+			},
 			body: JSON.stringify({
 				sortDirection: sortBy.sortDirection,
 				sortFilter: sortBy.sortFilter,
-			})
-		}).then((r) => {
-			if (r.ok) {
-				r.json().then((res) => {
-					setBugs(res);
-				});
-			}
-		});
-	}, [sortBy]);
+			}),
+		}).then((res) => {
+			const result = res.json();
+			return result;
+		})
+	);
 
 	
 	// function getAllUsers() {
@@ -48,22 +48,24 @@ function TableFramework() {
 
 
 
-			
+	if(bugs.isLoading) {
+		return <div>Loading...</div>
+	}
+				
 
 
 	const renderBugs = () => {
 		
-		return bugs.map((bug) => {
-			
-			return <TableElement key={bug.id} bug={bug} bugsFetch={bugsFetch}/>;
+		return bugs.data.map((bug) => {
+			return <TableElement key={bug.id} bug={bug} bugs={bugs.data}/>;
 		});
 	};
 
 
 
 	return (
-		<div className='mt-7 overflow-x-auto' key={useId()}>
-			<table className='w-full whitespace-nowrap' key={useId()}>
+		<div className='mt-7 overflow-x-auto' key={bugs.data.length}>
+			<table className='w-full whitespace-nowrap' key={bugs.data.length}>
 				<thead>
 					<tr className='h-14 bg-indigo-100 text-indigo-500 border-gray-800 rounded'>
 						{/* //idea: add a check box */}
@@ -79,9 +81,9 @@ function TableFramework() {
 					</tr>
 				</thead>
 
-				<tbody key={useId()}>
+				<tbody key={bugs.data.length}>
 					{renderBugs()}
-					<tr className='h-3' key={useId()}></tr>
+					<tr className='h-3' key={bugs.data.length}></tr>
 				</tbody>
 			</table>
 		</div>

@@ -2,14 +2,33 @@ import React, { useContext, useEffect, useCallback, useState } from 'react';
 import AppContext from '../../Context/AppContext';
 import DateFormat from '../../Components/DateFormat';
 import { useNavigate } from 'react-router-dom';
+import { useQuery } from 'react-query';
 
 function Comments() {
-	const { bug, allUsers, setBug } = useContext(AppContext);
+	const { bugInStorage, allUsers, setBug, selectedBugId } = useContext(AppContext);
 	const [valueHere, setValueHere] = useState('');
+
+	const { data, isLoading, isError } = useQuery(['getBug', bugInStorage], () =>
+		fetch(`http://localhost:3000/bugs/${bugInStorage}`, {
+			method: 'GET',
+			credentials: 'include',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		}).then((res) => {
+			const result = res.json();
+			console.log({ result });
+			return result;
+		})
+	);
+
+	if (isLoading) {
+		return <div>Loading...</div>;
+	}
 
 	const handleChange = (e) => {
 		e.preventDefault();
-		setValueHere(e.target.value);
+		setValueHere(e.target.value);		
 	};
 
 	async function addComment(e) {
@@ -34,16 +53,13 @@ function Comments() {
 			.catch((err) => console.log(err));
 	}
 
-	const findUser = useCallback(
-		(id) => {
+	function findUser(id) {
 			const allUsersUsernames = allUsers.filter((user) => user.id === id)[0]
 				.username;
 			return allUsersUsernames;
-		},
-		[allUsers]
-	);
+		}
 
-	const mapComments = bug.comments.map((comment, index) => {
+	const mapComments = data.comments.map((comment, index) => {
 		return (
 			<div className='grid grid-cols-3' key={`id: ${comment.id} fragment 0`}>
 				<br />
@@ -53,7 +69,7 @@ function Comments() {
 					key={`id: ${comment.id} div 0`}
 				>
 					<div className='col-span-2 font-bold'>
-						<strong>Comment:</strong> {index + 1} of {bug.comments.length}:
+						<strong>Comment:</strong> {index + 1} of {data.comments.length}:
 						&nbsp;
 					</div>
 					<div key={`id: ${comment.id} div 1'`}>
@@ -95,7 +111,7 @@ function Comments() {
 				<form
 					className='col-start-2 grid justify-center'
 					onSubmit={addComment}
-					id={bug.id}
+					id={data.id}
 					value={valueHere}
 				>
 					<span>
@@ -104,14 +120,14 @@ function Comments() {
 							type='text'
 							name='comment'
 							placeholder='Add Comment'
-							id={bug.id}
+							id={data.id}
 							value={valueHere}
 							onChange={handleChange}
 						/>
 						<button
 							className='bg-indigo-600 text-white px-2 rounded-md '
 							type='submit'
-							id={bug.id}
+							id={data.id}
 						>
 							Submit
 						</button>

@@ -1,5 +1,12 @@
 import { useQuery, useMutation, useQueryClient } from 'react-query';
 
+export const getCredentials = {
+	method: 'GET',
+	credentials: 'include',
+	headers: {
+		'Content-Type': 'application/json',
+	},
+}
 
 export const useGetAllUsers = async () => {
 	return useQuery('allUsers', () => {
