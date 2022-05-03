@@ -67,10 +67,21 @@ function ModifyBug({ rawProgress }) {
 		})
 	);	
 
-	console.log('userSelected: ', userSelected, 'statusSelected: ', statusSelected, 'prioritySelected: ', prioritySelected, 'progressBar: ', progressBar);
-	console.log('updateInfo: ', updateInfo);
+	// console.log('userSelected: ', userSelected, 'statusSelected: ', statusSelected, 'prioritySelected: ', prioritySelected, 'progressBar: ', progressBar);
+	// console.log('updateInfo: ', updateInfo);
 
-	const assignUserArray = ()=> allUsers.data.map((user, index) => {
+	const sample = [
+		{
+			id: 1,
+			username: 'bob',
+		},
+		{
+			id: 2,
+			username: 'joe',
+		},
+	]
+
+	const assignUserArray = ()=> sample.map((user, index) => {
 		return {
 			option: user.id,
 			value: index + 1,
@@ -256,7 +267,7 @@ function ModifyBug({ rawProgress }) {
 					<div className='grid grid-cols-3 px-5'>
 						<div className=''>
 							<Dropdown
-								array={assignUserArray}
+								array={assignUserArray()}
 								label={'Assign User'}
 								setValue={setUserSelected}
 								value={userSelected}
@@ -280,7 +291,7 @@ function ModifyBug({ rawProgress }) {
 					<br />
 					<div className='grid grid-cols-3 justify-self-start pr-8'>
 						<Dropdown
-							array={assignStatusArray}
+							array={assignStatusArray()}
 							label={'Status'}
 							setValue={setStatusSelected}
 							value={statusSelected}
@@ -288,7 +299,7 @@ function ModifyBug({ rawProgress }) {
 
 						<div className='grid-start-3 justify-self-start pl-3'>
 							<Dropdown
-								array={assignPriorityArray}
+								array={assignPriorityArray()}
 								label={'Priority'}
 								setValue={setPrioritySelected}
 								value={prioritySelected}

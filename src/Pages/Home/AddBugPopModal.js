@@ -101,7 +101,7 @@ function AddBugPopModal() {
 				});
 		}
 	}
-
+	console.log('modal')
 	return (
 		<div>
 			<div
