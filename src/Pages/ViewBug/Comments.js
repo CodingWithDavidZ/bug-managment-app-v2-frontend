@@ -18,7 +18,6 @@ function Comments() {
 			},
 		}).then((res) => {
 			const result = res.json();
-			console.log({ result });
 			return result;
 		})
 	);
@@ -86,9 +85,6 @@ function Comments() {
 							<strong>By:</strong> {findUser(comment.created_by)}
 						</span>
 					</div>
-					<div key={`id: ${comment.id} div 2'`}>
-						<strong>Message:</strong> {comment.comment_text}
-					</div>
 					<div key={`id: ${comment.id} div 3'`}>
 						<span key={`id: ${comment.id} span 3`}>
 							<strong>Created:</strong> <DateFormat time={comment.created_at} />
@@ -97,6 +93,9 @@ function Comments() {
 						<span key={`id: ${comment.id} span 4`}>
 							<strong>Updated:</strong> <DateFormat time={comment.updated_at} />
 						</span>
+					<div key={`id: ${comment.id} div 2'`}>
+						<strong>Message:</strong> {comment.comment_text}
+					</div>
 					</div>
 					<br />
 				</div>

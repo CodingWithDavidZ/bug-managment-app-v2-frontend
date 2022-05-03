@@ -6,12 +6,11 @@ import AddBugPopModal from './AddBugPopModal';
 import StatusFilter from './StatusFilter';
 
 import TableFramework from './Table/TableFramework';
-import { useGetAllUsers } from '../../Api/ApiCalls';
+
 
 
 function Home() {
-	const allUsers = useGetAllUsers();
-	console.log('allUsers: ', allUsers);
+
 	
 
 	return (

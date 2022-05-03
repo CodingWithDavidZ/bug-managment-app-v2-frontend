@@ -50,15 +50,7 @@ function Header() {
 							>
 								Home
 							</Link>
-							<p className='mr-5 hover:text-gray-900 hover:border-gray-600 hover:border-2 hover:rounded-md cursor-pointer'>
-								Second Link
-							</p>
-							<p className='mr-5 hover:text-gray-900 hover:border-gray-600 hover:border-2 hover:rounded-md cursor-pointer'>
-								Third Link
-							</p>
-							<p className='mr-5 hover:text-gray-900 hover:border-gray-600 hover:border-2 hover:rounded-md cursor-pointer'>
-								Fourth Link
-							</p>
+							
 						</nav>
 				) : (
 					<nav className='md:mr-auto md:ml-4 md:py-1 md:pl-4 	flex flex-wrap items-center text-base justify-center'>

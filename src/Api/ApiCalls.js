@@ -8,23 +8,6 @@ export const getCredentials = {
 	},
 }
 
-export const useGetAllUsers = async () => {
-	return useQuery('allUsers', () => {
-		fetch(`http://localhost:3000/users`, {
-			method: 'GET',
-			credentials: 'include',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-		}).then((r) => {
-			return r.data;
-		});
-	});
-};
-
-
-
-
 export async function getBug(e) {
 	
 	const response = await fetch(`http://localhost:3000/bugs/${e}`, {

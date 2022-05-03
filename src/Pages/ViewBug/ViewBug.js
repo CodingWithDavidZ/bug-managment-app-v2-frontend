@@ -23,7 +23,6 @@ function ViewBug() {
 			},
 		}).then((res) => {
 			const result = res.json();
-			console.log({ result });
 			return result;
 		})
 	);
@@ -37,7 +36,6 @@ function ViewBug() {
 			},
 		}).then((res) => {
 			const result = res.json();
-			console.log({ result });
 			return result;
 		})
 	);
@@ -125,7 +123,7 @@ function ViewBug() {
 				);
 			case '70':
 				return (
-					<div className='bg-blue-500 w-80 h-full' value={progressBar}></div>
+					<div className='bg-blue-500 w-3/4 h-full' value={progressBar}></div>
 				);
 			case '80':
 				return (
@@ -306,7 +304,7 @@ function ViewBug() {
 						</div>
 					</div>					
 					<div className='col-end-3 self-center pb-3'>
-						<ModifyBug rawProgress={rawProgress} />
+						<ModifyBug rawProgress={rawProgress} bug={bug.data}/>
 					</div>
 				</div>
 				<div className='h-1 bg-gray-800'></div>
