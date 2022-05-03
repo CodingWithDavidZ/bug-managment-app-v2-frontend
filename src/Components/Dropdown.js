@@ -51,32 +51,30 @@ function Dropdown({ array, label, setValue }) {
 
 	//Optional Settings:
 	const header = false;
-
+	
 	useEffect(() => {
-		console.log('rerender');
+		console.log('rerender')
+		setSeparatedArray([]);
 		setUnseparatedArray([]);
-
-		// if (label) {
-		// setDropdownLabel(label);
-		// setNoSelection(label);
-		// }
-
-		// if (array) {
-		// setOptionsArray(array);
 		
+		if (label) {
+			setDropdownLabel(label);
+			setNoSelection(label);
+		}
 
-		// }
-	}, []);
+		if (array) {
+			setOptionsArray(array);
+			
+		}
 
-	function iterateArray(array) {
-		array.forEach((item) => {
-			// if (item.separated) {
-			// 	setSeparatedArray((prevState) => [...prevState, item]);
-			// } else {
-			setUnseparatedArray((prevState) => [...prevState, item]);
-			// }
+		optionsArray.forEach((item) => {
+			if (item.separated) {
+				setSeparatedArray((prevState) => [...prevState, item]);
+			} else {
+				setUnseparatedArray((prevState) => [...prevState, item]);
+			}
 		});
-	}
+	}, [optionsArray]);
 
 	function visible() {
 		if (isVisible) {
@@ -91,24 +89,21 @@ function Dropdown({ array, label, setValue }) {
 	}
 
 	function handleChange(e) {
-		const selectedOptionFromArray =
-			optionsArray[parseInt(e.target.attributes.value.value)];
+		const selectedOptionFromArray = optionsArray[parseInt(e.target.attributes.value.value)];
 		if (selectedOptionFromArray.option === noSelection) {
 			setDropdownLabel(noSelection);
 			changeVisible();
 		} else {
 			console.log('dropdownLabel: ', dropdownLabel);
 			setDropdownLabel(selectedOptionFromArray.display);
-			console.log(
-				'selectedOptionFromArray.display: ',
-				selectedOptionFromArray.display,
-				'dropdownLabel: ',
-				dropdownLabel
-			);
+			console.log("selectedOptionFromArray.display: ", selectedOptionFromArray.display, 'dropdownLabel: ', dropdownLabel);
 			changeVisible();
 			setValue(parseInt(e.target.attributes.value.value));
 		}
 	}
+	
+
+
 
 	function handleMouseEnter(e) {
 		setTimeout(() => {
@@ -121,7 +116,7 @@ function Dropdown({ array, label, setValue }) {
 		setIsHover(false);
 	}
 
-	const optionsMap = array.map((item, index) => {
+	const optionsMap = unseparatedArray.map((item, index) => {
 		return (
 			<li key={index + ' li'} id={item.option}>
 				{/* {console.log(item.display)} */}
@@ -136,10 +131,8 @@ function Dropdown({ array, label, setValue }) {
 				>
 					{item.display}
 					{item.tooltip && isHover && thisOption === item.tooltip ? (
-						<span
-							className='text-sm py-2 px-4 font-normal w-full whitespace-nowrap bg-transparent text-gray-300 hover:bg-gray-700 hover:text-white focus:text-white focus:bg-gray-700 active:bg-blue-600 '
-							value={item.value}
-						>
+						<span className='text-sm py-2 px-4 font-normal w-full whitespace-nowrap bg-transparent text-gray-300 hover:bg-gray-700 hover:text-white focus:text-white focus:bg-gray-700 active:bg-blue-600 '
+						value={item.value}>
 							{item.tooltip}
 						</span>
 					) : null}

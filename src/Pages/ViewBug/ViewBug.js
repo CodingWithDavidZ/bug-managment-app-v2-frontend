@@ -150,32 +150,6 @@ function ViewBug() {
 		}
 	}
 
-	// const handleChange = (e) => {
-	// 	e.preventDefault();
-	// 	setValue(e.target.value);
-	// };
-
-	// async function addComment(e) {
-	// 	e.preventDefault();
-	// 	fetch(`http://localhost:3000/bugs/${e.target.id}/comments`, {
-	// 		method: 'PUT',
-	// 		credentials: 'include',
-	// 		headers: {
-	// 			'Content-Type': 'application/json',
-	// 		},
-	// 		body: JSON.stringify({
-	// 			bug_id: e.target.id,
-	// 			comment_text: e.target.attributes.value.value,
-	// 		}),
-	// 	})
-	// 		.then((res) => res.json())
-	// 		.then((data) => {
-	// 			setBug((prev) => [...prev.comments, data]);
-	// 		})
-	// 		.catch((err) => console.log(err));
-	// }
-	
-
 
 	return (
 		<div className='px-3'>
