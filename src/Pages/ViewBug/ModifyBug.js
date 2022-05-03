@@ -70,18 +70,8 @@ function ModifyBug({ rawProgress }) {
 	// console.log('userSelected: ', userSelected, 'statusSelected: ', statusSelected, 'prioritySelected: ', prioritySelected, 'progressBar: ', progressBar);
 	// console.log('updateInfo: ', updateInfo);
 
-	const sample = [
-		{
-			id: 1,
-			username: 'bob',
-		},
-		{
-			id: 2,
-			username: 'joe',
-		},
-	]
 
-	const assignUserArray = ()=> sample.map((user, index) => {
+	const assignUserArray = ()=> allUsers.data.map((user, index) => {
 		return {
 			option: user.id,
 			value: index + 1,
@@ -221,6 +211,7 @@ function ModifyBug({ rawProgress }) {
 			setUpdateInfo({ ...updateInfo, actual_resolution_date: new Date() });
 			if (progressBar !== 10){
 			setProgressBar(10);
+			setUpdateInfo({ ...updateInfo, progress: 10 });
 			}
 			changeVisible(true);
 		} else {
