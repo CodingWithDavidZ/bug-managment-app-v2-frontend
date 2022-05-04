@@ -4,7 +4,6 @@ import Register from './Register';
 import AppContext from '../Context/AppContext';
 
 function AuthContainer() {
-	
 	const [userInfo, setUserInfo] = useState({
 		username: '',
 		first_name: '',
@@ -39,21 +38,28 @@ function AuthContainer() {
 
 	return (
 		<>
-			<div className='grid grid-cols-12 gap-1 content-start'>
-				<button
-					className='bg-red-700 rounded border hover:animate-pulse'
-					onClick={renderRegisterAuth}
-				>
-					Register
-				</button>
-				<button
-					className='bg-green-700 rounded border hover:animate-pulse'
-					onClick={renderLoginAuth}
-				>
-					Login
-				</button>
+			<div className='grid grid-cols-3 gap-1 content-start'>
+				<div className='col-start-2 col-end-2'>
+					<div className='col-start-1 col-end-1 pt-16'>
+						<button
+							className='bg-red-700 w-1/3 rounded border hover:animate-pulse'
+							onClick={renderRegisterAuth}
+						>
+							Register
+						</button>
+						<button
+							className='bg-green-700 w-1/3 rounded border hover:animate-pulse'
+							onClick={renderLoginAuth}
+						>
+							Login
+						</button>
+					</div>
+					<div className=''>
+						<br />
+						{renderAuthMethod(authType)}
+					</div>
+				</div>
 			</div>
-			<div>{renderAuthMethod(authType)}</div>
 		</>
 	);
 }

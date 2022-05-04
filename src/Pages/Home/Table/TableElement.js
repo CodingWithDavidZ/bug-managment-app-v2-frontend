@@ -23,7 +23,7 @@ function TableElement({ bug }) {
 	};
 
 	
-
+	console.log('bug.image_url', bug.image_url);
 	return (
 		<>
 			<tr
@@ -69,7 +69,7 @@ function TableElement({ bug }) {
 							{bug.issue_title}
 						</p>
 
-						{bug.image_url !== ('' || null) ? (
+						{bug.image_url !== '' ? (
 							<BiLink key={key + bug.id + 'emoji'} />
 						) : null}
 					</div>
@@ -81,7 +81,8 @@ function TableElement({ bug }) {
 						key={key + bug.id + 'div 5'}
 					>
 						{/* TODO: change color of class name based on urgency */}
-						<BsTagsFill className='text-red-700' key={key + bug.id + 'emoji'} />
+						{bug.priority === 'Critical' ? (<BsTagsFill className='text-red-800' key={key + bug.id + 'emoji'} />) : (bug.priority === 'Urgent' ? (<BsTagsFill className='text-orange-500' key={key + bug.id + 'emoji'} />) : (<BsTagsFill className='text-green-700' key={key + bug.id + 'emoji'} />))}
+						
 						<p
 							className='text-sm leading-none text-gray-600 ml-2'
 							id={bug.id}

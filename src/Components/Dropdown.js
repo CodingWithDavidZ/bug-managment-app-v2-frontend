@@ -168,7 +168,7 @@ function Dropdown({ array, label, setValue }) {
 	});
 
 	return (
-		<div className='flex justify-center'>
+		<div className='flex justify-start'>
 			<div>
 				<div className='dropdown relative'>
 					<div

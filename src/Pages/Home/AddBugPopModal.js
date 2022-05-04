@@ -13,19 +13,23 @@ function AddBugPopModal() {
 		issue_description: '',
 		priority: '',
 		image_url: '',
+		target_resolution_date: '',
 	});
 
 	const modalRef = useRef(null);
 
 	function visible() {
 		if (isVisible) {
-			return 'py-12 bg-gray-700 transition duration-150 ease-in-out z-10 absolute inset-0 ';
+			document.body.style.overflow = 'hidden';
+			return 'py-12 bg-gray-700 transition duration-150 ease-in-out z-10 absolute inset-0 position-sticky top-0';
 		} else {
+			document.body.style.overflow = 'scroll';
 			return 'py-12 bg-gray-700 transition duration-150 ease-in-out z-10 absolute inset-0 hidden';
 		}
 	}
 
 	function changeVisible() {
+		window.scrollTo(0, 0);
 		setIsVisible(!isVisible);
 	}
 
@@ -66,7 +70,7 @@ function AddBugPopModal() {
 	function submitNewBug(e) {
 		e.preventDefault();
 		if (submitInfo.issue_title === '' || submitInfo.issue_description === '') {
-			alert('Please fill out title and description fields.');
+			alert('Please fill out TITLE and DESCRIPTION fields.');
 		} else {
 			fetch(`http://localhost:3000/bugs/create`, {
 				method: 'POST',
@@ -80,6 +84,7 @@ function AddBugPopModal() {
 						issue_description: submitInfo.issue_description,
 						priority: bugPriority,
 						image_url: submitInfo.image_url,
+						target_resolution_date: submitInfo.target_resolution_date,
 						status: 'Open',
 					},
 				}),
@@ -101,16 +106,16 @@ function AddBugPopModal() {
 				});
 		}
 	}
-	console.log('modal')
+	
 	return (
-		<div>
+		<div className=''>
 			<div
 				className='focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600 mt-4 sm:mt-0 inline-flex items-start justify-start px-6 py-3 bg-indigo-700 hover:bg-indigo-600 focus:outline-none rounded'
 				onClick={changeVisible}
 			>
 				<p className='text-sm font-medium leading-none text-white'>Add Bug</p>
 			</div>
-			<dh-component>
+			<div className='h-5/6'>
 				<form
 					className={visible()}
 					id='form'
@@ -213,6 +218,29 @@ function AddBugPopModal() {
 									});
 								}}
 							/>
+							{bugPriority === 0 || bugPriority === 1 ? (
+								<>
+									<label
+										htmlFor='expiry'
+										className='text-gray-800 text-sm font-bold leading-tight tracking-normal'
+									>
+										Target Resolution Date
+									</label>
+									<input
+										id='name'
+										type='date'
+										className='mb-5 mt-2 text-gray-600 focus:outline-none focus:border focus:border-indigo-700 font-normal w-full h-10 flex items-center pl-3 text-sm border-gray-300 rounded border'
+										placeholder='Leave Blank if Not Time Critical'
+										value={submitInfo.target_resolution_date}
+										onChange={(e) => {
+											setSubmitInfo({
+												...submitInfo,
+												target_resolution_date: e.target.value,
+											});
+										}}
+									/>
+								</>
+							) : null}
 
 							<div className='flex items-center justify-start w-full'>
 								<button
@@ -263,7 +291,7 @@ function AddBugPopModal() {
 						Open Modal
 					</button> */}
 				</div>
-			</dh-component>
+			</div>
 		</div>
 	);
 }
