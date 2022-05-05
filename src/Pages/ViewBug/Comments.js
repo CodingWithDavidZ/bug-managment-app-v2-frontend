@@ -1,15 +1,14 @@
-import React, { useContext, useEffect, useCallback, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import AppContext from '../../Context/AppContext';
 import DateFormat from '../../Components/DateFormat';
-import { useNavigate } from 'react-router-dom';
 import { useQuery, useQueryClient } from 'react-query';
 
 function Comments() {
-	const { bugInStorage, allUsers, setBug, selectedBugId } = useContext(AppContext);
+	const { bugInStorage, allUsers } = useContext(AppContext);
 	const [valueHere, setValueHere] = useState('');
 	const queryClient = useQueryClient();
 
-	const { data, isLoading, isError } = useQuery(['getBug', bugInStorage], () =>
+	const { data, isLoading } = useQuery(['getBug', bugInStorage], () =>
 		fetch(`http://localhost:3000/bugs/${bugInStorage}`, {
 			method: 'GET',
 			credentials: 'include',
