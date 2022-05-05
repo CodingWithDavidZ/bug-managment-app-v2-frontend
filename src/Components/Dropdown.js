@@ -54,7 +54,6 @@ function Dropdown({ array, label, setValue }) {
 	const header = false;
 
 	useEffect(() => {
-		console.log('rerender');
 		setSeparatedArray([]);
 		setUnseparatedArray([]);
 
@@ -95,14 +94,7 @@ function Dropdown({ array, label, setValue }) {
 			setDropdownLabel(noSelection);
 			changeVisible();
 		} else {
-			console.log('dropdownLabel: ', dropdownLabel);
 			setDropdownLabel(selectedOptionFromArray.display);
-			console.log(
-				'selectedOptionFromArray.display: ',
-				selectedOptionFromArray.display,
-				'dropdownLabel: ',
-				dropdownLabel
-			);
 			changeVisible();
 			setValue(parseInt(e.target.attributes.value.value));
 		}

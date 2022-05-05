@@ -6,9 +6,6 @@ function SortBy() {
 
 	function handleSortChange(e) {
 		setSortBy({ ...sortBy, sortDirection: e.target.value });
-		console.log(() => {
-			return sortBy;
-		});
 	}
 
 	return (

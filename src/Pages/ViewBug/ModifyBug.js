@@ -61,7 +61,6 @@ function ModifyBug({ rawProgress }) {
 		setUpdateInfo({ ...updateInfo, assigned_to: userSelected });
 	}, [userSelected, statusValue, prioritySelected]);
 
-	// console.log('updateInfo', updateInfo);
 
 	const allUsers = useQuery('allUser', () =>
 		fetch(`http://localhost:3000/users`, {
@@ -155,7 +154,7 @@ function ModifyBug({ rawProgress }) {
 			});
 			navigate('/');
 		} else {
-			console.log('false');
+			alert('Bug not deleted, please try again.');
 		}
 	};
 

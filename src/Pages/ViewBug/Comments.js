@@ -45,7 +45,6 @@ function Comments() {
 		})
 			.then((res) => res.json())
 			.then((data) => {
-				// setBug((prev) => [...prev.comments, data]);
 				queryClient.invalidateQueries('getBug');
 				setValueHere('');
 			})
