@@ -1,4 +1,4 @@
-import React from 'react'
+
 
 function DateFormat({time}) {
         const thisYear = new Date().getFullYear();
