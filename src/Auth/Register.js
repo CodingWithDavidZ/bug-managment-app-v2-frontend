@@ -116,7 +116,7 @@ function Register({ userInfo, setUserInfo }) {
 						});
 					}}
 				/>
-
+				{/* Add Later if you decide to implement avatar usage */}
 				{/* <label className=' pt-3 block text-gray-700 text-sm font-bold mb-2'>
 					Avatar
 				</label>
