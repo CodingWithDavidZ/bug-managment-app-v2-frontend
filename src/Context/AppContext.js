@@ -1,11 +1,9 @@
-import { createContext, useState, useEffect, useMemo } from 'react';
-import { useQuery, useMutation, useQueryClient } from 'react-query';
-import { useNavigate } from 'react-router-dom';
+import { createContext, useState, useMemo } from 'react';
+
 
 
 const AppContext = createContext();
 export function AppProvider({ children }) {
-	const queryClient = useQueryClient();
 	const [user, setUser] = useState({});
 	const [sortBy, setSortBy] = useState({
 		sortDirection: 'Descending',
@@ -23,44 +21,7 @@ export function AppProvider({ children }) {
 	const [allUsers, setAllUsers] = useState(
 		JSON.parse(window.localStorage.getItem('allUsers'))
 	);
-	// const bugInStorage = JSON.parse(window.localStorage.getItem('bug'));
-
-
-	// useEffect(() => {
-	// 	console.log('fetched allUsers');
-	// 	fetch(`http://localhost:3000/users`, {
-	// 		method: 'GET',
-	// 		credentials: 'include',
-	// 		headers: {
-	// 			'Content-Type': 'application/json',
-	// 		},
-	// 	}).then((r) => {
-	// 		if (r.ok) {
-	// 			r.json().then((users) => {
-	// 				setAllUsers(users);
-	// 			});
-	// 		}
-	// 	});
-	// }, [setAllUsers]);
-
-	function bugsFetch() {
-		fetch(`http://localhost:3000/bugs/sortOrder`, {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify({
-				sortDirection: sortBy.sortDirection,
-				sortFilter: sortBy.sortFilter,
-			}),
-		}).then((r) => {
-			if (r.ok) {
-				r.json().then((bugs) => {
-					setBugs(bugs);
-				});
-			}
-		});
-	}
+	
 
 	const value = useMemo(() => ({
 		user,
@@ -79,8 +40,6 @@ export function AppProvider({ children }) {
 		setIsLoading,
 		allUsers,
 		setAllUsers,
-		queryClient,
-		bugsFetch,
 		setSelectedBugId,
 		selectedBugId,
 		bugInStorage,
