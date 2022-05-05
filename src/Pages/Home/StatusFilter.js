@@ -1,12 +1,11 @@
 import React, { useContext, useState } from 'react';
-
 import AppContext from '../../Context/AppContext';
 
 function StatusFilter() {
+
 	const isHighlighted = 'py-2 px-8 bg-indigo-100 text-indigo-700 rounded-full';
 	const notHighlighted =
 		'py-2 px-8 text-gray-600 hover:text-indigo-700 hover:bg-indigo-100 rounded-full';
-
 	const { setBugStatusSort, bugs, setSortBy, sortBy } = useContext(AppContext);
 	const [allStyle, setAllStyle] = useState(isHighlighted);
 	const [completedStyle, setCompletedStyle] = useState(notHighlighted);
@@ -15,7 +14,8 @@ function StatusFilter() {
 	const [needsApprovalStyle, setNeedsApprovalStyle] = useState(notHighlighted);
 
 	function renderStyleSwitch(param) {
-		switch (param) {
+
+		switch (param) { //Changes classNames and sets the sortBy state
 			case 'all':
 				setAllStyle(isHighlighted);
 				setCompletedStyle(notHighlighted);
