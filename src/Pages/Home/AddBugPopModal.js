@@ -90,7 +90,6 @@ function AddBugPopModal() {
 			})
 				.then((response) => response.json())
 				.then((data) => {
-					queryClient.invalidateQueries('allBugs');
 					changeVisible();
 					setSubmitInfo({
 						issue_title: '',
@@ -98,6 +97,9 @@ function AddBugPopModal() {
 						priority: '',
 						image_url: '',
 					});
+					setTimeout(() => { // react query is too fast and reverts to cached data sometimes if this delay is not there
+					queryClient.invalidateQueries('allBugs');
+					}, 250);
 				})
 				.catch((error) => {
 					alert(error);

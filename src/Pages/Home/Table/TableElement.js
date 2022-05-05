@@ -17,7 +17,6 @@ function TableElement({ bug }) {
 		navigate(`viewBug`);
 	};
 
-	console.log('bug.image_url', bug.image_url);
 	return (
 		<>
 			<tr
