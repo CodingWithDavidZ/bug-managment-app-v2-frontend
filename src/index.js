@@ -4,7 +4,7 @@ import { createRoot } from 'react-dom/client';
 import App from './App';
 import './index.css';
 import { AppProvider } from './Context/AppContext';
-import {QueryClient, QueryClientProvider} from 'react-query'
+import { QueryClient, QueryClientProvider } from 'react-query';
 
 import { ReactQueryDevtools } from 'react-query/devtools';
 
@@ -13,7 +13,7 @@ import { ReactQueryDevtools } from 'react-query/devtools';
 const rootElement = document.getElementById('root');
 const root = createRoot(rootElement);
 
-const queryClient = new QueryClient()
+const queryClient = new QueryClient();
 
 // 👇️ if you use TypeScript, add non-null (!) assertion operator
 // const root = createRoot(rootElement!);
@@ -23,7 +23,7 @@ root.render(
 		<QueryClientProvider client={queryClient}>
 			<AppProvider>
 				<App />
-				<ReactQueryDevtools initialIsOpen={false}/>
+				<ReactQueryDevtools initialIsOpen={false} />
 			</AppProvider>
 		</QueryClientProvider>
 	</StrictMode>

@@ -1,11 +1,10 @@
-import React, {useContext } from 'react';
+import React, { useContext } from 'react';
 import TableElement from './TableElement';
 import AppContext from '../../../Context/AppContext';
 import { useQuery } from 'react-query';
 
 function TableFramework() {
-	
-	const { sortBy } = useContext(AppContext);	
+	const { sortBy } = useContext(AppContext);
 	const bugs = useQuery(['allBugs', sortBy], () =>
 		fetch(`http://localhost:3000/bugs/sortOrder`, {
 			method: 'POST',
@@ -23,18 +22,15 @@ function TableFramework() {
 		})
 	);
 
-
-	if(bugs.isLoading) {
-		return <div>Loading...</div>
+	if (bugs.isLoading) {
+		return <div>Loading...</div>;
 	}
-				
 
-	const renderBugs = () => {		
+	const renderBugs = () => {
 		return bugs.data.map((bug) => {
-			return <TableElement key={bug.id} bug={bug} bugs={bugs.data}/>;
+			return <TableElement key={bug.id} bug={bug} bugs={bugs.data} />;
 		});
 	};
-
 
 	return (
 		<div className='mt-7 overflow-x-auto' key={bugs.data.length}>

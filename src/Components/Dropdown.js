@@ -52,12 +52,12 @@ function Dropdown({ array, label, setValue }) {
 
 	//Optional Settings:
 	const header = false;
-	
+
 	useEffect(() => {
-		console.log('rerender')
+		console.log('rerender');
 		setSeparatedArray([]);
 		setUnseparatedArray([]);
-		
+
 		if (label) {
 			setDropdownLabel(label);
 			setNoSelection(label);
@@ -65,7 +65,6 @@ function Dropdown({ array, label, setValue }) {
 
 		if (array) {
 			setOptionsArray(array);
-			
 		}
 
 		optionsArray.forEach((item) => {
@@ -90,21 +89,24 @@ function Dropdown({ array, label, setValue }) {
 	}
 
 	function handleChange(e) {
-		const selectedOptionFromArray = optionsArray[parseInt(e.target.attributes.value.value)];
+		const selectedOptionFromArray =
+			optionsArray[parseInt(e.target.attributes.value.value)];
 		if (selectedOptionFromArray.option === noSelection) {
 			setDropdownLabel(noSelection);
 			changeVisible();
 		} else {
 			console.log('dropdownLabel: ', dropdownLabel);
 			setDropdownLabel(selectedOptionFromArray.display);
-			console.log("selectedOptionFromArray.display: ", selectedOptionFromArray.display, 'dropdownLabel: ', dropdownLabel);
+			console.log(
+				'selectedOptionFromArray.display: ',
+				selectedOptionFromArray.display,
+				'dropdownLabel: ',
+				dropdownLabel
+			);
 			changeVisible();
 			setValue(parseInt(e.target.attributes.value.value));
 		}
 	}
-	
-
-
 
 	function handleMouseEnter(e) {
 		setTimeout(() => {
@@ -131,8 +133,10 @@ function Dropdown({ array, label, setValue }) {
 				>
 					{item.display}
 					{item.tooltip && isHover && thisOption === item.tooltip ? (
-						<span className='text-sm py-2 px-4 font-normal w-full whitespace-nowrap bg-transparent text-gray-300 hover:bg-gray-700 hover:text-white focus:text-white focus:bg-gray-700 active:bg-blue-600 '
-						value={item.value}>
+						<span
+							className='text-sm py-2 px-4 font-normal w-full whitespace-nowrap bg-transparent text-gray-300 hover:bg-gray-700 hover:text-white focus:text-white focus:bg-gray-700 active:bg-blue-600 '
+							value={item.value}
+						>
 							{item.tooltip}
 						</span>
 					) : null}
@@ -207,11 +211,7 @@ function Dropdown({ array, label, setValue }) {
 								<li>
 									<hr className='h-0 my-2 border border-solid border-t-0 border-gray-300 opacity-25' />
 								</li>
-								<>
-									
-									{separatedOptionsMap}
-									
-								</>
+								<>{separatedOptionsMap}</>
 							</>
 						) : null}
 					</ul>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useContext, useEffect} from 'react';
+import { useContext, useEffect } from 'react';
 import AppContext from '../../Context/AppContext';
 import DateFormat from '../../Components/DateFormat';
 import Comments from './Comments';
@@ -8,7 +8,6 @@ import { useQuery } from 'react-query';
 
 function ViewBug() {
 	const { setBugInStorage, bugInStorage } = useContext(AppContext);
-
 
 	useEffect(() => {
 		setBugInStorage(window.localStorage.getItem('bug'));
@@ -39,9 +38,12 @@ function ViewBug() {
 			return result;
 		})
 	);
-	
 
-	if (bug.isLoading || allUsers.isLoading) {
+	if (bug.isLoading) {
+		return <div>Loading...</div>;
+	}
+
+	if (allUsers.isLoading) {
 		return <div>Loading...</div>;
 	}
 
@@ -63,7 +65,9 @@ function ViewBug() {
 	);
 	const projectId = bug.data.project_id;
 	const assignedTo =
-	bug.data.assigned_to !== null ? findUser(bug.data.assigned_to) : 'Unassigned';
+		bug.data.assigned_to !== null
+			? findUser(bug.data.assigned_to)
+			: 'Unassigned';
 	const status = bug.data.status;
 	const statusModifiedDate =
 		bug.data.status_modified_date !== null ? (
@@ -83,17 +87,22 @@ function ViewBug() {
 			<DateFormat time={bug.data.actual_resolution_date} />
 		) : null;
 	const resolutionSummary = bug.data.resolution_summary;
-	const modifiedBy = bug.data.modified_by !== null && findUser(bug.data.modified_by);
+	const modifiedBy =
+		bug.data.modified_by !== null && findUser(bug.data.modified_by);
 	const approvedBy = bug.data.approved_by;
 	const imageUrl = bug.data.image_url;
 	const approved = bug.data.approved;
-	const createdBy = bug.data.created_by ? findUser(bug.data.created_by) : 'Not Created';
+	const createdBy = bug.data.created_by
+		? findUser(bug.data.created_by)
+		: 'Not Created';
 	const createdAt = <DateFormat time={bug.data.created_at} />;
 	const updatedAt = <DateFormat time={bug.data.updated_at} />;
 
 	function renderProgressBar(progressBar) {
-		switch (progressBar) { //Responsible for displaying the progress bar and coloring it based on the progress
-			case ('null0' || '0'):
+		switch (
+			progressBar //Responsible for displaying the progress bar and coloring it based on the progress
+		) {
+			case 'null0' || '0':
 				return <div></div>;
 			case '10':
 				return (
@@ -147,7 +156,6 @@ function ViewBug() {
 				return <div></div>;
 		}
 	}
-
 
 	return (
 		<div className=''>

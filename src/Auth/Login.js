@@ -1,15 +1,12 @@
 import React, { useContext, useState } from 'react';
 import AppContext from '../Context/AppContext';
 
-
-
 function Login() {
 	const { setUser } = useContext(AppContext);
 	const [userLogin, setUserLogin] = useState({
 		username: '',
 		password: '',
 	});
-	
 
 	async function login(e) {
 		e.preventDefault();

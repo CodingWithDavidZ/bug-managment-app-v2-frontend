@@ -6,19 +6,17 @@ import { MdOutlineUpdate } from 'react-icons/md';
 import { AiOutlineComment } from 'react-icons/ai';
 import DateFormat from '../../../Components/DateFormat';
 
-
 function TableElement({ bug }) {
 	const navigate = useNavigate();
 
 	let key = useId();
 
-	const handleViewClick =(e) => {
+	const handleViewClick = (e) => {
 		e.preventDefault();
 		window.localStorage.setItem('bug', e.target.id);
-			navigate(`viewBug`);
+		navigate(`viewBug`);
 	};
 
-	
 	console.log('bug.image_url', bug.image_url);
 	return (
 		<>
@@ -76,7 +74,22 @@ function TableElement({ bug }) {
 						id={bug.id}
 						key={key + bug.id + 'div 5'}
 					>
-						{bug.priority === 'Critical' ? (<BsTagsFill className='text-red-800' key={key + bug.id + 'emoji'} />) : (bug.priority === 'Urgent' ? (<BsTagsFill className='text-orange-500' key={key + bug.id + 'emoji'} />) : (<BsTagsFill className='text-green-700' key={key + bug.id + 'emoji'} />))}
+						{bug.priority === 'Critical' ? (
+							<BsTagsFill
+								className='text-red-800'
+								key={key + bug.id + 'emoji'}
+							/>
+						) : bug.priority === 'Urgent' ? (
+							<BsTagsFill
+								className='text-orange-500'
+								key={key + bug.id + 'emoji'}
+							/>
+						) : (
+							<BsTagsFill
+								className='text-green-700'
+								key={key + bug.id + 'emoji'}
+							/>
+						)}
 						<p
 							className='text-sm leading-none text-gray-600 ml-2'
 							id={bug.id}
@@ -132,7 +145,7 @@ function TableElement({ bug }) {
 							className='text-lg'
 							key={key + bug.id + 'updated_icon'}
 						/>
-						
+
 						<p
 							className='text-sm leading-none text-gray-600 ml-2'
 							key={key + bug.id + 'updated_at'}

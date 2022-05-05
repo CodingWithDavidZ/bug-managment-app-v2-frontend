@@ -1,7 +1,6 @@
-import React, { useContext, } from 'react';
+import React, { useContext } from 'react';
 import AppContext from '../Context/AppContext';
 import { Link, useNavigate } from 'react-router-dom';
-
 
 function Header() {
 	const { user, setUser } = useContext(AppContext);
@@ -24,8 +23,6 @@ function Header() {
 		}
 	}
 
-
-
 	return (
 		<header className='text-gray-600 body-font'>
 			<div className='container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center'>
@@ -38,14 +35,14 @@ function Header() {
 					</span>
 				</div>
 				{user.id ? ( // if user is logged in gives access to Navbar
-						<nav className='md:mr-auto md:ml-4 md:py-1 md:pl-4 md:border-l md:border-gray-400	flex flex-wrap items-center text-base justify-center'>
-							
-							<Link
-								className='mr-5 hover:text-gray-900 hover:border-gray-600 hover:border-2 hover:pl-1 hover:pr-1 hover:rounded-md cursor-pointer font-bold'
-								to='/'
-							>Home</Link>
-							
-						</nav>
+					<nav className='md:mr-auto md:ml-4 md:py-1 md:pl-4 md:border-l md:border-gray-400	flex flex-wrap items-center text-base justify-center'>
+						<Link
+							className='mr-5 hover:text-gray-900 hover:border-gray-600 hover:border-2 hover:pl-1 hover:pr-1 hover:rounded-md cursor-pointer font-bold'
+							to='/'
+						>
+							Home
+						</Link>
+					</nav>
 				) : (
 					<nav className='md:mr-auto md:ml-4 md:py-1 md:pl-4 	flex flex-wrap items-center text-base justify-center'>
 						<p className='mr-5 hover:text-gray-900 hover:border-gray-600 hover:border-2 hover:rounded-md cursor-pointer'></p>

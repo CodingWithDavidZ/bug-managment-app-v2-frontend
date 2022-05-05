@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 function ErrorFallback({ error, resetErrorBoundary }) {
 	const navigate = useNavigate();
-    
+
 	const reset = () => {
 		resetErrorBoundary();
 		navigate('/');

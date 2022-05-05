@@ -1,7 +1,5 @@
 import { createContext, useState, useMemo } from 'react';
 
-
-
 const AppContext = createContext();
 export function AppProvider({ children }) {
 	const [user, setUser] = useState({});
@@ -21,7 +19,6 @@ export function AppProvider({ children }) {
 	const [allUsers, setAllUsers] = useState(
 		JSON.parse(window.localStorage.getItem('allUsers'))
 	);
-	
 
 	const value = useMemo(() => ({
 		user,

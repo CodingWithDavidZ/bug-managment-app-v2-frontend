@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import AppContext from '../Context/AppContext';
 
 function Register({ userInfo, setUserInfo }) {
-	const {setUser} = useContext(AppContext);
+	const { setUser } = useContext(AppContext);
 
 	function register(e) {
 		e.preventDefault();

@@ -1,7 +1,6 @@
-import React, {useState } from 'react';
+import React, { useState } from 'react';
 import Login from './Login';
 import Register from './Register';
-
 
 function AuthContainer() {
 	const [userInfo, setUserInfo] = useState({
@@ -22,7 +21,6 @@ function AuthContainer() {
 	function renderLoginAuth() {
 		setAuthType('login');
 	}
-
 
 	function renderAuthMethod(authMethod) {
 		switch (authMethod) {

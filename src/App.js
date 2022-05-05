@@ -1,21 +1,21 @@
 // import './App.css';
-import React, { useEffect, useContext} from 'react';
+import React, { useEffect, useContext } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Header from './Pages/Header';
 import ViewBug from './Pages/ViewBug/ViewBug';
 import Home from './Pages/Home/Home';
 import AppContext from './Context/AppContext';
 import AuthContainer from './Auth/AuthContainer';
-import {ErrorBoundary, useErrorHandler} from 'react-error-boundary';
+import { ErrorBoundary, useErrorHandler } from 'react-error-boundary';
 import ErrorFallback from './Components/ErrorFallback';
-import {useQuery } from 'react-query';
+import { useQuery } from 'react-query';
 
 function App() {
 	const { user, setUser, sortBy } = useContext(AppContext);
 	const handleError = useErrorHandler();
 
-
-	const allBugs = useQuery(['allBugs', sortBy], () => //This serves as a prefectch to make the app run smoother and thus is not called
+	const allBugs = useQuery(['allBugs', sortBy], () =>
+		//This serves as a prefectch to make the app run smoother and thus is not called
 		fetch(`http://localhost:3000/bugs/sortOrder`, {
 			method: 'POST',
 			credentials: 'include',
@@ -46,33 +46,27 @@ function App() {
 			}
 		});
 	}, [setUser]);
-	
 
 	const errorHandler = (error, info) => {
-		console.log('ERROR: ',error,'INFO: ', info);
+		console.log('ERROR: ', error, 'INFO: ', info);
 	};
-
-
-	
 
 	return (
 		<div>
-				<Router>
-			<ErrorBoundary FallbackComponent={ErrorFallback} onError={errorHandler}>
+			<Router>
+				<ErrorBoundary FallbackComponent={ErrorFallback} onError={errorHandler}>
 					<Header />
 					<Routes>
 						<Route path='/'>
-							<Route index element={(user.id) ? <Home /> : <AuthContainer />} />
+							<Route index element={user.id ? <Home /> : <AuthContainer />} />
 
 							<Route exact path='viewBug' element={<ViewBug />} />
 						</Route>
 					</Routes>
-			</ErrorBoundary>
-				</Router>
+				</ErrorBoundary>
+			</Router>
 		</div>
 	);
 }
 
 export default App;
-
-

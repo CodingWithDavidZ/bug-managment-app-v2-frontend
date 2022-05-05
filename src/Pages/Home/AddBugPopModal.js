@@ -105,7 +105,7 @@ function AddBugPopModal() {
 				});
 		}
 	}
-	
+
 	return (
 		<div className=''>
 			<div

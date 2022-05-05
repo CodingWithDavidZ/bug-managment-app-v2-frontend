@@ -27,11 +27,11 @@ function Comments() {
 
 	const handleChange = (e) => {
 		e.preventDefault();
-		setValueHere(e.target.value);		
+		setValueHere(e.target.value);
 	};
 
 	async function addComment(e) {
-		e.preventDefault(); 
+		e.preventDefault();
 		await fetch(`http://localhost:3000/bugs/${e.target.id}/comments`, {
 			method: 'POST',
 			credentials: 'include',
@@ -47,16 +47,16 @@ function Comments() {
 			.then((data) => {
 				// setBug((prev) => [...prev.comments, data]);
 				queryClient.invalidateQueries('getBug');
-				setValueHere('')
+				setValueHere('');
 			})
 			.catch((err) => console.log(err));
 	}
 
 	function findUser(id) {
-			const allUsersUsernames = allUsers.filter((user) => user.id === id)[0]
-				.username;
-			return allUsersUsernames;
-		}
+		const allUsersUsernames = allUsers.filter((user) => user.id === id)[0]
+			.username;
+		return allUsersUsernames;
+	}
 
 	const mapComments = data.comments.map((comment, index) => {
 		return (
@@ -92,9 +92,9 @@ function Comments() {
 						<span key={`id: ${comment.id} span 4`}>
 							<strong>Updated:</strong> <DateFormat time={comment.updated_at} />
 						</span>
-					<div key={`id: ${comment.id} div 2'`}>
-						<strong>Message:</strong> {comment.comment_text}
-					</div>
+						<div key={`id: ${comment.id} div 2'`}>
+							<strong>Message:</strong> {comment.comment_text}
+						</div>
 					</div>
 					<br />
 				</div>

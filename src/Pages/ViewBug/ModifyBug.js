@@ -221,7 +221,8 @@ function ModifyBug({ rawProgress }) {
 		// setUserSelected('');
 		// setStatusValue('');
 		// setPrioritySelected('');
-		setTimeout(() => { //React Query is too fast and defaults to a cached version of the page if this delay does not exist.
+		setTimeout(() => {
+			//React Query is too fast and defaults to a cached version of the page if this delay does not exist.
 			queryClient.invalidateQueries('getBug');
 		}, 250);
 	};
@@ -260,7 +261,6 @@ function ModifyBug({ rawProgress }) {
 					className='grid grid-cols-3 gap-y-2 gap-x-4 pl-12 pr-12 max-w-1/2 leading-none'
 					id={bug}
 				>
-
 					<label className='col-start-1 font-bold' id={bug}>
 						Title:{}
 					</label>
@@ -363,7 +363,7 @@ function ModifyBug({ rawProgress }) {
 							Submit
 						</button>
 					</span>
-					
+
 					<span className='col-start-2'>
 						<button
 							className='uppercase w-4/5 focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600 mt-4 sm:mt-0  items-center justify-center py-3 bg-indigo-700 hover:bg-red-600 focus:outline-none rounded font-bold text-md leading-none text-white'
@@ -374,7 +374,6 @@ function ModifyBug({ rawProgress }) {
 							Delete Bug
 						</button>
 					</span>
-					
 				</div>
 			</form>
 		</div>
