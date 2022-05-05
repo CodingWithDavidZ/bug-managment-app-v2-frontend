@@ -2,7 +2,17 @@ import React, { useContext } from 'react';
 import AppContext from '../Context/AppContext';
 
 function Register({ userInfo, setUserInfo }) {
-	const { setUser } = useContext(AppContext);
+	const {setUser} = useContext(AppContext);
+
+	function removeFirstWord(str) {
+		const indexOfSpace = str.indexOf(' ');
+
+		if (indexOfSpace === -1) {
+			return '';
+		}
+
+		return str.substring(indexOfSpace + 1);
+	}
 
 	function register(e) {
 		e.preventDefault();
@@ -23,15 +33,37 @@ function Register({ userInfo, setUserInfo }) {
 					password: userInfo.password,
 				},
 			}),
-		})
-			.then((response) => response.json())
-			.then((data) => {
-				setUser(data);
-			})
-			.catch((error) => {
-				alert(error);
-			});
+		}).then((r) => {
+			console.log('r', r);
+			if (r.ok) {
+				r.json().then((data) => {
+					setUser(data);
+				});
+			} else {
+				r.json().then((data) => {
+					console.log('data', data.errors);
+					if (data.errors.toString() === 'Email Email invalid') {
+					const string = data.errors.toString();
+					console.log('string', removeFirstWord(string));
+					alert(`${removeFirstWord(string)} Please try again.`);
+					} else {
+						alert(`${data.errors} Please try again.`);
+					}
+				});
+			}
+		});
 	}
+
+
+
+			// .then((response) => response.json())
+			// .then((data) => {
+			// 	setUser(data);
+			// })
+			// .catch((error) => {
+			// 	alert(error);
+			// });
+	
 
 	return (
 		<div className='w-full max-w-xs'>
@@ -116,7 +148,7 @@ function Register({ userInfo, setUserInfo }) {
 						});
 					}}
 				/>
-				{/* Add Later if you decide to implement avatar usage */}
+			{/* Add Later if you decide to implement avatar usage */}
 				{/* <label className=' pt-3 block text-gray-700 text-sm font-bold mb-2'>
 					Avatar
 				</label>
