@@ -1,5 +1,5 @@
 import React from 'react';
-import { useContext, useEffect, useState, useCallback } from 'react';
+import { useContext, useEffect} from 'react';
 import AppContext from '../../Context/AppContext';
 import DateFormat from '../../Components/DateFormat';
 import Comments from './Comments';
@@ -8,7 +8,7 @@ import { useQuery } from 'react-query';
 
 function ViewBug() {
 	const { setBugInStorage, bugInStorage } = useContext(AppContext);
-	// const [bugInStorage, setBugInStorage] = useState('');
+
 
 	useEffect(() => {
 		setBugInStorage(window.localStorage.getItem('bug'));
@@ -92,7 +92,7 @@ function ViewBug() {
 	const updatedAt = <DateFormat time={bug.data.updated_at} />;
 
 	function renderProgressBar(progressBar) {
-		switch (progressBar) {
+		switch (progressBar) { //Responsible for displaying the progress bar and coloring it based on the progress
 			case ('null0' || '0'):
 				return <div></div>;
 			case '10':
