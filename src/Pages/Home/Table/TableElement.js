@@ -1,6 +1,5 @@
-import React, { useId, useContext, useEffect } from 'react';
+import React, { useId } from 'react';
 import { useNavigate } from 'react-router-dom';
-import AppContext from '../../../Context/AppContext';
 import { BiLink } from 'react-icons/bi';
 import { BsTagsFill, BsCalendarDate } from 'react-icons/bs';
 import { MdOutlineUpdate } from 'react-icons/md';
@@ -15,8 +14,6 @@ function TableElement({ bug }) {
 
 	const handleViewClick =(e) => {
 		e.preventDefault();
-		console.log('e.target.id', e.target.id);
-		// setSelectedBugId(e.target.id)
 		window.localStorage.setItem('bug', e.target.id);
 			navigate(`viewBug`);
 	};
@@ -79,9 +76,7 @@ function TableElement({ bug }) {
 						id={bug.id}
 						key={key + bug.id + 'div 5'}
 					>
-						{/* TODO: change color of class name based on urgency */}
 						{bug.priority === 'Critical' ? (<BsTagsFill className='text-red-800' key={key + bug.id + 'emoji'} />) : (bug.priority === 'Urgent' ? (<BsTagsFill className='text-orange-500' key={key + bug.id + 'emoji'} />) : (<BsTagsFill className='text-green-700' key={key + bug.id + 'emoji'} />))}
-						
 						<p
 							className='text-sm leading-none text-gray-600 ml-2'
 							id={bug.id}
@@ -98,7 +93,6 @@ function TableElement({ bug }) {
 						key={key + bug.id + 'div 6'}
 					>
 						<BsCalendarDate key={key + bug.id + 'emoji calendar'} />
-
 						<p
 							className='text-sm leading-none text-gray-600 ml-2'
 							id={bug.id}
@@ -119,7 +113,6 @@ function TableElement({ bug }) {
 							className='text-xl'
 							key={key + bug.id + 'emoji comment'}
 						/>
-
 						<p
 							className='text-sm leading-none text-gray-600 ml-2'
 							id={bug.id}
@@ -139,21 +132,19 @@ function TableElement({ bug }) {
 							className='text-lg'
 							key={key + bug.id + 'updated_icon'}
 						/>
-						{/* Following info should be for Last updated */}
+						
 						<p
 							className='text-sm leading-none text-gray-600 ml-2'
 							key={key + bug.id + 'updated_at'}
 							id={bug.id}
 						>
 							<DateFormat time={bug.updated_at} />
-							{/* {bugDate(bug.updated_at)} */}
 						</p>
 					</div>
 				</td>
 				<td className='pl-5 ' key={key + bug.id + 'td-7'} id={bug.id}>
 					<div
 						className='py-3 px-3 text-sm focus:outline-none leading-none rounded flex justify-center'
-						// className='py-3 px-3 text-sm focus:outline-none leading-none text-red-700 bg-red-100 rounded flex justify-center'
 						key={key + bug.id + 'target resolution date'}
 						id={bug.id}
 					>
