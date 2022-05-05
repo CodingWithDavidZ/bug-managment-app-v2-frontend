@@ -30,6 +30,7 @@ function ModifyBug({ rawProgress }) {
 		status: bug.status !== undefined ? bug.status : undefined,
 		status_modified_date: '',
 		priority: bug.priority !== undefined ? bug.priority : undefined,
+		//Leaving the following code for future functionality updates
 		// approved: bug.approved !== undefined ? bug.approved !== true ? bug.approved : false : undefined,
 		// approved_by: bug.approved_by !== undefined ? bug.approved_by : undefined,
 		resolution_summary:
@@ -43,12 +44,10 @@ function ModifyBug({ rawProgress }) {
 	const [updateInfo, setUpdateInfo] = useState(defaultInfo);
 	const [titleValue, setTitleValue] = useState('');
 	const [descriptionValue, setDescriptionValue] = useState('');
-	const [progressValue, setProgressValue] = useState('');
 	const [statusModifiedDateValue, setStatusModifiedDateValue] = useState('');
 	const [resolutionSummaryValue, setResolutionSummaryValue] = useState('');
 	const [actualResolutionDateValue, setActualResolutionDateValue] =
 		useState('');
-	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [isVisible, setIsVisible] = useState(false);
 	const navigate = useNavigate();
 	const [userSelected, setUserSelected] = useState();
@@ -160,13 +159,9 @@ function ModifyBug({ rawProgress }) {
 		}
 	};
 
-	console.log(bug.resolution_summary);
-	console.log(bug.resolution_summary === resolutionSummaryValue);
-
 	const handleUpdate = (e) => {
 		e.preventDefault();
 		setStatusModifiedDateValue(new Date());
-		console.log('titleValue', titleValue, 'descriptionValue', descriptionValue);
 		fetch(
 			`http://localhost:3000/bugs/${bug.id}`,
 			{
@@ -195,6 +190,7 @@ function ModifyBug({ rawProgress }) {
 					status_modified_date: statusModifiedDateValue,
 					priority:
 						prioritySelected !== bug.priority ? prioritySelected : bug.priority,
+					// Leaving in for future functionality updates
 					// approved: updateInfo.approved,
 					// approved_by: updateInfo.approved_by,
 					resolution_summary:
@@ -217,14 +213,15 @@ function ModifyBug({ rawProgress }) {
 		);
 		setTitleValue('');
 		setDescriptionValue('');
-		// setProgressBar('');
 		setStatusModifiedDateValue('');
 		setResolutionSummaryValue('');
 		setActualResolutionDateValue('');
+		//Leaving in for future functionality updates
+		// setProgressBar('');
 		// setUserSelected('');
 		// setStatusValue('');
 		// setPrioritySelected('');
-		setTimeout(() => {
+		setTimeout(() => { //React Query is too fast and defaults to a cached version of the page if this delay does not exist.
 			queryClient.invalidateQueries('getBug');
 		}, 250);
 	};
@@ -255,12 +252,15 @@ function ModifyBug({ rawProgress }) {
 
 	return (
 		<div className='pr-12' id={bug}>
-			<h1 className='font-bold pb-3 pl-12 underline underline-offset-4 decoration-2'>Modify Bug:</h1>
+			<h1 className='font-bold pb-3 pl-12 underline underline-offset-4 decoration-2'>
+				Modify Bug:
+			</h1>
 			<form className='' onSubmit={handleUpdate} id={bug}>
 				<div
 					className='grid grid-cols-3 gap-y-2 gap-x-4 pl-12 pr-12 max-w-1/2 leading-none'
 					id={bug}
 				>
+
 					<label className='col-start-1 font-bold' id={bug}>
 						Title:{}
 					</label>
@@ -338,6 +338,7 @@ function ModifyBug({ rawProgress }) {
 							onChange={(e) => setUpdateInfo({ ...updateInfo, approved: true })}
 						/>
 					</div>
+
 					<div className={visible()} id={bug}>
 						<label className='' id={bug}>
 							Resolution Summary
@@ -351,8 +352,9 @@ function ModifyBug({ rawProgress }) {
 							onChange={(e) => setResolutionSummaryValue(e.target.value)}
 						/>
 					</div>
+
 					<br />
-					{/* <div className='col-start-1' id={bug}> */}
+
 					<span className='col-start-1'>
 						<button
 							className='uppercase w-4/5 focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600 mt-4 sm:mt-0 items-center justify-center  py-3 bg-indigo-700 hover:bg-red-600 focus:outline-none rounded font-bold text-md leading-none text-white'
@@ -361,6 +363,7 @@ function ModifyBug({ rawProgress }) {
 							Submit
 						</button>
 					</span>
+					
 					<span className='col-start-2'>
 						<button
 							className='uppercase w-4/5 focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600 mt-4 sm:mt-0  items-center justify-center py-3 bg-indigo-700 hover:bg-red-600 focus:outline-none rounded font-bold text-md leading-none text-white'
@@ -371,7 +374,7 @@ function ModifyBug({ rawProgress }) {
 							Delete Bug
 						</button>
 					</span>
-					{/* </div> */}
+					
 				</div>
 			</form>
 		</div>
