@@ -8,7 +8,7 @@ import { useQuery } from 'react-query';
 import Loading from '../../Components/Loading';
 
 function ViewBug() {
-	const { setBugInStorage, bugInStorage } = useContext(AppContext);
+	const { setBugInStorage, bugInStorage, isLoading, setIsLoading} = useContext(AppContext);
 
 	useEffect(() => {
 		setBugInStorage(window.localStorage.getItem('bug'));
@@ -40,24 +40,35 @@ function ViewBug() {
 		})
 	);
 
+
 	if (bug.isLoading) {
 		return <Loading/>;
 	}
+
 
 	if (allUsers.isLoading) {
 		return <Loading/>;
 	}
 
 	function findUser(id) {
+		//check if the user exists
 		if (allUsers.data) {
-			return allUsers.data.find((user) => user.id === id).username;
+			const user = allUsers.data.find((user) => user.id === id);
+			if (user) {
+				return user.username;
+			} else {
+				return 'Unknown';
+			}
 		}
 	}
+		
+
 
 	const bugId = bug.data.id;
 	const issueTitle = bug.data.issue_title;
 	const issueDescription = bug.data.issue_description;
 	const identifiedBy =
+	console.log('identified_by', bug.data.identified_by, 'created_by', bug.data.created_by);
 		bug.data.identified_by !== null
 			? findUser(bug.data.identified_by)
 			: findUser(bug.data.created_by);

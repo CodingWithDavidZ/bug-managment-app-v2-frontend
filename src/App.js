@@ -11,7 +11,7 @@ import ErrorFallback from './Components/ErrorFallback';
 import { useQuery } from 'react-query';
 
 function App() {
-	const { user, setUser, sortBy } = useContext(AppContext);
+	const { user, setUser, sortBy, setAllUsers } = useContext(AppContext);
 	const handleError = useErrorHandler();
 
 	const allBugs = useQuery(['allBugs', sortBy], () =>
@@ -31,6 +31,20 @@ function App() {
 			return result;
 		})
 	);
+
+	const allUsers = useQuery('allUser', () =>
+		fetch(`http://localhost:3000/users`, {
+			method: 'GET',
+			credentials: 'include',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		}).then((res) => {
+			const result = res.json();
+			return result;
+		})
+	);
+
 
 	useEffect(() => {
 		// auto-login

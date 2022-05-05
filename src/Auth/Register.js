@@ -1,8 +1,10 @@
 import React, { useContext } from 'react';
 import AppContext from '../Context/AppContext';
+import {useQueryClient} from 'react-query';
 
 function Register({ userInfo, setUserInfo }) {
 	const {setUser} = useContext(AppContext);
+	const queryClient = useQueryClient();
 
 	function removeFirstWord(str) {
 		const indexOfSpace = str.indexOf(' ');
@@ -38,6 +40,7 @@ function Register({ userInfo, setUserInfo }) {
 			if (r.ok) {
 				r.json().then((data) => {
 					setUser(data);
+					queryClient.invalidateQueries('allUser');
 				});
 			} else {
 				r.json().then((data) => {
@@ -139,6 +142,7 @@ function Register({ userInfo, setUserInfo }) {
 				<input
 					className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
 					placeholder='Password'
+					type='password'
 					value={userInfo.password}
 					required={true}
 					onChange={(e) => {

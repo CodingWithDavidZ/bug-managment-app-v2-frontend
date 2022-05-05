@@ -70,9 +70,15 @@ function Comments() {
 	}
 
 	function findUser(id) {
-		const allUsersUsernames = allUsers.data.filter((user) => user.id === id)[0]
-			.username;
-		return allUsersUsernames;
+		//check if the user exists
+		if (allUsers.data) {
+			const user = allUsers.data.find((user) => user.id === id);
+			if (user) {
+				return user.username;
+			} else {
+				return 'Unknown';
+			}
+		}
 	}
 
 	const mapComments = data.comments.map((comment, index) => {
