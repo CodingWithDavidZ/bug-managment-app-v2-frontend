@@ -5,7 +5,7 @@ import { useQuery, useQueryClient } from 'react-query';
 import Loading from '../../Components/Loading';
 
 function Comments() {
-	const { bugInStorage, allUsers } = useContext(AppContext);
+	const { bugInStorage } = useContext(AppContext);
 	const [valueHere, setValueHere] = useState('');
 	const queryClient = useQueryClient();
 
@@ -22,7 +22,24 @@ function Comments() {
 		})
 	);
 
+	const allUsers = useQuery('allUser', () =>
+		fetch(`http://localhost:3000/users`, {
+			method: 'GET',
+			credentials: 'include',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		}).then((res) => {
+			const result = res.json();
+			return result;
+		})
+	);
+
 	if (isLoading) {
+		return <Loading/>;
+	}
+
+	if(allUsers.isLoading) {
 		return <Loading/>;
 	}
 
@@ -53,7 +70,7 @@ function Comments() {
 	}
 
 	function findUser(id) {
-		const allUsersUsernames = allUsers.filter((user) => user.id === id)[0]
+		const allUsersUsernames = allUsers.data.filter((user) => user.id === id)[0]
 			.username;
 		return allUsersUsernames;
 	}
