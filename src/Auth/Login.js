@@ -1,7 +1,6 @@
 import React, { useContext, useState } from 'react';
 import AppContext from '../Context/AppContext';
-import * as api from '../Api/ApiCalls';
-import { useQuery } from 'react-query';
+
 
 
 function Login() {

@@ -6,8 +6,7 @@ import { BsTagsFill, BsCalendarDate } from 'react-icons/bs';
 import { MdOutlineUpdate } from 'react-icons/md';
 import { AiOutlineComment } from 'react-icons/ai';
 import DateFormat from '../../../Components/DateFormat';
-import {useQuery} from 'react-query';
-import { getCredentials } from '../../../Api/ApiCalls';
+
 
 function TableElement({ bug }) {
 	const navigate = useNavigate();
