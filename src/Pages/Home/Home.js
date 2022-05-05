@@ -1,22 +1,13 @@
-import React, { useState, useContext } from 'react';
-import AppContext from '../../Context/AppContext';
-
+import React from 'react';
 import SortBy from './SortBy';
 import AddBugPopModal from './AddBugPopModal';
 import StatusFilter from './StatusFilter';
-
 import TableFramework from './Table/TableFramework';
 
-
-
 function Home() {
-
-	
-
 	return (
 		<div className='sm:px w-full'>
 			<div className='px-4 md:px-10 py-4 md:py-7'>
-				{/* Top Navbar with "Sort By" dropdown */}
 				<div className='flex items-center justify-between'>
 					<p
 						tabIndex='0'
@@ -26,9 +17,7 @@ function Home() {
 					</p>
 					<SortBy />
 				</div>
-				{/* END: Top Navbar with "Sort By" dropdown */}
 			</div>
-
 			<div className='bg-white py-4 md:py-7 px-4 md:px-8 xl:px-10'>
 				<div className='sm:flex items-center justify-between'>
 					<StatusFilter />
