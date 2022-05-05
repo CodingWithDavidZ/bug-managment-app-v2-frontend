@@ -5,7 +5,8 @@ import React, { useState, useEffect } from 'react';
 //! This Component can take "array" and "label" as props
 //!      where "array" is the array of options to be displayed in the dropdown
 //!		 and "label" is the label of the dropdown button.
-//TODO: Bug: when hovering to get tool tip then selecting, changes dropdown button to tooltip.
+//!      Be sure that what you are passing in is an Array and not a function to produce an array.
+
 function Dropdown({ array, label, setValue }) {
 	const [isVisible, setIsVisible] = useState(false);
 	const [noSelection, setNoSelection] = useState('Dropdown');
