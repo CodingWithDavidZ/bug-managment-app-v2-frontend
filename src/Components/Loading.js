@@ -3,6 +3,7 @@ import React from 'react';
 function Loading() {
 	return (
 		<div className='text-center'>
+			<h1>Loading...</h1>
 			<svg
 				role='status'
 				className='inline mr-2 w-10 h-10 text-gray-200 animate-spin dark:text-gray-300 fill-indigo-700'

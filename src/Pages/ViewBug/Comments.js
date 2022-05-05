@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 import AppContext from '../../Context/AppContext';
 import DateFormat from '../../Components/DateFormat';
 import { useQuery, useQueryClient } from 'react-query';
+import Loading from '../../Components/Loading';
 
 function Comments() {
 	const { bugInStorage, allUsers } = useContext(AppContext);
@@ -22,7 +23,7 @@ function Comments() {
 	);
 
 	if (isLoading) {
-		return <div>Loading...</div>;
+		return <Loading/>;
 	}
 
 	const handleChange = (e) => {

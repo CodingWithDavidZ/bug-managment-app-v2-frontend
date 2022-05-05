@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import TableElement from './TableElement';
 import AppContext from '../../../Context/AppContext';
 import { useQuery } from 'react-query';
+import Loading from '../../../Components/Loading';
 
 function TableFramework() {
 	const { sortBy } = useContext(AppContext);
@@ -23,7 +24,7 @@ function TableFramework() {
 	);
 
 	if (bugs.isLoading) {
-		return <div>Loading...</div>;
+		return <Loading/>;
 	}
 
 	const renderBugs = () => {

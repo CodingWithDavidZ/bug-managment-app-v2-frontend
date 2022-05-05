@@ -5,6 +5,7 @@ import DateFormat from '../../Components/DateFormat';
 import Comments from './Comments';
 import ModifyBug from './ModifyBug';
 import { useQuery } from 'react-query';
+import Loading from '../../Components/Loading';
 
 function ViewBug() {
 	const { setBugInStorage, bugInStorage } = useContext(AppContext);
@@ -40,11 +41,11 @@ function ViewBug() {
 	);
 
 	if (bug.isLoading) {
-		return <div>Loading...</div>;
+		return <Loading/>;
 	}
 
 	if (allUsers.isLoading) {
-		return <div>Loading...</div>;
+		return <Loading/>;
 	}
 
 	function findUser(id) {
