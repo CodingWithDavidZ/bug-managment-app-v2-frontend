@@ -1,7 +1,7 @@
-import React, { useContext, useState } from 'react';
+import React, {useState } from 'react';
 import Login from './Login';
 import Register from './Register';
-import AppContext from '../Context/AppContext';
+
 
 function AuthContainer() {
 	const [userInfo, setUserInfo] = useState({
@@ -13,17 +13,16 @@ function AuthContainer() {
 		email: '',
 		is_team_lead: false,
 	});
-
 	const [authType, setAuthType] = useState('');
 
 	function renderRegisterAuth() {
 		setAuthType('register');
 	}
+
 	function renderLoginAuth() {
 		setAuthType('login');
 	}
 
-	// TODO: Handle login errors on browser
 
 	function renderAuthMethod(authMethod) {
 		switch (authMethod) {

@@ -6,7 +6,6 @@ import ViewBug from './Pages/ViewBug/ViewBug';
 import Home from './Pages/Home/Home';
 import AppContext from './Context/AppContext';
 import AuthContainer from './Auth/AuthContainer';
-
 import {ErrorBoundary, useErrorHandler} from 'react-error-boundary';
 import ErrorFallback from './Components/ErrorFallback';
 import {useQuery } from 'react-query';
@@ -15,8 +14,8 @@ function App() {
 	const { user, setUser, sortBy } = useContext(AppContext);
 	const handleError = useErrorHandler();
 
-	
-	const allBugs = useQuery(['allBugs', sortBy], () =>
+
+	const allBugs = useQuery(['allBugs', sortBy], () => //This serves as a prefectch to make the app run smoother and thus is not called
 		fetch(`http://localhost:3000/bugs/sortOrder`, {
 			method: 'POST',
 			credentials: 'include',
@@ -76,40 +75,4 @@ function App() {
 
 export default App;
 
-// idea: try to implement this breadcrumb thing
-// {
-// 	routes.map(({ path, name, Component }, key) => (
-// 		<Route
-// 			exact
-// 			path={path}
-// 			key={key}
-// 			return={(props) => {
-// 				const crumbs = routes
-// 					// Get all routes that contain the current one.
-// 					.filter(({ path }) => props.match.path.includes(path))
-// 					// Swap out any dynamic routes with their param values.
-// 					// E.g. "/pizza/:pizzaId" will become "/pizza/1"
-// 					.map(({ path, ...rest }) => ({
-// 						path: Object.keys(props.match.params).length
-// 							? Object.keys(props.match.params).reduce(
-// 									(path, param) =>
-// 										path.replace(`:${param}`, props.match.params[param]),
-// 									path
-// 							  )
-// 							: path,
-// 						...rest,
-// 					}));
 
-// 				console.log(`Generated crumbs for ${props.match.path}`);
-// 				crumbs.map(({ name, path }) => console.log({ name, path }));
-
-// 				return (
-// 					<div className='p-8'>
-// 						<Breadcrumbs crumbs={crumbs} />
-// 						<Component {...props} />
-// 					</div>
-// 				);
-// 			}}
-// 		/>
-// 	));
-// }
