@@ -1,16 +1,11 @@
 import React, { useContext, } from 'react';
 import AppContext from '../Context/AppContext';
-import { Link, BrowserRouter as Router, Route, Routes, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 
 function Header() {
 	const { user, setUser } = useContext(AppContext);
 	const navigate = useNavigate();
-
-	// const logout = async () => {
-	// 	logoutOfServer();
-	// 	setUser({});
-	// };
 
 	async function logoutOfServer() {
 		const res = await fetch('http://localhost:3000/logout', {
@@ -42,14 +37,13 @@ function Header() {
 							: '\u00A0 Please Login or Register'}
 					</span>
 				</div>
-				{user.id ? (
+				{user.id ? ( // if user is logged in gives access to Navbar
 						<nav className='md:mr-auto md:ml-4 md:py-1 md:pl-4 md:border-l md:border-gray-400	flex flex-wrap items-center text-base justify-center'>
+							
 							<Link
 								className='mr-5 hover:text-gray-900 hover:border-gray-600 hover:border-2 hover:pl-1 hover:pr-1 hover:rounded-md cursor-pointer font-bold'
 								to='/'
-							>
-								Home
-							</Link>
+							>Home</Link>
 							
 						</nav>
 				) : (
