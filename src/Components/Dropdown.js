@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 
 //!This Component uses Tailwind CSS
 
@@ -119,7 +119,6 @@ function Dropdown({ array, label, setValue }) {
 	const optionsMap = unseparatedArray.map((item, index) => {
 		return (
 			<li key={index + ' li'} id={item.option}>
-				{/* {console.log(item.display)} */}
 				<div
 					className='dropdown-item text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-gray-300 hover:bg-gray-700 hover:text-white focus:text-white focus:bg-gray-700 active:bg-blue-600'
 					value={item.value}
@@ -208,12 +207,9 @@ function Dropdown({ array, label, setValue }) {
 									<hr className='h-0 my-2 border border-solid border-t-0 border-gray-300 opacity-25' />
 								</li>
 								<>
-									{/* <div
-										className='dropdown-item text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-gray-300 hover:bg-gray-700 hover:text-white focus:text-white focus:bg-gray-700'
-										href='#'
-									> */}
+									
 									{separatedOptionsMap}
-									{/* </div> */}
+									
 								</>
 							</>
 						) : null}
