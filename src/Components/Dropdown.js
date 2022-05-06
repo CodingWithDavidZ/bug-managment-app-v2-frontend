@@ -88,6 +88,9 @@ function Dropdown({ array, label, setValue }) {
 	}
 
 	function handleChange(e) {
+		
+		const valueToString = e.target.attributes.value.value.toString();
+		console.log('e.target.attributes,', valueToString);
 		const selectedOptionFromArray =
 			optionsArray[parseInt(e.target.attributes.value.value)];
 		if (selectedOptionFromArray.option === noSelection) {
@@ -96,7 +99,7 @@ function Dropdown({ array, label, setValue }) {
 		} else {
 			setDropdownLabel(selectedOptionFromArray.display);
 			changeVisible();
-			setValue(parseInt(e.target.attributes.value.value));
+			setValue(parseInt(valueToString.split(',')[1]));
 		}
 	}
 
@@ -112,6 +115,7 @@ function Dropdown({ array, label, setValue }) {
 	}
 
 	const optionsMap = unseparatedArray.map((item, index) => {
+		// console.log('item', item)
 		return (
 			<li key={index + ' li'} id={item.option}>
 				<div

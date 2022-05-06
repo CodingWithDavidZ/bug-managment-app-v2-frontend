@@ -79,7 +79,7 @@ function ModifyBug({ rawProgress }) {
 		allUsers.data.map((user, index) => {
 			return {
 				option: user.id,
-				value: index,
+				value: [index, user.id],
 				display: user.username,
 				separated: false,
 			};
@@ -105,7 +105,7 @@ function ModifyBug({ rawProgress }) {
 		status.map((status, index) => {
 			return {
 				option: status,
-				value: index,
+				value: [index, index],
 				display: status,
 				separated: false,
 			};
@@ -117,7 +117,7 @@ function ModifyBug({ rawProgress }) {
 		priority.map((priority, index) => {
 			return {
 				option: priority,
-				value: index,
+				value: [index, index],
 				display: priority,
 				separated: false,
 			};
@@ -157,6 +157,7 @@ function ModifyBug({ rawProgress }) {
 			alert('Bug not deleted, please try again.');
 		}
 	};
+	console.log('userSelected', userSelected);
 
 	const handleUpdate = (e) => {
 		e.preventDefault();
@@ -181,8 +182,8 @@ function ModifyBug({ rawProgress }) {
 							? descriptionValue
 							: bug.issue_description,
 					assigned_to:
-						userSelected + 1 !== bug.assigned_to
-							? userSelected + 1
+						userSelected !== bug.assigned_to
+							? userSelected
 							: bug.assigned_to,
 					progress: progressBar !== bug.progress ? progressBar : bug.progress,
 					status: statusValue !== bug.status ? statusValue : bug.status,
