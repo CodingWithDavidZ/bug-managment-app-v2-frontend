@@ -45,7 +45,7 @@ function AuthContainer() {
 							Register
 						</button>
 						<button
-							className='bg-green-700 w-1/3 rounded border hover:animate-pulse'
+							className='bg-green-600 w-1/3 rounded border hover:animate-pulse'
 							onClick={renderLoginAuth}
 						>
 							Login
