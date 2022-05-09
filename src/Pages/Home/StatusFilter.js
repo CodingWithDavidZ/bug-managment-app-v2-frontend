@@ -20,7 +20,6 @@ function StatusFilter() {
 		setLastState(param);
 		switch (param) { //Changes classNames and sets the sortBy state
 			case 'all':
-				console.log('ALL')
 				setAllStyle(isHighlighted);
 				setCompletedStyle(notHighlighted);
 				setInProgressStyle(notHighlighted);
@@ -30,7 +29,6 @@ function StatusFilter() {
 				setSortBy({...sortBy, sortFilter: 'all'});
 				break;
 			case 'completed':
-				console.log('COMPLETED')
 				setAllStyle(notHighlighted);
 				setCompletedStyle(isHighlighted);
 				setInProgressStyle(notHighlighted);
@@ -40,7 +38,6 @@ function StatusFilter() {
 				setSortBy({...sortBy, sortFilter: 'completed'});
 				break;
 			case 'inProgress':
-				console.log('IN PROGRESS')
 				setAllStyle(notHighlighted);
 				setCompletedStyle(notHighlighted);
 				setInProgressStyle(isHighlighted);
@@ -50,7 +47,6 @@ function StatusFilter() {
 				setSortBy({...sortBy, sortFilter: 'inProgress'});
 				break;
 			case 'onHold':
-				console.log('ON HOLD')
 				setAllStyle(notHighlighted);
 				setCompletedStyle(notHighlighted);
 				setInProgressStyle(notHighlighted);
@@ -60,7 +56,6 @@ function StatusFilter() {
 				setSortBy({...sortBy, sortFilter: 'waiting'});
 				break;
 			case 'needsApproval':
-				console.log('NEEDS APPROVAL')
 				setAllStyle(notHighlighted);
 				setCompletedStyle(notHighlighted);
 				setInProgressStyle(notHighlighted);
@@ -70,7 +65,6 @@ function StatusFilter() {
 				setSortBy({...sortBy, sortFilter: 'needsApproval'});
 				break;
 			default:
-				console.log('DEFAULT')
 				setAllStyle(isHighlighted);
 				setCompletedStyle(notHighlighted);
 				setInProgressStyle(notHighlighted);
@@ -79,10 +73,7 @@ function StatusFilter() {
 				setBugStatusSort('all');
 				setSortBy({...sortBy, sortFilter: 'all'});
 		}
-	}
-
-	console.log('lastState', lastState)
-	
+	}	
 
 	useEffect(() => {
 			renderStyleSwitch(lastState);
