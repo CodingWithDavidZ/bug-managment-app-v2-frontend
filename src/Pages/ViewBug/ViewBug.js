@@ -51,10 +51,10 @@ function ViewBug() {
 	}
 
 	function findUser(id) {
-		//check if the user exists
 		if (allUsers.data) {
+			//check if the user exists
+			if (allUsers.data.find((user) => user.id === id)){
 			const user = allUsers.data.find((user) => user.id === id);
-			if (user) {
 				return user.username;
 			} else {
 				return 'Unknown';
@@ -67,11 +67,13 @@ function ViewBug() {
 	const bugId = bug.data.id;
 	const issueTitle = bug.data.issue_title;
 	const issueDescription = bug.data.issue_description;
-	const identifiedBy =
-	console.log('identified_by', bug.data.identified_by, 'created_by', bug.data.created_by);
-		bug.data.identified_by !== null
-			? findUser(bug.data.identified_by)
-			: findUser(bug.data.created_by);
+	const identifiedBy = () => {
+	    if (bug.data.identified_by !== null) {
+					return findUser(bug.data.identified_by);
+					} else {
+						return findUser(bug.data.created_by);
+					}
+				};
 	const identifiedDate = bug.data.identified_date !== null && (
 		<DateFormat time={bug.data.identified_date} />
 	);
@@ -183,7 +185,7 @@ function ViewBug() {
 									{identifiedBy !== createdBy ? (
 										<span>
 											<span className='font-bold'> Identified By:</span>
-											<span className='px-1'> {identifiedBy},</span>
+											<span className='px-1'> {identifiedBy()},</span>
 										</span>
 									) : null}
 								</span>
@@ -241,7 +243,7 @@ function ViewBug() {
 								{actualResolutionDate !== null ? (
 									<div className=''>
 										<span className='font-bold'> Actual Resolution Date: </span>
-										<di className=''>{actualResolutionDate}</di>
+										<div className=''>{actualResolutionDate}</div>
 									</div>
 								) : null}
 							</div>

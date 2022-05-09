@@ -19,6 +19,7 @@ export function AppProvider({ children }) {
 	const [allUsers, setAllUsers] = useState(
 		JSON.parse(window.localStorage.getItem('allUsers'))
 	);
+	const [lastState, setLastState] = useState('all');
 
 	const value = useMemo(() => ({
 		user,
@@ -41,6 +42,8 @@ export function AppProvider({ children }) {
 		selectedBugId,
 		bugInStorage,
 		setBugInStorage,
+		lastState,
+		setLastState,
 	}));
 
 	return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

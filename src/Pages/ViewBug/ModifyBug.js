@@ -157,7 +157,7 @@ function ModifyBug({ rawProgress }) {
 			alert('Bug not deleted, please try again.');
 		}
 	};
-	console.log('userSelected', userSelected);
+
 
 	const handleUpdate = (e) => {
 		e.preventDefault();

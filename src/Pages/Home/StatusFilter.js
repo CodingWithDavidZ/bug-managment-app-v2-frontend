@@ -1,22 +1,26 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import AppContext from '../../Context/AppContext';
 
 function StatusFilter() {
-
+	
 	const isHighlighted = 'py-2 px-8 bg-indigo-100 text-indigo-700 rounded-full';
 	const notHighlighted =
 		'py-2 px-8 text-gray-600 hover:text-indigo-700 hover:bg-indigo-100 rounded-full';
-	const { setBugStatusSort, bugs, setSortBy, sortBy } = useContext(AppContext);
-	const [allStyle, setAllStyle] = useState(isHighlighted);
-	const [completedStyle, setCompletedStyle] = useState(notHighlighted);
-	const [inProgressStyle, setInProgressStyle] = useState(notHighlighted);
-	const [onHoldStyle, setOnHoldStyle] = useState(notHighlighted);
-	const [needsApprovalStyle, setNeedsApprovalStyle] = useState(notHighlighted);
+	const { setBugStatusSort, setSortBy, sortBy, lastState, setLastState } = useContext(AppContext);
+	const [allStyle, setAllStyle] = useState();
+	const [completedStyle, setCompletedStyle] = useState();
+	const [inProgressStyle, setInProgressStyle] = useState();
+	const [onHoldStyle, setOnHoldStyle] = useState();
+	const [needsApprovalStyle, setNeedsApprovalStyle] = useState();
+	
+
+	
 
 	function renderStyleSwitch(param) {
-
+		setLastState(param);
 		switch (param) { //Changes classNames and sets the sortBy state
 			case 'all':
+				console.log('ALL')
 				setAllStyle(isHighlighted);
 				setCompletedStyle(notHighlighted);
 				setInProgressStyle(notHighlighted);
@@ -26,6 +30,7 @@ function StatusFilter() {
 				setSortBy({...sortBy, sortFilter: 'all'});
 				break;
 			case 'completed':
+				console.log('COMPLETED')
 				setAllStyle(notHighlighted);
 				setCompletedStyle(isHighlighted);
 				setInProgressStyle(notHighlighted);
@@ -35,6 +40,7 @@ function StatusFilter() {
 				setSortBy({...sortBy, sortFilter: 'completed'});
 				break;
 			case 'inProgress':
+				console.log('IN PROGRESS')
 				setAllStyle(notHighlighted);
 				setCompletedStyle(notHighlighted);
 				setInProgressStyle(isHighlighted);
@@ -44,6 +50,7 @@ function StatusFilter() {
 				setSortBy({...sortBy, sortFilter: 'inProgress'});
 				break;
 			case 'onHold':
+				console.log('ON HOLD')
 				setAllStyle(notHighlighted);
 				setCompletedStyle(notHighlighted);
 				setInProgressStyle(notHighlighted);
@@ -53,6 +60,7 @@ function StatusFilter() {
 				setSortBy({...sortBy, sortFilter: 'waiting'});
 				break;
 			case 'needsApproval':
+				console.log('NEEDS APPROVAL')
 				setAllStyle(notHighlighted);
 				setCompletedStyle(notHighlighted);
 				setInProgressStyle(notHighlighted);
@@ -62,6 +70,7 @@ function StatusFilter() {
 				setSortBy({...sortBy, sortFilter: 'needsApproval'});
 				break;
 			default:
+				console.log('DEFAULT')
 				setAllStyle(isHighlighted);
 				setCompletedStyle(notHighlighted);
 				setInProgressStyle(notHighlighted);
@@ -71,6 +80,15 @@ function StatusFilter() {
 				setSortBy({...sortBy, sortFilter: 'all'});
 		}
 	}
+
+	console.log('lastState', lastState)
+	
+
+	useEffect(() => {
+			renderStyleSwitch(lastState);
+	}, []);
+
+
 
 
 	return (

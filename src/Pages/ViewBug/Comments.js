@@ -72,8 +72,8 @@ function Comments() {
 	function findUser(id) {
 		//check if the user exists
 		if (allUsers.data) {
-			const user = allUsers.data.find((user) => user.id === id);
-			if (user) {
+			if (allUsers.data.find((user) => user.id === id)) {
+				const user = allUsers.data.find((user) => user.id === id);
 				return user.username;
 			} else {
 				return 'Unknown';

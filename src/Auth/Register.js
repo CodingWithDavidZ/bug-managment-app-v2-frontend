@@ -36,7 +36,6 @@ function Register({ userInfo, setUserInfo }) {
 				},
 			}),
 		}).then((r) => {
-			console.log('r', r);
 			if (r.ok) {
 				r.json().then((data) => {
 					setUser(data);
@@ -44,10 +43,8 @@ function Register({ userInfo, setUserInfo }) {
 				});
 			} else {
 				r.json().then((data) => {
-					console.log('data', data.errors);
 					if (data.errors.toString() === 'Email Email invalid') {
 					const string = data.errors.toString();
-					console.log('string', removeFirstWord(string));
 					alert(`${removeFirstWord(string)} Please try again.`);
 					} else {
 						alert(`${data.errors} Please try again.`);
