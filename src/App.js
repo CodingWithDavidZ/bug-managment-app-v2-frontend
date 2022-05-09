@@ -11,7 +11,7 @@ import ErrorFallback from './Components/ErrorFallback';
 import { useQuery } from 'react-query';
 
 function App() {
-	const { user, setUser, sortBy, setAllUsers } = useContext(AppContext);
+	const { user, setUser, sortBy } = useContext(AppContext);
 	const handleError = useErrorHandler();
 
 	const allBugs = useQuery(['allBugs', sortBy], () =>
