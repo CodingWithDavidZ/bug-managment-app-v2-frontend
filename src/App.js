@@ -15,7 +15,7 @@ function App() {
 	const handleError = useErrorHandler();
 
 	const allBugs = useQuery(['allBugs', sortBy], () =>
-		//This serves as a prefectch to make the app run smoother and thus is not called
+		//This serves as a pre-fetch to make the app run smoother and thus is not called at this stage
 		fetch(`http://localhost:3000/bugs/sortOrder`, {
 			method: 'POST',
 			credentials: 'include',
