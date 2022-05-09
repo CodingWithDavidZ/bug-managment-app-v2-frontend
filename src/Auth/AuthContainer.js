@@ -39,7 +39,7 @@ function AuthContainer() {
 				<div className='col-start-2 col-end-2'>
 					<div className='col-start-1 col-end-1 pt-16'>
 						<button
-							className='bg-red-700 w-1/3 rounded border hover:animate-pulse'
+							className='bg-red-600 w-1/3 rounded border hover:animate-pulse'
 							onClick={renderRegisterAuth}
 						>
 							Register
