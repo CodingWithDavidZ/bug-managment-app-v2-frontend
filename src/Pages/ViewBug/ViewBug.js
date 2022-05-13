@@ -8,7 +8,7 @@ import { useQuery } from 'react-query';
 import Loading from '../../Components/Loading';
 
 function ViewBug() {
-	const { setBugInStorage, bugInStorage, isLoading, setIsLoading } =
+	const { setBugInStorage, bugInStorage } =
 		useContext(AppContext);
 
 	useEffect(() => {
