@@ -36,31 +36,31 @@ function AddBugPopModal() {
 		// { option: 'noSelection', value: null, display: defaultLabel },
 		{
 			option: 'option1',
-			value: [0,0],
+			value: [0, 0],
 			display: 'Critical',
 			tooltip: 'Security Risk or Breaks Functionality',
 		},
 		{
 			option: 'option2',
-			value: [1,1],
+			value: [1, 1],
 			display: 'Urgent',
 			tooltip: 'Obstructs Operations in a Serious Manner',
 		},
 		{
 			option: 'option3',
-			value: [2,2],
+			value: [2, 2],
 			display: 'Medium',
 			tooltip: 'Issue Hinders Normal Usage but Applications Still Works',
 		},
 		{
 			option: 'option4',
-			value: [3,3],
+			value: [3, 3],
 			display: 'Low (Default)',
 			tooltip: 'Minor loss of function or an annoying behavior.',
 		},
 		{
 			option: 'option4',
-			value: [4,4],
+			value: [4, 4],
 			display: 'Very Low',
 			tooltip: 'Cosmetic Issues, Spelling Errors, Minor Graphical Issues',
 		},
@@ -71,7 +71,7 @@ function AddBugPopModal() {
 		if (submitInfo.issue_title === '' || submitInfo.issue_description === '') {
 			alert('Please fill out TITLE and DESCRIPTION fields.');
 		} else {
-			fetch(`https://git.heroku.com/tranquil-depths-19820.git/bugs/create`, {
+			fetch(`https://tranquil-depths-19820.herokuapp.com/bugs/create`, {
 				method: 'POST',
 				credentials: 'include',
 				headers: {

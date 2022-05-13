@@ -11,7 +11,7 @@ function Login() {
 	async function login(e) {
 		e.preventDefault();
 		const res = await fetch(
-			'https://git.heroku.com/tranquil-depths-19820.git/login',
+			'https://tranquil-depths-19820.herokuapp.com/login',
 
 			{
 				method: 'POST',

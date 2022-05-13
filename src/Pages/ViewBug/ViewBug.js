@@ -8,30 +8,15 @@ import { useQuery } from 'react-query';
 import Loading from '../../Components/Loading';
 
 function ViewBug() {
-	const { setBugInStorage, bugInStorage, isLoading, setIsLoading} = useContext(AppContext);
+	const { setBugInStorage, bugInStorage, isLoading, setIsLoading } =
+		useContext(AppContext);
 
 	useEffect(() => {
 		setBugInStorage(window.localStorage.getItem('bug'));
 	}, []);
 
 	const bug = useQuery(['getBug', bugInStorage], () =>
-		fetch(
-			`https://git.heroku.com/tranquil-depths-19820.git/bugs/${bugInStorage}`,
-			{
-				method: 'GET',
-				credentials: 'include',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-			}
-		).then((res) => {
-			const result = res.json();
-			return result;
-		})
-	);
-
-	const allUsers = useQuery('allUser', () =>
-		fetch(`https://git.heroku.com/tranquil-depths-19820.git/users`, {
+		fetch(`https://tranquil-depths-19820.herokuapp.com/bugs/${bugInStorage}`, {
 			method: 'GET',
 			credentials: 'include',
 			headers: {
@@ -43,40 +28,49 @@ function ViewBug() {
 		})
 	);
 
+	const allUsers = useQuery('allUser', () =>
+		fetch(`https://tranquil-depths-19820.herokuapp.com/users`, {
+			method: 'GET',
+			credentials: 'include',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		}).then((res) => {
+			const result = res.json();
+			return result;
+		})
+	);
 
 	if (bug.isLoading) {
-		return <Loading/>;
+		return <Loading />;
 	}
 
-
 	if (allUsers.isLoading) {
-		return <Loading/>;
+		return <Loading />;
 	}
 
 	function findUser(id) {
 		if (allUsers.data) {
 			//check if the user exists
-			if (allUsers.data.find((user) => user.id === id)){
-			const user = allUsers.data.find((user) => user.id === id);
+			if (allUsers.data.find((user) => user.id === id)) {
+				const user = allUsers.data.find((user) => user.id === id);
 				return user.username;
 			} else {
 				return 'Unknown';
 			}
 		}
 	}
-		
-
 
 	const bugId = bug.data.id;
 	const issueTitle = bug.data.issue_title;
 	const issueDescription = bug.data.issue_description;
 	const identifiedBy = () => {
-	    if (bug.data.identified_by !== null) {
-					return findUser(bug.data.identified_by);
-					} else {
-						return findUser(bug.data.created_by);
-					}
-				};
+		if (bug.data.identified_by !== null) {
+			return findUser(bug.data.identified_by);
+		} else {
+			return findUser(bug.data.created_by);
+		}
+	};
 	const identifiedDate = bug.data.identified_date !== null && (
 		<DateFormat time={bug.data.identified_date} />
 	);

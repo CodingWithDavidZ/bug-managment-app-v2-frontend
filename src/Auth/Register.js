@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
 import AppContext from '../Context/AppContext';
-import {useQueryClient} from 'react-query';
+import { useQueryClient } from 'react-query';
 
 function Register({ userInfo, setUserInfo }) {
-	const {setUser} = useContext(AppContext);
+	const { setUser } = useContext(AppContext);
 	const queryClient = useQueryClient();
 
 	function removeFirstWord(str) {
@@ -18,7 +18,7 @@ function Register({ userInfo, setUserInfo }) {
 
 	function register(e) {
 		e.preventDefault();
-		fetch(`https://git.heroku.com/tranquil-depths-19820.git/register`, {
+		fetch(`https://tranquil-depths-19820.herokuapp.com/register`, {
 			method: 'POST',
 			credentials: 'include',
 			headers: {
@@ -54,16 +54,13 @@ function Register({ userInfo, setUserInfo }) {
 		});
 	}
 
-
-
-			// .then((response) => response.json())
-			// .then((data) => {
-			// 	setUser(data);
-			// })
-			// .catch((error) => {
-			// 	alert(error);
-			// });
-	
+	// .then((response) => response.json())
+	// .then((data) => {
+	// 	setUser(data);
+	// })
+	// .catch((error) => {
+	// 	alert(error);
+	// });
 
 	return (
 		<div className='w-full max-w-xs'>
@@ -149,7 +146,7 @@ function Register({ userInfo, setUserInfo }) {
 						});
 					}}
 				/>
-			{/* Add Later if you decide to implement avatar usage */}
+				{/* Add Later if you decide to implement avatar usage */}
 				{/* <label className=' pt-3 block text-gray-700 text-sm font-bold mb-2'>
 					Avatar
 				</label>

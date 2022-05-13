@@ -7,16 +7,13 @@ import { useQuery, useQueryClient } from 'react-query';
 function ModifyBug({ rawProgress }) {
 	const { user, bugInStorage } = useContext(AppContext);
 	const bugQuery = useQuery(['getBug', bugInStorage], () =>
-		fetch(
-			`https://git.heroku.com/tranquil-depths-19820.git/bugs/${bugInStorage}`,
-			{
-				method: 'GET',
-				credentials: 'include',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-			}
-		).then((res) => {
+		fetch(`https://tranquil-depths-19820.herokuapp.com/bugs/${bugInStorage}`, {
+			method: 'GET',
+			credentials: 'include',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		}).then((res) => {
 			const result = res.json();
 			return result;
 		})
@@ -64,9 +61,8 @@ function ModifyBug({ rawProgress }) {
 		setUpdateInfo({ ...updateInfo, assigned_to: userSelected });
 	}, [userSelected, statusValue, prioritySelected]);
 
-
 	const allUsers = useQuery('allUser', () =>
-		fetch(`https://git.heroku.com/tranquil-depths-19820.git/users`, {
+		fetch(`https://tranquil-depths-19820.herokuapp.com/users`, {
 			method: 'GET',
 			credentials: 'include',
 			headers: {
@@ -147,7 +143,7 @@ function ModifyBug({ rawProgress }) {
 		if (
 			window.confirm(`Are you sure you want to delete Bug: ${bug.id}`) == true
 		) {
-			fetch(`https://git.heroku.com/tranquil-depths-19820.git/bugs/${bug.id}`, {
+			fetch(`https://tranquil-depths-19820.herokuapp.com/bugs/${bug.id}`, {
 				method: 'DELETE',
 				credentials: 'include',
 				headers: {
@@ -161,12 +157,11 @@ function ModifyBug({ rawProgress }) {
 		}
 	};
 
-
 	const handleUpdate = (e) => {
 		e.preventDefault();
 		setStatusModifiedDateValue(new Date());
 		fetch(
-			`https://git.heroku.com/tranquil-depths-19820.git/bugs/${bug.id}`,
+			`https://tranquil-depths-19820.herokuapp.com/bugs/${bug.id}`,
 			{
 				method: 'PUT',
 				credentials: 'include',
