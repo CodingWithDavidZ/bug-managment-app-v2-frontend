@@ -7,13 +7,16 @@ import { useQuery, useQueryClient } from 'react-query';
 function ModifyBug({ rawProgress }) {
 	const { user, bugInStorage } = useContext(AppContext);
 	const bugQuery = useQuery(['getBug', bugInStorage], () =>
-		fetch(`http://localhost:3000/bugs/${bugInStorage}`, {
-			method: 'GET',
-			credentials: 'include',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-		}).then((res) => {
+		fetch(
+			`https://git.heroku.com/tranquil-depths-19820.git/bugs/${bugInStorage}`,
+			{
+				method: 'GET',
+				credentials: 'include',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+			}
+		).then((res) => {
 			const result = res.json();
 			return result;
 		})
@@ -63,7 +66,7 @@ function ModifyBug({ rawProgress }) {
 
 
 	const allUsers = useQuery('allUser', () =>
-		fetch(`http://localhost:3000/users`, {
+		fetch(`https://git.heroku.com/tranquil-depths-19820.git/users`, {
 			method: 'GET',
 			credentials: 'include',
 			headers: {
@@ -144,7 +147,7 @@ function ModifyBug({ rawProgress }) {
 		if (
 			window.confirm(`Are you sure you want to delete Bug: ${bug.id}`) == true
 		) {
-			fetch(`http://localhost:3000/bugs/${bug.id}`, {
+			fetch(`https://git.heroku.com/tranquil-depths-19820.git/bugs/${bug.id}`, {
 				method: 'DELETE',
 				credentials: 'include',
 				headers: {
@@ -163,7 +166,7 @@ function ModifyBug({ rawProgress }) {
 		e.preventDefault();
 		setStatusModifiedDateValue(new Date());
 		fetch(
-			`http://localhost:3000/bugs/${bug.id}`,
+			`https://git.heroku.com/tranquil-depths-19820.git/bugs/${bug.id}`,
 			{
 				method: 'PUT',
 				credentials: 'include',
@@ -182,9 +185,7 @@ function ModifyBug({ rawProgress }) {
 							? descriptionValue
 							: bug.issue_description,
 					assigned_to:
-						userSelected !== bug.assigned_to
-							? userSelected
-							: bug.assigned_to,
+						userSelected !== bug.assigned_to ? userSelected : bug.assigned_to,
 					progress: progressBar !== bug.progress ? progressBar : bug.progress,
 					status: statusValue !== bug.status ? statusValue : bug.status,
 					status_modified_date: statusModifiedDateValue,

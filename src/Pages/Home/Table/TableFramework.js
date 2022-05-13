@@ -7,7 +7,7 @@ import Loading from '../../../Components/Loading';
 function TableFramework() {
 	const { sortBy } = useContext(AppContext);
 	const bugs = useQuery(['allBugs', sortBy], () =>
-		fetch(`http://localhost:3000/bugs/sortOrder`, {
+		fetch(`https://git.heroku.com/tranquil-depths-19820.git/bugs/sortOrder`, {
 			method: 'POST',
 			credentials: 'include',
 			headers: {

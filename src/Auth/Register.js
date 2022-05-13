@@ -18,7 +18,7 @@ function Register({ userInfo, setUserInfo }) {
 
 	function register(e) {
 		e.preventDefault();
-		fetch(`http://localhost:3000/register`, {
+		fetch(`https://git.heroku.com/tranquil-depths-19820.git/register`, {
 			method: 'POST',
 			credentials: 'include',
 			headers: {
@@ -44,8 +44,8 @@ function Register({ userInfo, setUserInfo }) {
 			} else {
 				r.json().then((data) => {
 					if (data.errors.toString() === 'Email Email invalid') {
-					const string = data.errors.toString();
-					alert(`${removeFirstWord(string)} Please try again.`);
+						const string = data.errors.toString();
+						alert(`${removeFirstWord(string)} Please try again.`);
 					} else {
 						alert(`${data.errors} Please try again.`);
 					}

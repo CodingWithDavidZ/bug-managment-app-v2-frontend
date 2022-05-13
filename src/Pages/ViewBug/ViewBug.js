@@ -15,20 +15,23 @@ function ViewBug() {
 	}, []);
 
 	const bug = useQuery(['getBug', bugInStorage], () =>
-		fetch(`http://localhost:3000/bugs/${bugInStorage}`, {
-			method: 'GET',
-			credentials: 'include',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-		}).then((res) => {
+		fetch(
+			`https://git.heroku.com/tranquil-depths-19820.git/bugs/${bugInStorage}`,
+			{
+				method: 'GET',
+				credentials: 'include',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+			}
+		).then((res) => {
 			const result = res.json();
 			return result;
 		})
 	);
 
 	const allUsers = useQuery('allUser', () =>
-		fetch(`http://localhost:3000/users`, {
+		fetch(`https://git.heroku.com/tranquil-depths-19820.git/users`, {
 			method: 'GET',
 			credentials: 'include',
 			headers: {

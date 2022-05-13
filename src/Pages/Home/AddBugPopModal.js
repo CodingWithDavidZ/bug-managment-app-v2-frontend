@@ -71,7 +71,7 @@ function AddBugPopModal() {
 		if (submitInfo.issue_title === '' || submitInfo.issue_description === '') {
 			alert('Please fill out TITLE and DESCRIPTION fields.');
 		} else {
-			fetch(`http://localhost:3000/bugs/create`, {
+			fetch(`https://git.heroku.com/tranquil-depths-19820.git/bugs/create`, {
 				method: 'POST',
 				credentials: 'include',
 				headers: {
@@ -97,8 +97,9 @@ function AddBugPopModal() {
 						priority: '',
 						image_url: '',
 					});
-					setTimeout(() => { // react query is too fast and reverts to cached data sometimes if this delay is not there
-					queryClient.invalidateQueries('allBugs');
+					setTimeout(() => {
+						// react query is too fast and reverts to cached data sometimes if this delay is not there
+						queryClient.invalidateQueries('allBugs');
 					}, 250);
 				})
 				.catch((error) => {

@@ -16,7 +16,7 @@ function App() {
 
 	const allBugs = useQuery(['allBugs', sortBy], () =>
 		//This serves as a pre-fetch to make the app run smoother and thus is not called at this stage
-		fetch(`http://localhost:3000/bugs/sortOrder`, {
+		fetch(`https://git.heroku.com/tranquil-depths-19820.git/bugs/sortOrder`, {
 			method: 'POST',
 			credentials: 'include',
 			headers: {
@@ -33,7 +33,7 @@ function App() {
 	);
 
 	const allUsers = useQuery('allUser', () =>
-		fetch(`http://localhost:3000/users`, {
+		fetch(`https://git.heroku.com/tranquil-depths-19820.git/users`, {
 			method: 'GET',
 			credentials: 'include',
 			headers: {
@@ -48,7 +48,7 @@ function App() {
 
 	useEffect(() => {
 		// auto-login
-		fetch(`http://localhost:3000/me`, {
+		fetch(`https://git.heroku.com/tranquil-depths-19820.git/me`, {
 			method: 'GET',
 			credentials: 'include',
 			headers: {

@@ -7,13 +7,16 @@ function Header() {
 	const navigate = useNavigate();
 
 	async function logoutOfServer() {
-		const res = await fetch('http://localhost:3000/logout', {
-			method: 'DELETE',
-			credentials: 'include',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-		});
+		const res = await fetch(
+			'https://git.heroku.com/tranquil-depths-19820.git/logout',
+			{
+				method: 'DELETE',
+				credentials: 'include',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+			}
+		);
 		if (res.ok) {
 			alert('Logged out');
 			setUser({});
