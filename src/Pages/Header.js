@@ -8,7 +8,7 @@ function Header() {
 
 	async function logoutOfServer() {
 		const res = await fetch(
-			'https://tranquil-depths-19820.herokuapp.com/logout',
+			'http://server.bug-management.codingwithdavidz.com/logout',
 			{
 				method: 'DELETE',
 				credentials: 'include',

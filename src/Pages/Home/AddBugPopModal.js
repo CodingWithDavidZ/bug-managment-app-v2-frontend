@@ -71,7 +71,7 @@ function AddBugPopModal() {
 		if (submitInfo.issue_title === '' || submitInfo.issue_description === '') {
 			alert('Please fill out TITLE and DESCRIPTION fields.');
 		} else {
-			fetch(`https://tranquil-depths-19820.herokuapp.com/bugs/create`, {
+			fetch(`http://server.bug-management.codingwithdavidz.com/bugs/create`, {
 				method: 'POST',
 				credentials: 'include',
 				headers: {

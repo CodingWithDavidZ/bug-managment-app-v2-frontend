@@ -18,7 +18,7 @@ function Register({ userInfo, setUserInfo }) {
 
 	function register(e) {
 		e.preventDefault();
-		fetch(`https://tranquil-depths-19820.herokuapp.com/register`, {
+		fetch(`http://server.bug-management.codingwithdavidz.com/register`, {
 			method: 'POST',
 			credentials: 'include',
 			headers: {

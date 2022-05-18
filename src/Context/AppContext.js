@@ -21,6 +21,8 @@ export function AppProvider({ children }) {
 	);
 	const [lastState, setLastState] = useState('all');
 
+	const apiURI = 'http://server.bug-management.codingwithdavidz.com';
+
 	const value = useMemo(() => ({
 		user,
 		setUser,
@@ -44,6 +46,7 @@ export function AppProvider({ children }) {
 		setBugInStorage,
 		lastState,
 		setLastState,
+		apiURI,
 	}));
 
 	return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

@@ -16,7 +16,7 @@ function App() {
 
 	const allBugs = useQuery(['allBugs', sortBy], () =>
 		//This serves as a pre-fetch to make the app run smoother and thus is not called at this stage
-		fetch(`https://tranquil-depths-19820.herokuapp.com/bugs/sortOrder`, {
+		fetch(`http://server.bug-management.codingwithdavidz.com/bugs/sortOrder`, {
 			method: 'POST',
 			credentials: 'include',
 			headers: {
@@ -33,7 +33,7 @@ function App() {
 	);
 
 	const allUsers = useQuery('allUser', () =>
-		fetch(`https://tranquil-depths-19820.herokuapp.com/users`, {
+		fetch(`http://server.bug-management.codingwithdavidz.com/users`, {
 			method: 'GET',
 			credentials: 'include',
 			headers: {
@@ -47,7 +47,7 @@ function App() {
 
 	useEffect(() => {
 		// auto-login
-		fetch(`https://tranquil-depths-19820.herokuapp.com/me`, {
+		fetch(`http://server.bug-management.codingwithdavidz.com/me`, {
 			method: 'GET',
 			credentials: 'include',
 			headers: {

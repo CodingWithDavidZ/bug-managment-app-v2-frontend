@@ -10,20 +10,23 @@ function Comments() {
 	const queryClient = useQueryClient();
 
 	const { data, isLoading } = useQuery(['getBug', bugInStorage], () =>
-		fetch(`https://tranquil-depths-19820.herokuapp.com/bugs/${bugInStorage}`, {
-			method: 'GET',
-			credentials: 'include',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-		}).then((res) => {
+		fetch(
+			`http://server.bug-management.codingwithdavidz.com/bugs/${bugInStorage}`,
+			{
+				method: 'GET',
+				credentials: 'include',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+			}
+		).then((res) => {
 			const result = res.json();
 			return result;
 		})
 	);
 
 	const allUsers = useQuery('allUser', () =>
-		fetch(`https://tranquil-depths-19820.herokuapp.com/users`, {
+		fetch(`http://server.bug-management.codingwithdavidz.com/users`, {
 			method: 'GET',
 			credentials: 'include',
 			headers: {
@@ -51,7 +54,7 @@ function Comments() {
 	async function addComment(e) {
 		e.preventDefault();
 		await fetch(
-			`https://tranquil-depths-19820.herokuapp.com/bugs/${e.target.id}/comments`,
+			`http://server.bug-management.codingwithdavidz.com/bugs/${e.target.id}/comments`,
 			{
 				method: 'POST',
 				credentials: 'include',

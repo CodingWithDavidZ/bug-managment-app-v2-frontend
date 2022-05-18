@@ -8,28 +8,30 @@ import { useQuery } from 'react-query';
 import Loading from '../../Components/Loading';
 
 function ViewBug() {
-	const { setBugInStorage, bugInStorage } =
-		useContext(AppContext);
+	const { setBugInStorage, bugInStorage } = useContext(AppContext);
 
 	useEffect(() => {
 		setBugInStorage(window.localStorage.getItem('bug'));
 	}, []);
 
 	const bug = useQuery(['getBug', bugInStorage], () =>
-		fetch(`https://tranquil-depths-19820.herokuapp.com/bugs/${bugInStorage}`, {
-			method: 'GET',
-			credentials: 'include',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-		}).then((res) => {
+		fetch(
+			`http://server.bug-management.codingwithdavidz.com/bugs/${bugInStorage}`,
+			{
+				method: 'GET',
+				credentials: 'include',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+			}
+		).then((res) => {
 			const result = res.json();
 			return result;
 		})
 	);
 
 	const allUsers = useQuery('allUser', () =>
-		fetch(`https://tranquil-depths-19820.herokuapp.com/users`, {
+		fetch(`http://server.bug-management.codingwithdavidz.com/users`, {
 			method: 'GET',
 			credentials: 'include',
 			headers: {

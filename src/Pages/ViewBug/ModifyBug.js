@@ -7,13 +7,16 @@ import { useQuery, useQueryClient } from 'react-query';
 function ModifyBug({ rawProgress }) {
 	const { user, bugInStorage } = useContext(AppContext);
 	const bugQuery = useQuery(['getBug', bugInStorage], () =>
-		fetch(`https://tranquil-depths-19820.herokuapp.com/bugs/${bugInStorage}`, {
-			method: 'GET',
-			credentials: 'include',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-		}).then((res) => {
+		fetch(
+			`http://server.bug-management.codingwithdavidz.com/bugs/${bugInStorage}`,
+			{
+				method: 'GET',
+				credentials: 'include',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+			}
+		).then((res) => {
 			const result = res.json();
 			return result;
 		})
@@ -62,7 +65,7 @@ function ModifyBug({ rawProgress }) {
 	}, [userSelected, statusValue, prioritySelected]);
 
 	const allUsers = useQuery('allUser', () =>
-		fetch(`https://tranquil-depths-19820.herokuapp.com/users`, {
+		fetch(`http://server.bug-management.codingwithdavidz.com/users`, {
 			method: 'GET',
 			credentials: 'include',
 			headers: {
@@ -143,14 +146,17 @@ function ModifyBug({ rawProgress }) {
 		if (
 			window.confirm(`Are you sure you want to delete Bug: ${bug.id}`) == true
 		) {
-			fetch(`https://tranquil-depths-19820.herokuapp.com/bugs/${bug.id}`, {
-				method: 'DELETE',
-				credentials: 'include',
-				headers: {
-					'Content-Type': 'application/json',
-					Accept: 'application/json',
-				},
-			});
+			fetch(
+				`http://server.bug-management.codingwithdavidz.com/bugs/${bug.id}`,
+				{
+					method: 'DELETE',
+					credentials: 'include',
+					headers: {
+						'Content-Type': 'application/json',
+						Accept: 'application/json',
+					},
+				}
+			);
 			navigate('/');
 		} else {
 			alert('Bug not deleted, please try again.');
@@ -161,7 +167,7 @@ function ModifyBug({ rawProgress }) {
 		e.preventDefault();
 		setStatusModifiedDateValue(new Date());
 		fetch(
-			`https://tranquil-depths-19820.herokuapp.com/bugs/${bug.id}`,
+			`http://server.bug-management.codingwithdavidz.com/bugs/${bug.id}`,
 			{
 				method: 'PUT',
 				credentials: 'include',
