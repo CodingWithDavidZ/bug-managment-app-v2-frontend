@@ -2,6 +2,4 @@
 deployment:
   tasks:
     - export DEPLOYPATH=/home/codibumv/public_html/
-    - /build/cp index.html $DEPLOYPATH
-    - /build/static/css/cp main.b9253361.css $DEPLOYPATH
-    - /build/static/js/cp main.f5fa752f.js $DEPLOYPATH
+    - /build/cp -R images $DEPLOYPATH
