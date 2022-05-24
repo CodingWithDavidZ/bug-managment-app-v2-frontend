@@ -1,5 +1,6 @@
 {
 	"name": "bug-management-app-v2-frontend",
+	"homepage": "http://app.bug-management.codingwithdavidz.com/",
 	"version": "0.1.0",
 	"private": true,
 	"dependencies": {
